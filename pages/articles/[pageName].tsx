@@ -1,4 +1,4 @@
-import { GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import * as React from "react";
 import { useState } from "react";
 import { fetchZApps } from "..";
@@ -147,7 +147,7 @@ export function ArticleContent({
 
 export default Articles;
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
     const response: Response = await fetchZApps("api/Articles/GetAllArticles");
     const pages: Page[] = await response.json();
     return {
@@ -157,7 +157,7 @@ export async function getStaticPaths() {
             .map(u => `/articles/${u}`),
         fallback: false,
     };
-}
+};
 
 export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
     async ({ params }) => {
