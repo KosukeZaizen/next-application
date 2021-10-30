@@ -5,7 +5,14 @@ import Layout, { siteTitle } from "../components/layout";
 import { getSortedPostsData } from "../lib/posts";
 import utilStyles from "../styles/utils.module.css";
 
-export default function Home({ allPostsData }) {
+export interface PostData {
+    id: number;
+    date: string;
+    title: string;
+    contentHtml: string;
+}
+
+export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
     return (
         <Layout home>
             <Head>
