@@ -1,6 +1,7 @@
 import { GetStaticProps } from "next";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { fetchZApps } from "..";
 
 export interface Page {
     url?: string;
@@ -10,6 +11,8 @@ export interface Page {
     imgPath?: string;
     isAboutFolktale?: boolean;
 }
+
+interface Props extends Page {}
 
 // export function getImgNumber(num: number = 0) {
 //     const today = new Date();
@@ -25,7 +28,7 @@ const Articles = ({
     description,
     articleContent,
     isAboutFolktale,
-}: Page) => {
+}: Props) => {
     return (
         <div style={{ width: "100%" }} className="center">
             <ArticleContent
@@ -145,30 +148,33 @@ export function ArticleContent({
 export default Articles;
 
 export async function getStaticPaths() {
-    const paths = ["/articles/japanese-i-adjectives-list-for-jlpt-n5"];
+    const response: Response = await fetchZApps("api/Articles/GetAllArticles");
+    const pages: Page[] = await response.json();
     return {
-        paths,
+        paths: pages
+            .map(p => p.url)
+            .filter(u => u)
+            .map(u => `/articles/${u}`),
         fallback: false,
     };
 }
 
-export const getStaticProps: GetStaticProps<{}, { pageName: string }> = async ({
-    params,
-}) => {
-    const pageName = params?.pageName;
-    if (!pageName) return { notFound: true };
+export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
+    async ({ params }) => {
+        const pageName = params?.pageName;
+        if (!pageName) return { notFound: true };
 
-    const lowerPageName = pageName.toLowerCase();
-    // if (pageName !== lowerPageName) {
-    //     history.push(`/articles/${lowerPageName}`);
-    //     return;
-    // }
+        const lowerPageName = pageName.toLowerCase();
+        // if (pageName !== lowerPageName) {
+        //     history.push(`/articles/${lowerPageName}`);
+        //     return;
+        // }
 
-    const response: Response = await fetch(
-        `https://articles.lingual-ninja.com/api/Articles/GetArticle?p=${pageName}`
-    );
-    const page: Page = await response.json();
-    return {
-        props: page,
+        const response: Response = await fetchZApps(
+            `api/Articles/GetArticle?p=${pageName}`
+        );
+        const page: Page = await response.json();
+        return {
+            props: page,
+        };
     };
-};

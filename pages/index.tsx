@@ -1,9 +1,9 @@
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Date from "../components/date";
 import Layout, { siteTitle } from "../components/layout";
-import { getSortedPostsData } from "../lib/posts";
 import utilStyles from "../styles/utils.module.css";
+import { Page } from "./articles/[pageName]";
 
 export interface PostData {
     id: string;
@@ -12,7 +12,7 @@ export interface PostData {
     contentHtml: string;
 }
 
-export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
+export default function Home({ pages }: { pages: Page[] }) {
     return (
         <Layout home>
             <Head>
@@ -32,15 +32,11 @@ export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
             >
                 <h2 className={utilStyles.headingLg}>Blog</h2>
                 <ul className={utilStyles.list}>
-                    {allPostsData.map(({ id, date, title }) => (
-                        <li className={utilStyles.listItem} key={id}>
-                            <Link href={`/posts/${id}`}>
+                    {pages.map(({ title, url }) => (
+                        <li className={utilStyles.listItem} key={url}>
+                            <Link href={`/articles/${url}`}>
                                 <a>{title}</a>
                             </Link>
-                            <br />
-                            <small className={utilStyles.lightText}>
-                                <Date dateString={date} />
-                            </small>
                         </li>
                     ))}
                 </ul>
@@ -49,11 +45,16 @@ export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
     );
 }
 
-export async function getStaticProps() {
-    const allPostsData = getSortedPostsData();
+export const getStaticProps: GetStaticProps = async () => {
+    const response: Response = await fetchZApps("api/Articles/GetAllArticles");
+    const pages: Page[] = await response.json();
     return {
         props: {
-            allPostsData,
+            pages,
         },
     };
+};
+
+export function fetchZApps(url: string) {
+    return fetch(`https://articles.lingual-ninja.com/${url}`);
 }
