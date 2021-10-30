@@ -6,7 +6,7 @@ import { getSortedPostsData } from "../lib/posts";
 import utilStyles from "../styles/utils.module.css";
 
 export interface PostData {
-    id: number;
+    id: string;
     date: string;
     title: string;
     contentHtml: string;
