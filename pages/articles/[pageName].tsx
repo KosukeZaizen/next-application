@@ -265,57 +265,72 @@ export const getStaticPaths: GetStaticPaths = async () => {
             .map(p => p.url?.toLowerCase())
             .filter(u => u)
             .map(u => `/articles/${u}`),
-        fallback: false,
+        fallback: "blocking",
     };
 };
 
 export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
     async ({ params }) => {
-        const pageName = params?.pageName;
-        if (!pageName) return { notFound: true };
+        try {
+            const pageName = params?.pageName;
+            if (!pageName) {
+                return { notFound: true };
+            }
+            const lowerPageName = pageName.toLowerCase();
+            if (pageName !== lowerPageName) {
+                return {
+                    redirect: {
+                        permanent: true,
+                        destination: lowerPageName,
+                    },
+                };
+            }
 
-        // Article
-        const response: Response = await fetchZApps(
-            `api/Articles/GetArticle?p=${pageName}`
-        );
-        const {
-            url,
-            description,
-            title,
-            isAboutFolktale,
-            articleContent,
-            imgPath,
-        }: Page = await response.json();
-
-        // Other articles
-        const param = `?num=10&${
-            isAboutFolktale ? "&isAboutFolktale=true" : ""
-        }`;
-        const responseOther: Response = await fetchZApps(
-            "api/Articles/GetRandomArticles" + param
-        );
-        const articles: Page[] = await responseOther.json();
-        const otherArticles = articles.filter(a => a.title !== title);
-
-        const indexInfo = articleContent
-            .split("\n")
-            .filter(c => c.includes("##") && !c.includes("###"))
-            .map(c => {
-                const linkText = c.split("#").join("").trim();
-                const encodedUrl = encodeURIComponent(linkText);
-                return { linkText, encodedUrl };
-            });
-
-        return {
-            props: {
+            // Article
+            const response: Response = await fetchZApps(
+                `api/Articles/GetArticle?p=${pageName}`
+            );
+            const {
                 url,
                 description,
                 title,
                 isAboutFolktale,
                 articleContent,
                 imgPath,
-                indexInfo,
-                otherArticles,
-            },
-        };
+            }: Page = await response.json();
+
+            // Other articles
+            const param = `?num=10&${
+                isAboutFolktale ? "&isAboutFolktale=true" : ""
+            }`;
+            const responseOther: Response = await fetchZApps(
+                "api/Articles/GetRandomArticles" + param
+            );
+            const articles: Page[] = await responseOther.json();
+            const otherArticles = articles.filter(a => a.title !== title);
+
+            const indexInfo = articleContent
+                .split("\n")
+                .filter(c => c.includes("##") && !c.includes("###"))
+                .map(c => {
+                    const linkText = c.split("#").join("").trim();
+                    const encodedUrl = encodeURIComponent(linkText);
+                    return { linkText, encodedUrl };
+                });
+
+            return {
+                props: {
+                    url,
+                    description,
+                    title,
+                    isAboutFolktale,
+                    articleContent,
+                    imgPath,
+                    indexInfo,
+                    otherArticles,
+                },
+            };
+        } catch {
+            return { notFound: true };
+        }
     };
