@@ -276,6 +276,8 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
             if (!pageName) {
                 return { notFound: true };
             }
+
+            // Redirect to lower case
             const lowerPageName = pageName.toLowerCase();
             if (pageName !== lowerPageName) {
                 return {
