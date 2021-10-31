@@ -1,7 +1,14 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import Link from "next/link";
 import * as React from "react";
-import { useState } from "react";
-import { fetchZApps } from "..";
+import { Markdown } from "../../components/articles/Markdown";
+import CharacterComment from "../../components/shared/CharacterComment";
+import { AnchorLink } from "../../components/shared/HashScroll";
+import { Helmet } from "../../components/shared/Helmet";
+import { ScrollBox } from "../../components/shared/ScrollBox";
+import ShurikenProgress from "../../components/shared/ShurikenProgress";
+import { YouTubeAd } from "../../components/shared/YouTubeAd";
+import { fetchZApps } from "../../lib/fetch";
 
 export interface Page {
     url?: string;
@@ -12,35 +19,42 @@ export interface Page {
     isAboutFolktale?: boolean;
 }
 
-interface Props extends Page {}
+type IndexInfo = {
+    linkText: string;
+    encodedUrl: string;
+}[];
 
-// export function getImgNumber(num: number = 0) {
-//     const today = new Date();
-//     const todayNumber = today.getMonth() + today.getDate() + num;
-//     const mod = todayNumber % 30;
-//     if (mod > 22) return 2;
-//     if (mod > 14) return 3;
-//     return 1;
-// }
+interface Props extends Page {
+    indexInfo: IndexInfo;
+    otherArticles: Page[];
+}
+
+export function getImgNumber() {
+    return Math.ceil(Math.random() * 3);
+}
 
 const Articles = ({
     title,
     description,
     articleContent,
     isAboutFolktale,
+    indexInfo,
+    otherArticles,
 }: Props) => {
     return (
         <div style={{ width: "100%" }} className="center">
+            <Helmet title={title} desc={description} />
             <ArticleContent
                 title={title}
                 description={description}
                 imgNumber={0}
                 width={1000}
-                indexLi={[]}
                 content={articleContent}
                 adsense={true}
-                isAboutFolktale={isAboutFolktale}
+                otherArticles={otherArticles}
+                indexInfo={indexInfo}
             />
+            {/* <HashScroll location={location} /> */}
         </div>
     );
 };
@@ -56,50 +70,28 @@ const textShadow = Array.from(Array(50).keys())
 interface ArticleContentProps {
     title: string;
     description: string;
-    isAboutFolktale?: boolean;
     imgNumber: number;
     width: number;
-    indexLi: JSX.Element[];
+    indexInfo: IndexInfo;
     content: string;
     adsense: boolean;
+    otherArticles: Page[];
 }
 export function ArticleContent({
     title,
     description,
     imgNumber,
     width,
-    indexLi,
+    indexInfo,
     content,
     //adsense,
-    isAboutFolktale,
+    otherArticles,
 }: ArticleContentProps) {
-    const [otherArticles, setOtherArticles] = useState<Page[]>([]);
-
-    // useEffect(() => {
-    //     if (title) {
-    //         const getArticles = async () => {
-    //             const url =
-    //                 "https://articles.lingual-ninja.com/api/Articles/GetRandomArticles";
-
-    //             const titlesToExclude = [title, ...excludedArticleTitles];
-    //             const param = `?num=10&${titlesToExclude
-    //                 .map(t => `wordsToExclude=${t}`)
-    //                 .join("&")}${
-    //                 isAboutFolktale ? "&isAboutFolktale=true" : ""
-    //             }`;
-
-    //             const response: Response = await fetch(url + param);
-    //             const pages: Page[] = await response.json();
-    //             setOtherArticles(pages);
-    //         };
-    //         getArticles();
-    //     }
-    // }, [title, isAboutFolktale]);
-
     const isWide = width > 991;
 
     return (
         <main style={{ maxWidth: 800 }}>
+            <BreadCrumbs title={title} />
             <article style={{ textAlign: "left" }}>
                 {title ? (
                     <h1
@@ -112,38 +104,156 @@ export function ArticleContent({
                         {title}
                     </h1>
                 ) : (
-                    <>Loading...</>
+                    <ShurikenProgress size="10%" />
                 )}
+                <CharacterComment
+                    imgNumber={imgNumber}
+                    screenWidth={width}
+                    comment={description || <ShurikenProgress size="20%" />}
+                    style={{
+                        marginBottom: 15,
+                    }}
+                    commentStyle={{ paddingLeft: 25, paddingRight: 20 }}
+                />
+                <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
                 {content ? (
-                    content
+                    <Markdown
+                        source={content}
+                        style={{ margin: "25px 0 40px", textShadow }}
+                    />
                 ) : (
-                    // <Markdown
-                    //     source={content}
-                    //     style={{ margin: "25px 0 40px", textShadow }}
-                    // />
-                    <>Loading...</>
+                    <ShurikenProgress size="10%" />
                 )}
             </article>
         </main>
     );
 }
 
-// export function getIndex(content: string, pageName: string) {
-//     return content
-//         .split("\n")
-//         .filter(c => c.includes("##") && !c.includes("###"))
-//         .map(c => {
-//             const linkText = c.split("#").join("").trim();
-//             const encodedUrl = encodeURIComponent(linkText);
-//             return (
-//                 <li key={linkText} style={{ marginTop: 10, marginBottom: 5 }}>
-//                     <AnchorLink targetHash={`#${encodedUrl}`}>
-//                         {linkText}
-//                     </AnchorLink>
-//                 </li>
-//             );
-//         });
-// }
+function BreadCrumbs({ title }: { title: string }) {
+    return (
+        <div
+            className="breadcrumbs"
+            itemScope
+            itemType="https://schema.org/BreadcrumbList"
+            style={{ textAlign: "left" }}
+        >
+            <span
+                itemProp="itemListElement"
+                itemScope
+                itemType="http://schema.org/ListItem"
+            >
+                <Link href="/">
+                    <a
+                        itemProp="item"
+                        style={{
+                            marginRight: "5px",
+                            marginLeft: "5px",
+                        }}
+                    >
+                        <span itemProp="name">{"Home"}</span>
+                    </a>
+                </Link>
+                <meta itemProp="position" content="1" />
+            </span>
+            {" > "}
+            <span
+                itemProp="itemListElement"
+                itemScope
+                itemType="http://schema.org/ListItem"
+            >
+                <span
+                    itemProp="name"
+                    style={{
+                        marginRight: "5px",
+                        marginLeft: "5px",
+                    }}
+                >
+                    {title}
+                </span>
+                <meta itemProp="position" content="2" />
+            </span>
+        </div>
+    );
+}
+
+function IndexAndAd({
+    isWide,
+    indexInfo,
+}: {
+    isWide: boolean;
+    indexInfo: IndexInfo;
+}) {
+    return (
+        <div
+            style={{
+                display: "flex",
+                flexDirection: isWide ? "row" : "column",
+            }}
+        >
+            <ScrollBox
+                style={{
+                    display: "inline-block",
+                    flex: 1,
+                    marginRight: isWide ? 30 : undefined,
+                }}
+            >
+                <div
+                    style={{
+                        fontSize: "large",
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                >
+                    <span
+                        style={{
+                            fontWeight: "bold",
+                            fontSize: "large",
+                        }}
+                    >
+                        Index
+                    </span>
+                    {indexInfo && indexInfo.length > 0 ? (
+                        <ol
+                            style={{
+                                display: "inline-block",
+                                margin: 0,
+                            }}
+                        >
+                            {indexInfo.map(ind => (
+                                <li
+                                    key={ind.linkText}
+                                    style={{ marginTop: 10, marginBottom: 5 }}
+                                >
+                                    <AnchorLink
+                                        targetHash={`#${ind.encodedUrl}`}
+                                    >
+                                        {ind.linkText}
+                                    </AnchorLink>
+                                </li>
+                            ))}
+                        </ol>
+                    ) : (
+                        <ShurikenProgress size="20%" />
+                    )}
+                </div>
+            </ScrollBox>
+            <div
+                style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    marginTop: isWide ? undefined : 25,
+                }}
+            >
+                <YouTubeAd width={isWide ? "90%" : undefined} />
+            </div>
+        </div>
+    );
+}
 
 export default Articles;
 
@@ -152,7 +262,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const pages: Page[] = await response.json();
     return {
         paths: pages
-            .map(p => p.url)
+            .map(p => p.url?.toLowerCase())
             .filter(u => u)
             .map(u => `/articles/${u}`),
         fallback: false,
@@ -164,17 +274,48 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
         const pageName = params?.pageName;
         if (!pageName) return { notFound: true };
 
-        const lowerPageName = pageName.toLowerCase();
-        // if (pageName !== lowerPageName) {
-        //     history.push(`/articles/${lowerPageName}`);
-        //     return;
-        // }
-
+        // Article
         const response: Response = await fetchZApps(
             `api/Articles/GetArticle?p=${pageName}`
         );
-        const page: Page = await response.json();
+        const {
+            url,
+            description,
+            title,
+            isAboutFolktale,
+            articleContent,
+            imgPath,
+        }: Page = await response.json();
+
+        // Other articles
+        const titlesToExclude = [title, ...excludedArticleTitles];
+        const param = `?num=10&${titlesToExclude
+            .map(t => `wordsToExclude=${t}`)
+            .join("&")}${isAboutFolktale ? "&isAboutFolktale=true" : ""}`;
+        const responseOther: Response = await fetchZApps(
+            "api/Articles/GetRandomArticles" + param
+        );
+        const otherArticles: Page[] = await responseOther.json();
+
+        const indexInfo = articleContent
+            .split("\n")
+            .filter(c => c.includes("##") && !c.includes("###"))
+            .map(c => {
+                const linkText = c.split("#").join("").trim();
+                const encodedUrl = encodeURIComponent(linkText);
+                return { linkText, encodedUrl };
+            });
+
         return {
-            props: page,
+            props: {
+                url,
+                description,
+                title,
+                isAboutFolktale,
+                articleContent,
+                imgPath,
+                indexInfo,
+                otherArticles,
+            },
         };
     };

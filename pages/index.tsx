@@ -1,7 +1,8 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Layout, { siteTitle } from "../components/layout";
+import Layout, { siteTitle } from "../components/articles/layout";
+import { fetchZApps } from "../lib/fetch";
 import utilStyles from "../styles/utils.module.css";
 import { Page } from "./articles/[pageName]";
 
@@ -54,7 +55,3 @@ export const getStaticProps: GetStaticProps = async () => {
         },
     };
 };
-
-export function fetchZApps(url: string) {
-    return fetch(`https://articles.lingual-ninja.com/${url}`);
-}
