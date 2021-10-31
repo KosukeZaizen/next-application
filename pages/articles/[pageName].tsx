@@ -288,14 +288,14 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
         }: Page = await response.json();
 
         // Other articles
-        const titlesToExclude = [title, ...excludedArticleTitles];
-        const param = `?num=10&${titlesToExclude
-            .map(t => `wordsToExclude=${t}`)
-            .join("&")}${isAboutFolktale ? "&isAboutFolktale=true" : ""}`;
+        const param = `?num=10&${
+            isAboutFolktale ? "&isAboutFolktale=true" : ""
+        }`;
         const responseOther: Response = await fetchZApps(
             "api/Articles/GetRandomArticles" + param
         );
-        const otherArticles: Page[] = await responseOther.json();
+        const articles: Page[] = await responseOther.json();
+        const otherArticles = articles.filter(a => a.title !== title);
 
         const indexInfo = articleContent
             .split("\n")
