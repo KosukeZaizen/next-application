@@ -274,7 +274,7 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
         try {
             const pageName = params?.pageName;
             if (!pageName) {
-                return { notFound: true };
+                return { notFound: true, revalidate: 10 };
             }
 
             // Redirect to lower case
@@ -331,8 +331,9 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
                     indexInfo,
                     otherArticles,
                 },
+                revalidate: 10,
             };
         } catch {
-            return { notFound: true };
+            return { notFound: true, revalidate: 10 };
         }
     };
