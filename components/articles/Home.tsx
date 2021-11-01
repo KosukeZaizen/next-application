@@ -1,17 +1,8 @@
-import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Layout, { siteTitle } from "../../components/articles/layout";
-import { fetchZApps } from "../../lib/fetch";
+import { Page } from "../../pages/articles/[pageName]";
 import utilStyles from "../../styles/utils.module.css";
-import { Page } from "../articles/[pageName]";
-
-export interface PostData {
-    id: string;
-    date: string;
-    title: string;
-    contentHtml: string;
-}
+import Layout, { siteTitle } from "./layout";
 
 export default function Home({ pages }: { pages: Page[] }) {
     return (
@@ -45,13 +36,3 @@ export default function Home({ pages }: { pages: Page[] }) {
         </Layout>
     );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-    const response: Response = await fetchZApps("api/Articles/GetAllArticles");
-    const pages: Page[] = await response.json();
-    return {
-        props: {
-            pages,
-        },
-    };
-};
