@@ -1,4 +1,4 @@
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Layout, { siteTitle } from "../components/articles/layout";
@@ -46,13 +46,13 @@ export default function Home({ pages }: { pages: Page[] }) {
     );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+    console.log("req", req);
     const response: Response = await fetchZApps("api/Articles/GetAllArticles");
     const pages: Page[] = await response.json();
     return {
         props: {
             pages,
         },
-        revalidate: 10,
     };
 };

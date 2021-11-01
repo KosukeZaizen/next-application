@@ -1,5 +1,5 @@
 import { CSSProperties } from "react";
-import { BLOB_URL } from "../../../const/private";
+import { BLOB_URL } from "../../../const/public";
 import { ATargetBlank } from "../ATargetBlank";
 
 export const YouTubeAd = ({

@@ -5,7 +5,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 import LazyLoad from "react-lazyload";
-import { BLOB_URL } from "../../../../../const/private";
+import { BLOB_URL } from "../../../../../const/public";
 import { vocab, vocabGenre } from "../../../../../types/vocab";
 import ShurikenProgress from "../../../../shared/ShurikenProgress";
 

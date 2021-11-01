@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import React from "react";
-import { BLOB_URL } from "../../../../const/private";
+import { BLOB_URL } from "../../../../const/public";
 import ShurikenProgress from "../../../shared/ShurikenProgress";
 
 interface SpeakerProps {

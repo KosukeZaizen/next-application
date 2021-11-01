@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Z_APPS_TOP_URL } from "../../../../../const/private";
+import { Z_APPS_TOP_URL } from "../../../../../const/public";
 import { fetchZApps } from "../../../../../lib/fetch";
 import { vocab, vocabGenre, VocabGenreId } from "../../../../../types/vocab";
 import { ATargetBlank } from "../../../../shared/ATargetBlank";

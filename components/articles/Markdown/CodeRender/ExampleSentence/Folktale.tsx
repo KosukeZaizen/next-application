@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ExampleSentence } from ".";
-import { BLOB_URL, Z_APPS_TOP_URL } from "../../../../../const/private";
+import { BLOB_URL, Z_APPS_TOP_URL } from "../../../../../const/public";
 import { fetchZApps } from "../../../../../lib/fetch";
 import { sentence, word } from "../../../../../types/stories";
 import { ATargetBlank } from "../../../../shared/ATargetBlank";

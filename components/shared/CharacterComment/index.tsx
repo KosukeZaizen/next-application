@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BLOB_URL } from "../../../const/private";
+import { BLOB_URL } from "../../../const/public";
 import "./CharacterComment.module.css";
 
 type TProps = {
