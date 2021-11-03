@@ -18,6 +18,6 @@ export default makeApi<GetOneSentenceQuery, GetOneSentenceResponse>(
         const url = `api/Stories/GetOneSentence/${storyName}/${lineNumber}`;
         const response = await fetchZApps(url);
         const { sentence, words } = await response.json();
-        return { sentence, words, a: 1 };
+        return { sentence, words };
     }
 );
