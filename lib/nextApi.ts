@@ -1,4 +1,5 @@
 import { NextApiResponse } from "next";
+import { ServerResponse } from "../types/fetch";
 import { Req, StrictQuery } from "../types/next";
 import { SERVER_SIDE_ERROR_MESSAGE } from "./error";
 
@@ -20,19 +21,8 @@ export const makeApi =
             sendRes(res, await handler(req.query));
         } catch {
             sendRes(res, {
-                responseType: "error",
+                responseType: "system_error",
                 message: SERVER_SIDE_ERROR_MESSAGE,
             });
         }
     };
-
-export type ResponseType = "success" | "error";
-
-export interface ErrorResponse {
-    responseType: "error";
-    message: string;
-}
-
-export type ServerResponse<T> =
-    | (T & { responseType: "success" })
-    | ErrorResponse;

@@ -1,5 +1,6 @@
 import { fetchZApps } from "../../../../lib/fetch";
-import { makeApi, ServerResponse } from "../../../../lib/nextApi";
+import { makeApi } from "../../../../lib/nextApi";
+import { ServerResponse } from "../../../../types/fetch";
 import { StrictQuery } from "../../../../types/next";
 import { sentence, word } from "../../../../types/stories";
 
