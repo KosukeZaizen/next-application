@@ -3,7 +3,7 @@ import { ExampleSentence } from ".";
 import { BLOB_URL, Z_APPS_TOP_URL } from "../../../../../const/public";
 import { fetchGet } from "../../../../../lib/fetch";
 import {
-    GetOneSentenceQuery,
+    GetOneSentenceParams,
     GetOneSentenceResponse,
 } from "../../../../../pages/api/zApps/folktales/getOneSentence";
 import { sentence, word } from "../../../../../types/stories";
@@ -40,7 +40,7 @@ export function FolktaleExample({
         const fetchSentence = async () => {
             const url = `/api/zApps/folktales/getOneSentence?storyName=${storyName}&lineNumber=${lineNumber}`;
             const result = await fetchGet<
-                GetOneSentenceQuery,
+                GetOneSentenceParams,
                 GetOneSentenceResponse
             >(url, { storyName, lineNumber });
             if (result.responseType !== "success") {
