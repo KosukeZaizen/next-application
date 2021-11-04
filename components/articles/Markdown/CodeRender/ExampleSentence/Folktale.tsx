@@ -38,11 +38,10 @@ export function FolktaleExample({
 
     useEffect(() => {
         const fetchSentence = async () => {
-            const url = `/api/zApps/folktales/getOneSentence?storyName=${storyName}&lineNumber=${lineNumber}`;
             const result = await fetchGet<
                 GetOneSentenceParams,
                 GetOneSentenceResponse
-            >(url, { storyName, lineNumber });
+            >("/api/zApps/folktales/getOneSentence", { storyName, lineNumber });
             if (result.responseType !== "success") {
                 return;
             }
