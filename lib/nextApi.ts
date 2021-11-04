@@ -1,6 +1,6 @@
 import { NextApiResponse } from "next";
 import { ServerResponse } from "../types/fetch";
-import { Req, StrictParams } from "../types/next";
+import { GetParams, Req } from "../types/next";
 import { SERVER_SIDE_ERROR_MESSAGE } from "./error";
 import { Apis } from "./fetch";
 
@@ -11,7 +11,7 @@ export function sendRes<T>(res: NextApiResponse<T>, responseData: T) {
 export const apiGet =
     <T extends Apis>(
         handler: (
-            params: StrictParams<T["params"]>
+            params: GetParams<T["params"]>
         ) =>
             | Promise<ServerResponse<T["response"]>>
             | ServerResponse<T["response"]>
