@@ -17,10 +17,11 @@ type Response = ServerResponse<{
     words: word[];
 }>;
 
-export default apiGet<Params>(async (params): Promise<Response> => {
-    const { storyName, lineNumber } = params;
-    const url = `api/Stories/GetOneSentence/${storyName}/${lineNumber}`;
-    const response = await fetchZApps(url);
+export default apiGet<Params>(
+    async ({ storyName, lineNumber }): Promise<Response> => {
+        const url = `api/Stories/GetOneSentence/${storyName}/${lineNumber}`;
+        const response = await fetchZApps(url);
 
-    return await response.json();
-});
+        return await response.json();
+    }
+);
