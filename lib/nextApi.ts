@@ -8,12 +8,12 @@ export function sendRes<T>(res: NextApiResponse<T>, responseData: T) {
 }
 
 export const apiGet =
-    <Params, Res>(
-        handler: (
+    <Params>(
+        handler: <Res>(
             params: StrictParams<Params>
         ) => Promise<ServerResponse<Res>> | ServerResponse<Res>
     ) =>
-    async (
+    async <Res>(
         req: Req<Params>,
         res: NextApiResponse<ServerResponse<Res>>
     ): Promise<void> => {
@@ -28,12 +28,12 @@ export const apiGet =
     };
 
 export const apiPost =
-    <Params, Res>(
-        handler: (
+    <Params>(
+        handler: <Res>(
             params: Params
         ) => Promise<ServerResponse<Res>> | ServerResponse<Res>
     ) =>
-    async (
+    async <Res>(
         req: Req<Params>,
         res: NextApiResponse<ServerResponse<Res>>
     ): Promise<void> => {

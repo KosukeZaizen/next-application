@@ -13,8 +13,8 @@ export type GetOneSentenceResponse = ServerResponse<{
     words: word[];
 }>;
 
-export default apiGet<GetOneSentenceParams, GetOneSentenceResponse>(
-    async params => {
+export default apiGet<GetOneSentenceParams>(
+    async (params): Promise<GetOneSentenceResponse> => {
         const { storyName, lineNumber } = params;
         const url = `api/Stories/GetOneSentence/${storyName}/${lineNumber}`;
         const response = await fetchZApps(url);
