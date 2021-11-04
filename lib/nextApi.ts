@@ -2,20 +2,23 @@ import { NextApiResponse } from "next";
 import { ServerResponse } from "../types/fetch";
 import { Req, StrictParams } from "../types/next";
 import { SERVER_SIDE_ERROR_MESSAGE } from "./error";
+import { Apis } from "./fetch";
 
 export function sendRes<T>(res: NextApiResponse<T>, responseData: T) {
     res.status(200).json({ responseType: "success", ...responseData });
 }
 
 export const apiGet =
-    <Params>(
-        handler: <Res>(
-            params: StrictParams<Params>
-        ) => Promise<ServerResponse<Res>> | ServerResponse<Res>
+    <T extends Apis>(
+        handler: (
+            params: StrictParams<T["params"]>
+        ) =>
+            | Promise<ServerResponse<T["response"]>>
+            | ServerResponse<T["response"]>
     ) =>
-    async <Res>(
-        req: Req<Params>,
-        res: NextApiResponse<ServerResponse<Res>>
+    async (
+        req: Req<T["params"]>,
+        res: NextApiResponse<ServerResponse<T["response"]>>
     ): Promise<void> => {
         try {
             if (req.method !== "GET") {
@@ -31,14 +34,16 @@ export const apiGet =
     };
 
 export const apiPost =
-    <Params>(
-        handler: <Res>(
-            params: Params
-        ) => Promise<ServerResponse<Res>> | ServerResponse<Res>
+    <T extends Apis>(
+        handler: (
+            params: T["params"]
+        ) =>
+            | Promise<ServerResponse<T["response"]>>
+            | ServerResponse<T["response"]>
     ) =>
-    async <Res>(
-        req: Req<Params>,
-        res: NextApiResponse<ServerResponse<Res>>
+    async (
+        req: Req<T["params"]>,
+        res: NextApiResponse<ServerResponse<T["response"]>>
     ): Promise<void> => {
         try {
             if (req.method !== "POST") {

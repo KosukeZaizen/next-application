@@ -7,19 +7,19 @@ export function fetchZApps(url: string) {
     return fetch(`https://articles.lingual-ninja.com/${url}`);
 }
 
-type Apis = GetOneSentence;
+export type Apis = GetOneSentence;
 
 export async function fetchGet<T extends Apis>(
     url: T["url"],
     params: T["params"]
-) {
+): Promise<ServerResponse<T["response"]>> {
     try {
         const paramKeys = Object.keys(params) as (keyof typeof params)[];
         const strParams = paramKeys.length
             ? "?" + paramKeys.map(key => `${key}=${params[key]}`).join("&")
             : "";
         const response = await fetch(url + strParams);
-        const result: T["response"] = await response.json();
+        const result: ServerResponse<T["response"]> = await response.json();
         return result;
     } catch (e) {
         return {

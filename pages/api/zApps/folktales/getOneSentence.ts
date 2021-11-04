@@ -1,6 +1,7 @@
 import { fetchZApps } from "../../../../lib/fetch";
 import { apiGet } from "../../../../lib/nextApi";
 import { ServerResponse } from "../../../../types/fetch";
+import { StrictParams } from "../../../../types/next";
 import { sentence, word } from "../../../../types/stories";
 
 export interface GetOneSentence {
@@ -12,16 +13,19 @@ type Params = {
     storyName: string;
     lineNumber: number;
 };
-type Response = ServerResponse<{
+type Response = {
     sentence: sentence;
     words: word[];
-}>;
+};
 
-export default apiGet<Params>(
-    async ({ storyName, lineNumber }): Promise<Response> => {
-        const url = `api/Stories/GetOneSentence/${storyName}/${lineNumber}`;
-        const response = await fetchZApps(url);
+const handler = async ({
+    storyName,
+    lineNumber,
+}: StrictParams<Params>): Promise<ServerResponse<Response>> => {
+    const url = `api/Stories/GetOneSentence/${storyName}/${lineNumber}`;
+    const response = await fetchZApps(url);
 
-        return await response.json();
-    }
-);
+    return await response.json();
+};
+
+export default apiGet(handler);
