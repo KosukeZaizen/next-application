@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 export interface Req<Query> extends Omit<NextApiRequest, "query"> {
-    query: StrictParams<Query>;
+    query: GetParams<Query>;
 }
 
-export type StrictParams<Params> = {
+export type GetParams<Params> = {
     [key in keyof Params]?: string | string[];
 };
 
