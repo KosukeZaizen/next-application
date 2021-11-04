@@ -18,6 +18,9 @@ export const apiGet =
         res: NextApiResponse<ServerResponse<Res>>
     ): Promise<void> => {
         try {
+            if (req.method !== "GET") {
+                console.log("Fetch method is not GET");
+            }
             sendRes(res, await handler(req.query));
         } catch {
             sendRes(res, {
@@ -38,6 +41,9 @@ export const apiPost =
         res: NextApiResponse<ServerResponse<Res>>
     ): Promise<void> => {
         try {
+            if (req.method !== "POST") {
+                console.log("Fetch method is not POST");
+            }
             sendRes(res, await handler(req.body));
         } catch {
             sendRes(res, {
