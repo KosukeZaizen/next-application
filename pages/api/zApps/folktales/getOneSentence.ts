@@ -4,10 +4,10 @@ import { ServerResponse } from "../../../../types/fetch";
 import { StrictQuery } from "../../../../types/next";
 import { sentence, word } from "../../../../types/stories";
 
-export interface GetOneSentenceQuery {
+export type GetOneSentenceQuery = {
     storyName: string;
     lineNumber: number;
-}
+};
 
 export type GetOneSentenceResponse = ServerResponse<{
     sentence: sentence;

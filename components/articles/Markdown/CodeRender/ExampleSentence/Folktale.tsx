@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ExampleSentence } from ".";
 import { BLOB_URL, Z_APPS_TOP_URL } from "../../../../../const/public";
-import { fetchGetJson } from "../../../../../lib/fetch";
-import { GetOneSentenceResponse } from "../../../../../pages/api/zApps/folktales/getOneSentence";
+import { fetchGet } from "../../../../../lib/fetch";
+import {
+    GetOneSentenceQuery,
+    GetOneSentenceResponse,
+} from "../../../../../pages/api/zApps/folktales/getOneSentence";
 import { sentence, word } from "../../../../../types/stories";
 import { ATargetBlank } from "../../../../shared/ATargetBlank";
 
@@ -36,7 +39,10 @@ export function FolktaleExample({
     useEffect(() => {
         const fetchSentence = async () => {
             const url = `/api/zApps/folktales/getOneSentence?storyName=${storyName}&lineNumber=${lineNumber}`;
-            const result = await fetchGetJson<GetOneSentenceResponse>(url);
+            const result = await fetchGet<
+                GetOneSentenceQuery,
+                GetOneSentenceResponse
+            >(url, { storyName, lineNumber });
             if (result.responseType !== "success") {
                 return;
             }
