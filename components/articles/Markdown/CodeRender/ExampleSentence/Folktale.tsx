@@ -2,10 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ExampleSentence } from ".";
 import { BLOB_URL, Z_APPS_TOP_URL } from "../../../../../const/public";
 import { fetchGet } from "../../../../../lib/fetch";
-import {
-    GetOneSentenceParams,
-    GetOneSentenceResponse,
-} from "../../../../../pages/api/zApps/folktales/getOneSentence";
 import { sentence, word } from "../../../../../types/stories";
 import { ATargetBlank } from "../../../../shared/ATargetBlank";
 
@@ -38,10 +34,10 @@ export function FolktaleExample({
 
     useEffect(() => {
         const fetchSentence = async () => {
-            const result = await fetchGet<
-                GetOneSentenceParams,
-                GetOneSentenceResponse
-            >("/api/zApps/folktales/getOneSentence", { storyName, lineNumber });
+            const result = await fetchGet(
+                "/api/zApps/folktales/getOneSentence",
+                { storyName, lineNumber }
+            );
             if (result.responseType !== "success") {
                 return;
             }

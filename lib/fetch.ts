@@ -1,3 +1,4 @@
+import { GetOneSentence } from "../pages/api/zApps/folktales/getOneSentence";
 import { ServerResponse } from "../types/fetch";
 import { getErrorMessage } from "./error";
 
@@ -6,17 +7,19 @@ export function fetchZApps(url: string) {
     return fetch(`https://articles.lingual-ninja.com/${url}`);
 }
 
-export async function fetchGet<
-    T extends { [key: string]: string | number },
-    U extends ServerResponse<unknown>
->(url: string, params: T) {
+type Apis = GetOneSentence;
+
+export async function fetchGet<T extends Apis>(
+    url: T["url"],
+    params: T["params"]
+) {
     try {
-        const paramKeys = Object.keys(params);
+        const paramKeys = Object.keys(params) as (keyof typeof params)[];
         const strParams = paramKeys.length
             ? "?" + paramKeys.map(key => `${key}=${params[key]}`).join("&")
             : "";
         const response = await fetch(url + strParams);
-        const result: U = await response.json();
+        const result: T["response"] = await response.json();
         return result;
     } catch (e) {
         return {

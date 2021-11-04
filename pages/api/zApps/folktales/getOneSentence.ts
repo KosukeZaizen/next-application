@@ -3,22 +3,24 @@ import { apiGet } from "../../../../lib/nextApi";
 import { ServerResponse } from "../../../../types/fetch";
 import { sentence, word } from "../../../../types/stories";
 
-export type GetOneSentenceParams = {
+export interface GetOneSentence {
+    url: "/api/zApps/folktales/getOneSentence";
+    params: Params;
+    response: Response;
+}
+type Params = {
     storyName: string;
     lineNumber: number;
 };
-
-export type GetOneSentenceResponse = ServerResponse<{
+type Response = ServerResponse<{
     sentence: sentence;
     words: word[];
 }>;
 
-export default apiGet<GetOneSentenceParams>(
-    async (params): Promise<GetOneSentenceResponse> => {
-        const { storyName, lineNumber } = params;
-        const url = `api/Stories/GetOneSentence/${storyName}/${lineNumber}`;
-        const response = await fetchZApps(url);
+export default apiGet<Params>(async (params): Promise<Response> => {
+    const { storyName, lineNumber } = params;
+    const url = `api/Stories/GetOneSentence/${storyName}/${lineNumber}`;
+    const response = await fetchZApps(url);
 
-        return await response.json();
-    }
-);
+    return await response.json();
+});
