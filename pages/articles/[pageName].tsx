@@ -10,6 +10,7 @@ import ShurikenProgress from "../../components/shared/ShurikenProgress";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { fetchZApps } from "../../lib/fetch";
 import { useScreenSize } from "../../lib/screenSize";
+import styles from "../../styles/articles.module.css";
 
 export interface Page {
     url?: string;
@@ -51,7 +52,7 @@ const Articles = ({
 }: Props) => {
     const { screenWidth } = useScreenSize();
     return (
-        <div style={{ width: "100%" }} className="center">
+        <div style={{ width: "100%" }} className={styles.center}>
             <Helmet title={title} desc={description} />
             <ArticleContent
                 title={title}
@@ -108,7 +109,7 @@ export function ArticleContent({
                             margin: "25px auto 30px",
                             textAlign: "center",
                         }}
-                        className="whiteShadow"
+                        className={styles.whiteShadow}
                     >
                         {title}
                     </h1>

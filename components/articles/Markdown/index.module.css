@@ -55,7 +55,7 @@
     border-radius: 2px;
 }
 
-.markdownArea img.renderedImg {
+.markdownRenderedImg {
     display: inline-block;
     margin: 0px auto 20px;
     width: 100%;

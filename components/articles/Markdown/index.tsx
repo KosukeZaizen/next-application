@@ -4,7 +4,7 @@ import gfm from "remark-gfm";
 import { CodeRender } from "./CodeRender";
 import { HeadingRenderer } from "./HeadingRenderer";
 import { ImageRender } from "./ImageRender";
-import "./index.module.css";
+import styles from "./index.module.css";
 import { InlineCodeRender } from "./InlineCodeRender";
 import { LinkRender, LinkWithoutShadowRender } from "./LinkBlockRender";
 import { TableCellRender } from "./Table/TableCellRender";
@@ -38,11 +38,11 @@ export function Markdown({
     );
 
     return section ? (
-        <section style={style} className="markdownArea">
+        <section style={style} className={styles.markdownArea}>
             {markdown}
         </section>
     ) : (
-        <div style={style} className="markdownArea">
+        <div style={style} className={styles.markdownArea}>
             {markdown}
         </div>
     );

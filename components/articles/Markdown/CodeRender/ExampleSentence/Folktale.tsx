@@ -4,6 +4,7 @@ import { BLOB_URL, Z_APPS_TOP_URL } from "../../../../../const/public";
 import { fetchGet } from "../../../../../lib/fetch";
 import { sentence, word } from "../../../../../types/stories";
 import { ATargetBlank } from "../../../../shared/ATargetBlank";
+import styles from "../../index.module.css";
 
 export function FolktaleExample({
     storyName,
@@ -66,7 +67,7 @@ export function FolktaleExample({
                 src={`${BLOB_URL}/folktalesImg/${storyName.split("--")[0]}.png`}
                 alt={folktaleTitle}
                 title={folktaleTitle}
-                className="renderedImg"
+                className={styles.markdownRenderedImg}
             />
             <div style={{ fontWeight: "bold", marginBottom: 20 }}>
                 {"Below is a sentence from the folktale "}
