@@ -11,10 +11,6 @@ import { fetchZApps } from "../../lib/fetch";
 import { useScreenSize } from "../../lib/screenSize";
 import styles from "../../styles/articles.module.css";
 
-// const red = css`
-//     color: red;
-// `;
-
 export interface Page {
     url?: string;
     title: string;
@@ -112,9 +108,8 @@ export function ArticleContent({
                         margin: "25px auto 30px",
                         textAlign: "center",
                     }}
-                    // className={styles.whiteShadow}
+                    className={styles.whiteShadow}
                 >
-                    {/* <p css={red}>a</p> */}
                     {title}
                 </h1>
                 <CharacterComment
