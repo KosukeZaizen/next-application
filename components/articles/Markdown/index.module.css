@@ -3,6 +3,10 @@
     font-size: large;
 }
 
+.markdownArea a {
+    background-color: transparent;
+}
+
 .markdownArea li {
     font-size: large;
 }
@@ -55,7 +59,7 @@
     border-radius: 2px;
 }
 
-.markdownRenderedImg {
+.markdownArea img.renderedImg {
     display: inline-block;
     margin: 0px auto 20px;
     width: 100%;
@@ -125,7 +129,7 @@
 
 .markdownArea .greenBox {
     position: relative;
-    padding: 25px 25px 12px 12px;
+    padding: 24px 24px 12px 12px;
     color: black;
     border-radius: 10px;
     background: #e3f5d8;

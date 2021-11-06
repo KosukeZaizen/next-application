@@ -1,6 +1,8 @@
 import { Collapse } from "@material-ui/core";
 import React from "react";
+import articleStyles from "../../../../../styles/articles.module.css";
 import { sentence, word } from "../../../../../types/stories";
+import markdownStyles from "../../index.module.css";
 
 interface WordListProps {
     words: { [key: number]: word[] };
@@ -65,7 +67,7 @@ export class WordList extends React.Component<
                 ) : null}
                 <Collapse in={this.state.showWordList} timeout={1000}>
                     <div
-                        className="center"
+                        className={articleStyles.center}
                         style={{
                             backgroundColor: "#f8f7f8",
                             maxWidth: 700,
@@ -74,7 +76,7 @@ export class WordList extends React.Component<
                         }}
                     >
                         <table
-                            className="exclude"
+                            className={markdownStyles.exclude}
                             style={{ fontSize: "normal" }}
                         >
                             <tbody>

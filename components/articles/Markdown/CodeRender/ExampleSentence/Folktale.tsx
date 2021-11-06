@@ -67,7 +67,7 @@ export function FolktaleExample({
                 src={`${BLOB_URL}/folktalesImg/${storyName.split("--")[0]}.png`}
                 alt={folktaleTitle}
                 title={folktaleTitle}
-                className={styles.markdownRenderedImg}
+                className={styles.renderedImg}
             />
             <div style={{ fontWeight: "bold", marginBottom: 20 }}>
                 {"Below is a sentence from the folktale "}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Markdown } from "..";
 import { sentence } from "../../../../types/stories";
+import styles from "../index.module.css";
 import { ExampleSentence } from "./ExampleSentence";
 import { FolktaleExample } from "./ExampleSentence/Folktale";
 import { PointBox } from "./PointBox";
@@ -42,7 +43,7 @@ export const CodeRender = ({
         return <OriginalExample params={params} />;
     } else if (language === "box") {
         return (
-            <div className="greenBox">
+            <div className={styles.greenBox}>
                 <Markdown source={value} noLinkShadow />
             </div>
         );

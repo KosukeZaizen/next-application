@@ -45,11 +45,6 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
         return <VocabList genreName={alt} />;
     }
     return (
-        <img
-            src={src}
-            alt={alt}
-            title={alt}
-            className={styles.markdownRenderedImg}
-        />
+        <img src={src} alt={alt} title={alt} className={styles.renderedImg} />
     );
 };
