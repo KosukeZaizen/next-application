@@ -1,7 +1,6 @@
 import { FallingImage } from "../../../../components/shared/SeasonAnimation/type";
 import { fetchZApps } from "../../../../lib/fetch";
 import { apiGet } from "../../../../lib/nextApi";
-import { HandlerResponse } from "../../../../types/fetch";
 import { EmptyObject } from "../../../../types/util";
 
 export interface GetFallingImages {
@@ -12,7 +11,7 @@ export interface GetFallingImages {
 type Params = EmptyObject;
 type Response = { data: FallingImage[] };
 
-const handler = async (): Promise<HandlerResponse<Response>> => {
+const handler = async (): Promise<Response> => {
     const url = `api/FallingImage/GetFallingImages`;
     const response = await fetchZApps(url);
     const data: FallingImage[] = await response.json();

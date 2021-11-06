@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Z_APPS_TOP_URL } from "../../../../../const/public";
-import { fetchZApps } from "../../../../../lib/fetch";
+import { fetchGet } from "../../../../../lib/fetch";
+import { GetQuizDataWithoutCache } from "../../../../../pages/api/zApps/vocabQuiz/GetQuizDataWithoutCache";
 import { vocab, vocabGenre, VocabGenreId } from "../../../../../types/vocab";
 import { ATargetBlank } from "../../../../shared/ATargetBlank";
 import { linkShadowStyle } from "../../LinkBlockRender/linkShadowStyle";
@@ -70,7 +71,7 @@ function useGenreAndVocab(genreName: string) {
     return genreAndVocab;
 }
 
-interface GenreAndVocab {
+export interface GenreAndVocab {
     vocabGenre: vocabGenre;
     vocabList: vocab[];
 }
@@ -78,11 +79,14 @@ async function fetchGenreAndVocab(
     genreName: string
 ): Promise<GenreAndVocab | null> {
     try {
-        return (
-            await fetchZApps(
-                `api/VocabQuiz/GetQuizDataWithoutCache/${genreName}`
-            )
-        ).json();
+        const result = await fetchGet<GetQuizDataWithoutCache>(
+            "/api/zApps/vocabQuiz/getQuizDataWithoutCache",
+            { genreName }
+        );
+        if (result.responseType === "system_error") {
+            return null;
+        }
+        return result;
     } catch (ex) {
         return null;
     }

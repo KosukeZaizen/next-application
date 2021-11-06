@@ -3,8 +3,6 @@ export interface ErrorResponse {
     message: string;
 }
 
-export type HandlerResponse<T> = T | ErrorResponse;
-
 export type ServerResponse<T> =
     | (T & { responseType: "success" })
     | ErrorResponse;

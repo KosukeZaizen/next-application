@@ -1,12 +1,12 @@
 import { NextApiResponse } from "next";
-import { HandlerResponse, ServerResponse } from "../types/fetch";
+import { ServerResponse } from "../types/fetch";
 import { GetParams, Req } from "../types/next";
 import { SERVER_SIDE_ERROR_MESSAGE } from "./error";
 import { Apis } from "./fetch";
 
 export function sendRes<T>(
     res: NextApiResponse<ServerResponse<T>>,
-    responseData: HandlerResponse<T>
+    responseData: T
 ) {
     res.status(200).json({ responseType: "success", ...responseData });
 }
@@ -15,9 +15,7 @@ export const apiGet =
     <T extends Apis>(
         handler: (
             params: GetParams<T["params"]>
-        ) =>
-            | Promise<HandlerResponse<T["response"]>>
-            | HandlerResponse<T["response"]>
+        ) => Promise<T["response"]> | T["response"]
     ) =>
     async (
         req: Req<T["params"]>,
