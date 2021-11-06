@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Z_APPS_TOP_URL } from "../../../../../const/public";
 import { fetchGet } from "../../../../../lib/fetch";
-import { GetQuizDataWithoutCache } from "../../../../../pages/api/zApps/vocabQuiz/GetQuizDataWithoutCache";
+import { GetQuizDataWithoutCache } from "../../../../../pages/api/zApps/vocabQuiz/getQuizDataWithoutCache";
 import { vocab, vocabGenre, VocabGenreId } from "../../../../../types/vocab";
 import { ATargetBlank } from "../../../../shared/ATargetBlank";
 import { linkShadowStyle } from "../../LinkBlockRender/linkShadowStyle";
