@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import { Button } from "@material-ui/core";
 import React from "react";
 import { BLOB_URL } from "../../../../const/public";
@@ -57,7 +58,7 @@ export class Speaker extends React.Component<
                 <img
                     alt={alt}
                     src={BLOB_URL + "/articles/img/speaker.png"}
-                    style={{
+                    css={{
                         width: "60%",
                         maxWidth: 60,
                         cursor: "pointer",
@@ -72,7 +73,10 @@ export class Speaker extends React.Component<
             <ShurikenProgress
                 key="circle"
                 size="100%"
-                style={{ width: "60%", maxWidth: 30 }}
+                style={css`
+                    width: 60%;
+                    max-width: 30;
+                `}
             />
         );
     }

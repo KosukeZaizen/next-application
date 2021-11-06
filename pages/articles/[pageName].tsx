@@ -131,7 +131,10 @@ export function ArticleContent({
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
                 <Markdown
                     source={content}
-                    style={{ margin: "25px 0 40px", textShadow }}
+                    style={css`
+                        margin: "25px 0 40px";
+                        ${textShadow};
+                    `}
                 />
             </article>
         </main>
@@ -156,7 +159,7 @@ function BreadCrumbs({ title }: { title: string }) {
                 <Link href="/">
                     <a
                         itemProp="item"
-                        style={{
+                        css={{
                             marginRight: "5px",
                             marginLeft: "5px",
                         }}
@@ -174,7 +177,7 @@ function BreadCrumbs({ title }: { title: string }) {
             >
                 <span
                     itemProp="name"
-                    style={{
+                    css={{
                         marginRight: "5px",
                         marginLeft: "5px",
                     }}
@@ -196,20 +199,20 @@ function IndexAndAd({
 }) {
     return (
         <div
-            style={{
+            css={{
                 display: "flex",
                 flexDirection: isWide ? "row" : "column",
             }}
         >
             <ScrollBox
-                style={{
-                    display: "inline-block",
-                    flex: 1,
-                    marginRight: isWide ? 30 : undefined,
-                }}
+                style={css`
+                    display: inline-block;
+                    flex: 1;
+                    margin-right: ${isWide ? 30 : undefined};
+                `}
             >
                 <div
-                    style={{
+                    css={{
                         fontSize: "large",
                         width: "100%",
                         display: "flex",
@@ -217,7 +220,7 @@ function IndexAndAd({
                     }}
                 >
                     <span
-                        style={{
+                        css={{
                             fontWeight: "bold",
                             fontSize: "large",
                         }}
@@ -225,7 +228,7 @@ function IndexAndAd({
                         Index
                     </span>
                     <ol
-                        style={{
+                        css={{
                             display: "inline-block",
                             margin: 0,
                         }}
@@ -233,7 +236,7 @@ function IndexAndAd({
                         {indexInfo.map(ind => (
                             <li
                                 key={ind.linkText}
-                                style={{ marginTop: 10, marginBottom: 5 }}
+                                css={{ marginTop: 10, marginBottom: 5 }}
                             >
                                 <a href={`#${ind.encodedUrl}`}>
                                     {ind.linkText}
@@ -244,7 +247,7 @@ function IndexAndAd({
                 </div>
             </ScrollBox>
             <div
-                style={{
+                css={{
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",

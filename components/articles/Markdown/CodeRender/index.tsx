@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import React from "react";
 import { Markdown } from "..";
 import { sentence } from "../../../../types/stories";
@@ -50,7 +51,12 @@ export const CodeRender = ({
     }
 
     return (
-        <PointBox language={language} style={{ textShadow: "initial" }}>
+        <PointBox
+            language={language}
+            style={css`
+                text-shadow: initial;
+            `}
+        >
             <Markdown source={value} noLinkShadow />
         </PointBox>
     );
@@ -83,7 +89,7 @@ function OriginalExample({ params }: { params: { [key: number]: string } }) {
     }));
 
     return (
-        <div style={{ marginBottom: 20, marginTop: 10, textShadow: "initial" }}>
+        <div css={{ marginBottom: 20, marginTop: 10, textShadow: "initial" }}>
             <ExampleSentence
                 s={s}
                 boldInfo={params[4]}

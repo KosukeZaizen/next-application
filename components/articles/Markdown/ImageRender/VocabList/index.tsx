@@ -19,7 +19,7 @@ export function VocabList({ genreName }: { genreName: string }) {
 
     return (
         <div
-            style={{
+            css={{
                 marginBottom: 30,
                 textAlign: "center",
                 textShadow: "initial",

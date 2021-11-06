@@ -1,3 +1,4 @@
+import { SerializedStyles } from "@emotion/utils";
 import { ReactChildren } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
@@ -11,7 +12,7 @@ import { TableCellRender } from "./Table/TableCellRender";
 
 interface MarkdownProps {
     source: string;
-    style?: React.CSSProperties;
+    style?: SerializedStyles;
     section?: boolean;
     noLinkShadow?: boolean;
 }
@@ -38,11 +39,11 @@ export function Markdown({
     );
 
     return section ? (
-        <section style={style} className={styles.markdownArea}>
+        <section css={style} className={styles.markdownArea}>
             {markdown}
         </section>
     ) : (
-        <div style={style} className={styles.markdownArea}>
+        <div css={style} className={styles.markdownArea}>
             {markdown}
         </div>
     );

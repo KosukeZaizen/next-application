@@ -25,14 +25,14 @@ const LinkRenderBase = ({
 
     if (href.includes("https://") || href.includes("http://")) {
         return (
-            <ATargetBlank href={href} style={style}>
+            <ATargetBlank href={href} css={style}>
                 {children}
             </ATargetBlank>
         );
     }
     return (
         <Link href={href}>
-            <a style={style}>{children}</a>
+            <a css={style}>{children}</a>
         </Link>
     );
 };

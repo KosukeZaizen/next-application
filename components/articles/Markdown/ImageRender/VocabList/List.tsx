@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -36,7 +37,7 @@ export function VList({
     return vocabList && vocabList.length > 0 ? (
         <Table aria-label="simple table" style={style}>
             <TableHead>
-                <TableRow style={{ backgroundColor: "papayawhip" }}>
+                <TableRow css={{ backgroundColor: "papayawhip" }}>
                     <TableCell style={tableHeadStyle} align="center">
                         Kanji
                     </TableCell>
@@ -155,7 +156,7 @@ class Speaker extends React.Component<
             <img
                 alt="vocab speaker"
                 src={BLOB_URL + "/vocabulary-quiz/img/speaker.png"}
-                style={{ width: "60%", maxWidth: 30, cursor: "pointer" }}
+                css={{ width: "60%", maxWidth: 30, cursor: "pointer" }}
                 onClick={() => {
                     vocabSound && vocabSound.play();
                 }}
@@ -164,7 +165,10 @@ class Speaker extends React.Component<
             <ShurikenProgress
                 key="circle"
                 size="100%"
-                style={{ width: "60%", maxWidth: 30 }}
+                style={css`
+                    width: 60%;
+                    max-width: 30px;
+                `}
             />
         );
     }
