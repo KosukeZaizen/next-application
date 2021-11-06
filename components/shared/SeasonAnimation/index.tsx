@@ -109,10 +109,6 @@ export const SeasonAnimation = ({
     let getImg;
     const seasonItem = seasonItems?.find(item => item.name === season);
 
-    console.log("season", season);
-    console.log("seasonItems", seasonItems);
-    console.log("seasonItem", seasonItem);
-
     if (!season || season === "none" || !seasonItem) {
         getImg = () => null;
     } else {
