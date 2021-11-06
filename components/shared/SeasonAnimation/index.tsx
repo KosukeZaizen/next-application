@@ -1,9 +1,9 @@
+import { css } from "@emotion/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { appsPublicImg } from "../../../const/public";
 import { fetchGet } from "../../../lib/fetch";
 import { GetFallingImages } from "../../../pages/api/zApps/fallingImage/getFallingImages";
-import styles from "./animation.module.css";
 import { FallingImage } from "./type";
 
 let count = 0;
@@ -118,17 +118,40 @@ export const SeasonAnimation = ({
                 src={appsPublicImg + seasonItem.fileName}
                 alt={`${seasonItem.alt} ${l.id}`}
                 title={`${seasonItem.alt} ${l.id}`}
-                style={{
-                    willChange: "animation",
-                    backfaceVisibility: "hidden",
-                    maxWidth: 50 * scale,
-                    maxHeight: 50 * scale,
-                    position: "fixed",
-                    top: -1.5 * 90 * scale,
-                    left: l.initialX,
-                    zIndex: -100,
-                }}
-                className={styles.falling}
+                css={css`
+                    will-change: animation;
+                    backface-visibility: hidden;
+                    max-width: ${50 * scale}px;
+                    max-height: ${50 * scale}px;
+                    position: fixed;
+                    top: ${-1.5 * 90 * scale}px;
+                    left: ${l.initialX}px;
+                    z-index: -100;
+                    @media only screen and (max-width: 600px) {
+                        animation: fallSmall 40s 1s ease-out;
+                    }
+                    @media only screen and (min-width: 601px) {
+                        animation: fall 25s 1s ease-out;
+                    }
+                    @keyframes fallSmall {
+                        0% {
+                            transform: translate(0px, 0px) rotate(0deg);
+                        }
+                        100% {
+                            transform: translate(-1000px, 2000px)
+                                rotate(2000deg);
+                        }
+                    }
+                    @keyframes fall {
+                        0% {
+                            transform: translate(0px, 0px) rotate(0deg);
+                        }
+                        100% {
+                            transform: translate(-1000px, 2000px)
+                                rotate(1000deg);
+                        }
+                    }
+                `}
             />
         );
     }
@@ -140,7 +163,7 @@ export const SeasonAnimation = ({
                     alt="japanese festival"
                     title="japanese festival"
                     src={appsPublicImg + "japanese-festival.png"}
-                    style={{
+                    css={{
                         position: "absolute",
                         width: "128%",
                         top: 80 - screenWidth * 0.34,

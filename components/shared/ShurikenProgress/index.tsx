@@ -1,4 +1,4 @@
-import { css, SerializedStyles } from "@emotion/react";
+import { css, CSSObject } from "@emotion/react";
 import * as React from "react";
 import { appsPublicImg } from "../../../const/public";
 import { centerStyle } from "../../../pages/articles/[pageName]";
@@ -7,7 +7,7 @@ const shuriken = appsPublicImg + "shuriken.png";
 
 interface Props {
     size?: string;
-    style?: SerializedStyles;
+    style?: CSSObject;
 }
 export default function ShurikenProgress({ size, style }: Props) {
     return (

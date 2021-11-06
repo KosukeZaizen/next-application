@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -164,11 +163,11 @@ class Speaker extends React.Component<
         ) : (
             <ShurikenProgress
                 key="circle"
-                size="100%"
-                style={css`
-                    width: 60%;
-                    max-width: 30px;
-                `}
+                size="20%"
+                style={{
+                    width: "60%",
+                    maxWidth: 30,
+                }}
             />
         );
     }
