@@ -1,4 +1,3 @@
-import { GetOneSentence } from "../pages/api/zApps/folktales/getOneSentence";
 import { ServerResponse } from "../types/fetch";
 import { getErrorMessage } from "./error";
 
@@ -7,7 +6,11 @@ export function fetchZApps(url: string) {
     return fetch(`https://articles.lingual-ninja.com/${url}`);
 }
 
-export type Apis = GetOneSentence;
+export type Apis = {
+    url: string;
+    params: { [key: string]: unknown };
+    response: unknown;
+};
 
 export async function fetchGet<T extends Apis>(
     url: T["url"],

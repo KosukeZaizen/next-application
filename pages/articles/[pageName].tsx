@@ -49,9 +49,9 @@ const Articles = ({
     otherArticles,
     imgNumber,
 }: Props) => {
-    const { screenWidth } = useScreenSize();
+    const { screenWidth, screenHeight } = useScreenSize();
     return (
-        <Layout>
+        <Layout screenWidth={screenWidth} screenHeight={screenHeight}>
             <div style={{ width: "100%" }} className={styles.center}>
                 <Helmet title={title} desc={description} />
                 <ArticleContent

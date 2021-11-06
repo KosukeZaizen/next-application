@@ -1,11 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "../../pages/articles/[pageName]";
 import { Layout } from "./Layout";
 
 export default function Home({ pages }: { pages: Page[] }) {
+    const { screenWidth, screenHeight } = useScreenSize();
     return (
-        <Layout>
+        <Layout screenWidth={screenWidth} screenHeight={screenHeight}>
             <Head>
                 <title>{"Hello!"}</title>
             </Head>

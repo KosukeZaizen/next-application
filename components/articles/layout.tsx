@@ -2,6 +2,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { SeasonAnimation } from "../shared/SeasonAnimation";
 
 const styles = {
     appBar: {
@@ -16,9 +17,11 @@ const styles = {
 
 interface Props {
     children: React.ReactNode;
+    screenWidth: number;
+    screenHeight: number;
 }
 
-export function Layout({ children }: Props) {
+export function Layout({ children, screenWidth, screenHeight }: Props) {
     return (
         <>
             <AppBar position="static" style={styles.appBar}>
@@ -37,6 +40,11 @@ export function Layout({ children }: Props) {
                 </Toolbar>
             </AppBar>
             {children}
+            <SeasonAnimation
+                frequencySec={2}
+                screenWidth={screenWidth}
+                screenHeight={screenHeight}
+            />
         </>
     );
 }
