@@ -4,13 +4,16 @@ import * as React from "react";
 import { Layout } from "../../components/articles/Layout";
 import { Markdown } from "../../components/articles/Markdown";
 import CharacterComment from "../../components/shared/CharacterComment";
-import { AnchorLink } from "../../components/shared/HashScroll";
 import { Helmet } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { fetchZApps } from "../../lib/fetch";
 import { useScreenSize } from "../../lib/screenSize";
 import styles from "../../styles/articles.module.css";
+
+// const red = css`
+//     color: red;
+// `;
 
 export interface Page {
     url?: string;
@@ -65,7 +68,6 @@ const Articles = ({
                     indexInfo={indexInfo}
                     imgNumber={imgNumber}
                 />
-                {/* <HashScroll location={location} /> */}
             </div>
         </Layout>
     );
@@ -110,8 +112,9 @@ export function ArticleContent({
                         margin: "25px auto 30px",
                         textAlign: "center",
                     }}
-                    className={styles.whiteShadow}
+                    // className={styles.whiteShadow}
                 >
+                    {/* <p css={red}>a</p> */}
                     {title}
                 </h1>
                 <CharacterComment
@@ -228,9 +231,9 @@ function IndexAndAd({
                                 key={ind.linkText}
                                 style={{ marginTop: 10, marginBottom: 5 }}
                             >
-                                <AnchorLink targetHash={`#${ind.encodedUrl}`}>
+                                <a href={`#${ind.encodedUrl}`}>
                                     {ind.linkText}
-                                </AnchorLink>
+                                </a>
                             </li>
                         ))}
                     </ol>
