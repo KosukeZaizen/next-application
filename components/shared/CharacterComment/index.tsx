@@ -1,3 +1,4 @@
+import { SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
 import styles from "./CharacterComment.module.css";
@@ -6,9 +7,9 @@ type TProps = {
     imgNumber: number;
     screenWidth: number;
     comment: string | React.ReactNode;
-    style?: React.CSSProperties;
-    commentStyle?: React.CSSProperties;
-    imgStyle?: React.CSSProperties;
+    css?: SerializedStyles;
+    commentStyle?: SerializedStyles;
+    imgStyle?: SerializedStyles;
     containerRef?: React.RefObject<HTMLDivElement>;
 };
 export default function CharacterComment(props: TProps) {
@@ -16,18 +17,18 @@ export default function CharacterComment(props: TProps) {
         imgNumber,
         screenWidth,
         comment,
-        style,
+        css,
         commentStyle,
         imgStyle,
         containerRef,
     } = props;
     return (
         <div
-            style={{
+            css={{
                 display: "flex",
                 maxWidth: 600,
                 margin: "auto",
-                ...style,
+                ...css,
             }}
             ref={containerRef}
         >
@@ -35,7 +36,7 @@ export default function CharacterComment(props: TProps) {
                 <img
                     src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
                     alt="Japanese ninja"
-                    style={{
+                    css={{
                         width: (screenWidth * 2) / 10,
                         maxWidth: 120,
                         height: "auto",
@@ -47,7 +48,7 @@ export default function CharacterComment(props: TProps) {
             </div>
             <div
                 className={styles.chatting}
-                style={{
+                css={{
                     height: "auto",
                     display: "flex",
                     alignItems: "center",
@@ -56,7 +57,7 @@ export default function CharacterComment(props: TProps) {
             >
                 <div
                     className={styles.says}
-                    style={{
+                    css={{
                         width:
                             screenWidth > 767
                                 ? (screenWidth * 7) / 10 - 15

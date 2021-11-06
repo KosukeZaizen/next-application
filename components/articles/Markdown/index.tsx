@@ -51,7 +51,7 @@ export function Markdown({
 function ParagraphRender({ children }: { children: ReactChildren }) {
     return (
         <span
-            style={{
+            css={{
                 display: "block",
                 marginBottom: 15,
             }}

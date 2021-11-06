@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import { Layout } from "../../components/articles/Layout";
@@ -8,7 +9,6 @@ import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { fetchZApps } from "../../lib/fetch";
 import { useScreenSize } from "../../lib/screenSize";
-import styles from "../../styles/articles.module.css";
 
 export interface Page {
     url?: string;
@@ -51,7 +51,12 @@ const Articles = ({
     const { screenWidth, screenHeight } = useScreenSize();
     return (
         <Layout screenWidth={screenWidth} screenHeight={screenHeight}>
-            <div style={{ width: "100%" }} className={styles.center}>
+            <div
+                css={css`
+                    width: 100%;
+                    ${centerStyle}
+                `}
+            >
                 <Helmet title={title} desc={description} />
                 <ArticleContent
                     title={title}
@@ -99,15 +104,15 @@ export function ArticleContent({
     const isWide = width > 991;
 
     return (
-        <main style={{ maxWidth: 800 }}>
+        <main css={{ maxWidth: 800 }}>
             <BreadCrumbs title={title} />
-            <article style={{ textAlign: "left" }}>
+            <article css={{ textAlign: "left" }}>
                 <h1
-                    style={{
-                        margin: "25px auto 30px",
-                        textAlign: "center",
-                    }}
-                    className={styles.whiteShadow}
+                    css={css`
+                        margin: 25px auto 30px;
+                        text-align: center;
+                        ${whiteShadowStyle}
+                    `}
                 >
                     {title}
                 </h1>
@@ -115,10 +120,13 @@ export function ArticleContent({
                     imgNumber={imgNumber}
                     screenWidth={width}
                     comment={description}
-                    style={{
-                        marginBottom: 15,
-                    }}
-                    commentStyle={{ paddingLeft: 25, paddingRight: 20 }}
+                    css={css`
+                        margin-bottom: 15px;
+                    `}
+                    commentStyle={css`
+                        padding-left: 25px;
+                        padding-right: 20px;
+                    `}
                 />
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
                 <Markdown
@@ -133,10 +141,12 @@ export function ArticleContent({
 function BreadCrumbs({ title }: { title: string }) {
     return (
         <div
-            className={styles.whiteShadow}
             itemScope
             itemType="https://schema.org/BreadcrumbList"
-            style={{ textAlign: "left" }}
+            css={css`
+                text-align: left;
+                ${whiteShadowStyle}
+            `}
         >
             <span
                 itemProp="itemListElement"
@@ -333,3 +343,34 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
             return { notFound: true, revalidate: 10 };
         }
     };
+
+export const whiteShadowStyle = `
+text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,
+    0px 0px 4px white, 0px 0px 5px white, 0px 0px 5px white,
+    0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
+    0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
+    0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
+    0px 0px 6px white, 1px 1px 6px white, -1px 1px 6px white,
+    1px -1px 6px white, -1px -1px 6px white, 2px 2px 6px white,
+    -2px 2px 6px white, 2px -2px 6px white, -2px -2px 6px white,
+    3px 3px 6px white, -3px 3px 6px white, 3px -3px 6px white,
+    -3px -3px 6px white, 0px 0px 8px white, 1px 1px 8px white,
+    -1px 1px 8px white, 1px -1px 8px white, -1px -1px 8px white,
+    2px 2px 8px white, -2px 2px 8px white, 2px -2px 8px white,
+    -2px -2px 8px white, 3px 3px 8px white, -3px 3px 8px white,
+    3px -3px 8px white, -3px -3px 8px white, 0px 0px 10px white,
+    1px 1px 10px white, -1px 1px 10px white, 1px -1px 10px white,
+    -1px -1px 10px white, 2px 2px 10px white, -2px 2px 10px white,
+    2px -2px 10px white, -2px -2px 10px white, 3px 3px 10px white,
+    -3px 3px 10px white, 3px -3px 10px white, -3px -3px 10px white,
+    3px 3px 10px white, -3px 3px 10px white, 3px -3px 10px white,
+    -3px -3px 10px white;
+`;
+
+export const centerStyle = `
+    text-align: center;
+    & * {
+        margin-right: auto;
+        margin-left: auto;
+    }
+`;

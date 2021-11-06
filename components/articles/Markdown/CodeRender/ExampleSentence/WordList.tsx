@@ -1,6 +1,7 @@
+import { css } from "@emotion/react";
 import { Collapse } from "@material-ui/core";
 import React from "react";
-import articleStyles from "../../../../../styles/articles.module.css";
+import { centerStyle } from "../../../../../pages/articles/[pageName]";
 import { sentence, word } from "../../../../../types/stories";
 import markdownStyles from "../../index.module.css";
 
@@ -67,13 +68,13 @@ export class WordList extends React.Component<
                 ) : null}
                 <Collapse in={this.state.showWordList} timeout={1000}>
                     <div
-                        className={articleStyles.center}
-                        style={{
-                            backgroundColor: "#f8f7f8",
-                            maxWidth: 700,
-                            marginLeft: 0,
-                            marginRight: "auto",
-                        }}
+                        css={css`
+                            background-color: #f8f7f8;
+                            max-width: 700px;
+                            margin-left: 0;
+                            margin-right: auto;
+                            ${centerStyle}
+                        `}
                     >
                         <table
                             className={markdownStyles.exclude}
