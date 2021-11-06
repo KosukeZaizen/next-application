@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Helmet as ReactHelmet } from "react-helmet";
 import { getSubDomain } from "../../pages/_app";
 
@@ -9,13 +9,7 @@ export const Helmet = (props: {
     isHome?: boolean;
     img?: string;
 }) => {
-    const subDomain = useMemo(() => {
-        const sd = getSubDomain();
-        if (sd === "localhost") {
-            return "";
-        }
-        return sd;
-    }, []);
+    const subDomain = useSubDomain();
 
     return (
         <div className="application">
@@ -37,3 +31,15 @@ export const Helmet = (props: {
         </div>
     );
 };
+
+function useSubDomain() {
+    const [subDomain, setSubDomain] = useState("");
+    useEffect(() => {
+        const sd = getSubDomain();
+        if (sd !== "localhost") {
+            setSubDomain(sd);
+        }
+    }, []);
+
+    return subDomain;
+}
