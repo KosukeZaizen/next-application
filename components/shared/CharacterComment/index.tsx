@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
-import "./CharacterComment.module.css";
+import styles from "./CharacterComment.module.css";
 
 type TProps = {
     imgNumber: number;
@@ -42,11 +42,11 @@ export default function CharacterComment(props: TProps) {
                         verticalAlign: "top",
                         ...imgStyle,
                     }}
-                    className="ninjaPic"
+                    className={styles.ninjaPic}
                 />
             </div>
             <div
-                className="chatting"
+                className={styles.chatting}
                 style={{
                     height: "auto",
                     display: "flex",
@@ -55,7 +55,7 @@ export default function CharacterComment(props: TProps) {
                 }}
             >
                 <div
-                    className="says"
+                    className={styles.says}
                     style={{
                         width:
                             screenWidth > 767

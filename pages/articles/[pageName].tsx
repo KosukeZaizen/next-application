@@ -9,6 +9,7 @@ import { ScrollBox } from "../../components/shared/ScrollBox";
 import ShurikenProgress from "../../components/shared/ShurikenProgress";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { fetchZApps } from "../../lib/fetch";
+import { useScreenSize } from "../../lib/screenSize";
 
 export interface Page {
     url?: string;
@@ -27,10 +28,16 @@ type IndexInfo = {
 interface Props extends Page {
     indexInfo: IndexInfo;
     otherArticles: Page[];
+    imgNumber: number;
 }
 
-export function getImgNumber() {
-    return Math.ceil(Math.random() * 3);
+export function getImgNumber(num: number = 0) {
+    const today = new Date();
+    const todayNumber = today.getMonth() + today.getDate() + num;
+    const mod = todayNumber % 30;
+    if (mod > 22) return 2;
+    if (mod > 14) return 3;
+    return 1;
 }
 
 const Articles = ({
@@ -40,19 +47,21 @@ const Articles = ({
     isAboutFolktale,
     indexInfo,
     otherArticles,
+    imgNumber,
 }: Props) => {
+    const { screenWidth } = useScreenSize();
     return (
         <div style={{ width: "100%" }} className="center">
             <Helmet title={title} desc={description} />
             <ArticleContent
                 title={title}
                 description={description}
-                imgNumber={0}
-                width={1000}
+                width={screenWidth}
                 content={articleContent}
                 adsense={true}
                 otherArticles={otherArticles}
                 indexInfo={indexInfo}
+                imgNumber={imgNumber}
             />
             {/* <HashScroll location={location} /> */}
         </div>
@@ -70,22 +79,22 @@ const textShadow = Array.from(Array(50).keys())
 interface ArticleContentProps {
     title: string;
     description: string;
-    imgNumber: number;
     width: number;
     indexInfo: IndexInfo;
     content: string;
     adsense: boolean;
     otherArticles: Page[];
+    imgNumber: number;
 }
 export function ArticleContent({
     title,
     description,
-    imgNumber,
     width,
     indexInfo,
     content,
     //adsense,
     otherArticles,
+    imgNumber,
 }: ArticleContentProps) {
     const isWide = width > 991;
 
@@ -330,6 +339,7 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
                     imgPath,
                     indexInfo,
                     otherArticles,
+                    imgNumber: getImgNumber(pageName.length),
                 },
                 revalidate: 10,
             };
