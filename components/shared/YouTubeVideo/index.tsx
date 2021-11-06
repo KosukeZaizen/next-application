@@ -1,6 +1,13 @@
+import { css } from "@emotion/react";
 import { Button } from "@material-ui/core";
 import React, { CSSProperties } from "react";
 import { ATargetBlank } from "../ATargetBlank";
+
+const buttonHover = css`
+    &:hover {
+        opacity: 0.5;
+    }
+`;
 
 export function YouTubeVideo({
     videoId,
@@ -51,11 +58,6 @@ export function YouTubeVideo({
                     nofollow
                     href="http://www.youtube.com/channel/UCii35PcojqMUNkSRalUw35g?sub_confirmation=1"
                 >
-                    <style jsx>{`
-                        button:hover {
-                            opacity: 0.5;
-                        }
-                    `}</style>
                     <Button
                         style={{
                             marginTop: 5,
@@ -63,6 +65,7 @@ export function YouTubeVideo({
                             backgroundColor: "red",
                             color: "white",
                         }}
+                        css={buttonHover}
                     >
                         {buttonLabel ||
                             "Click to subscribe to this YouTube channel!"}

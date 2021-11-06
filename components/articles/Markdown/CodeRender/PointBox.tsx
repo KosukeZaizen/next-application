@@ -1,4 +1,5 @@
-import { CSSProperties } from "react";
+import { css } from "@emotion/react";
+import React, { CSSProperties } from "react";
 
 export function PointBox({
     language,
@@ -25,20 +26,8 @@ export function PointBox({
 
     return (
         <>
-            <style jsx>{`
-                .beforeDiv::before {
-                    font-size: 15px;
-                    position: absolute;
-                    top: -23px;
-                    left: 0;
-                    height: 23px;
-                    padding: 0 1em;
-                    content: ${content};
-                    color: #fff;
-                    border-radius: 10px 10px 0 0;
-                    background: ${titleBackgroundColor};
-                }
-                .beforeDiv {
+            <div
+                css={css`
                     position: relative;
                     padding: 15px 20px 2px;
                     color: black;
@@ -47,9 +36,21 @@ export function PointBox({
                     margin: 45px 0 30px;
                     display: inline-block;
                     border: border;
-                }
-            `}</style>
-            <div className="beforeDiv" style={style}>
+                    &::before {
+                        font-size: 15px;
+                        position: absolute;
+                        top: -23px;
+                        left: 0;
+                        height: 23px;
+                        padding: 0 1em;
+                        content: ${content};
+                        color: #fff;
+                        border-radius: 10px 10px 0 0;
+                        background: ${titleBackgroundColor};
+                    }
+                `}
+                style={style}
+            >
                 {children}
             </div>
         </>

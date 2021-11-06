@@ -1,8 +1,13 @@
+import { css } from "@emotion/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "../../pages/articles/[pageName]";
 import { Layout } from "./Layout";
+
+const red = css`
+    color: red;
+`;
 
 export default function Home({ pages }: { pages: Page[] }) {
     const { screenWidth, screenHeight } = useScreenSize();
@@ -12,7 +17,7 @@ export default function Home({ pages }: { pages: Page[] }) {
                 <title>{"Hello!"}</title>
             </Head>
             <section>
-                <p>[Your Self Introduction]</p>
+                <p css={red}>[Your Self Introduction]</p>
                 <p>
                     (This is a sample website - you’ll be building a site like
                     this in{" "}
