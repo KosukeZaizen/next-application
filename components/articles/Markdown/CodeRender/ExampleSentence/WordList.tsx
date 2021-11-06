@@ -39,7 +39,7 @@ export class WordList extends React.Component<
                 this.props.words[this.props.s.lineNumber] ? (
                     this.state.showWordList ? (
                         <button
-                            style={{
+                            css={{
                                 marginTop: 5,
                                 marginBottom: 2,
                                 height: 28,
@@ -53,7 +53,7 @@ export class WordList extends React.Component<
                         </button>
                     ) : (
                         <button
-                            style={{
+                            css={{
                                 marginTop: 5,
                                 height: 28,
                                 paddingTop: 0,
@@ -86,7 +86,7 @@ export class WordList extends React.Component<
                                     ]?.map(w => (
                                         <tr key={w.wordNumber}>
                                             <td
-                                                style={{
+                                                css={{
                                                     minWidth: 100,
                                                     border: "1px solid",
                                                 }}
@@ -98,14 +98,14 @@ export class WordList extends React.Component<
                                                     : null}
                                             </td>
                                             <td
-                                                style={{
+                                                css={{
                                                     paddingLeft: 3,
                                                     paddingRight: 3,
                                                     border: "1px solid",
                                                 }}
                                             >
                                                 <div
-                                                    style={{
+                                                    css={{
                                                         display: "inline-block",
                                                         textAlign: "left",
                                                     }}

@@ -41,10 +41,10 @@ export function ExampleSentence({
 
     return (
         <>
-            <span style={{ fontSize: "small", marginBottom: 5 }}>
+            <span css={{ fontSize: "small", marginBottom: 5 }}>
                 {s.kanji && (
                     <span
-                        style={{
+                        css={{
                             backgroundColor: "#fff0f2",
                             padding: 2,
                             margin: 3,
@@ -55,7 +55,7 @@ export function ExampleSentence({
                 )}
                 {s.hiragana && (
                     <span
-                        style={{
+                        css={{
                             backgroundColor: "#ffffe0",
                             padding: 2,
                             margin: 3,
@@ -66,7 +66,7 @@ export function ExampleSentence({
                 )}
                 {s.romaji && (
                     <span
-                        style={{
+                        css={{
                             backgroundColor: "#f0fff2",
                             padding: 2,
                             margin: 3,
@@ -77,7 +77,7 @@ export function ExampleSentence({
                 )}
                 {s.english && (
                     <span
-                        style={{
+                        css={{
                             backgroundColor: "#f0f8ff",
                             padding: 2,
                             margin: 3,
@@ -89,7 +89,7 @@ export function ExampleSentence({
             </span>
             {s.kanji && (
                 <div
-                    style={{
+                    css={{
                         display: "flex",
                         alignItems: "center",
                         width: "100%",
@@ -98,21 +98,21 @@ export function ExampleSentence({
                     }}
                 >
                     <div
-                        style={{
+                        css={{
                             fontWeight: "bold",
                             marginRight: "1em",
                         }}
                     >
                         <abbr title="kanji">Ｋ</abbr>:
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div css={{ width: "100%" }}>
                         {getBoldSentence(s.kanji, bold?.K)}
                     </div>
                 </div>
             )}
             {s.hiragana && (
                 <div
-                    style={{
+                    css={{
                         display: "flex",
                         alignItems: "center",
                         width: "100%",
@@ -121,21 +121,21 @@ export function ExampleSentence({
                     }}
                 >
                     <div
-                        style={{
+                        css={{
                             fontWeight: "bold",
                             marginRight: "1em",
                         }}
                     >
                         <abbr title="hiragana">Ｈ</abbr>:
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div css={{ width: "100%" }}>
                         {getBoldSentence(s.hiragana, bold?.H)}
                     </div>
                 </div>
             )}
             {s.romaji && (
                 <div
-                    style={{
+                    css={{
                         display: "flex",
                         alignItems: "center",
                         width: "100%",
@@ -144,21 +144,21 @@ export function ExampleSentence({
                     }}
                 >
                     <div
-                        style={{
+                        css={{
                             fontWeight: "bold",
                             marginRight: "1em",
                         }}
                     >
                         <abbr title="romaji">Ｒ</abbr>:
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div css={{ width: "100%" }}>
                         {getBoldSentence(s.romaji, bold?.R)}
                     </div>
                 </div>
             )}
             {s.english && (
                 <div
-                    style={{
+                    css={{
                         display: "flex",
                         alignItems: "center",
                         width: "100%",
@@ -167,14 +167,14 @@ export function ExampleSentence({
                     }}
                 >
                     <div
-                        style={{
+                        css={{
                             fontWeight: "bold",
                             marginRight: "1em",
                         }}
                     >
                         <abbr title="english">Ｅ</abbr>:
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div css={{ width: "100%" }}>
                         {getBoldSentence(s.english, bold?.E)}
                     </div>
                 </div>
