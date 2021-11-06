@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import * as React from "react";
+import { Layout } from "../../components/articles/Layout";
 import { Markdown } from "../../components/articles/Markdown";
 import CharacterComment from "../../components/shared/CharacterComment";
 import { AnchorLink } from "../../components/shared/HashScroll";
@@ -51,20 +52,22 @@ const Articles = ({
 }: Props) => {
     const { screenWidth } = useScreenSize();
     return (
-        <div style={{ width: "100%" }} className={styles.center}>
-            <Helmet title={title} desc={description} />
-            <ArticleContent
-                title={title}
-                description={description}
-                width={screenWidth}
-                content={articleContent}
-                adsense={true}
-                otherArticles={otherArticles}
-                indexInfo={indexInfo}
-                imgNumber={imgNumber}
-            />
-            {/* <HashScroll location={location} /> */}
-        </div>
+        <Layout>
+            <div style={{ width: "100%" }} className={styles.center}>
+                <Helmet title={title} desc={description} />
+                <ArticleContent
+                    title={title}
+                    description={description}
+                    width={screenWidth}
+                    content={articleContent}
+                    adsense={true}
+                    otherArticles={otherArticles}
+                    indexInfo={indexInfo}
+                    imgNumber={imgNumber}
+                />
+                {/* <HashScroll location={location} /> */}
+            </div>
+        </Layout>
     );
 };
 

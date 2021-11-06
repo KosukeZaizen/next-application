@@ -1,77 +1,51 @@
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { ReactNode } from "react";
-import styles from "./layout.module.css";
+import AppBar from "@material-ui/core/AppBar";
+import { makeStyles } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import React from "react";
 
-const name = "[Your Name]";
-export const siteTitle = "Next.js Sample Website";
+const useStyles = makeStyles(theme => ({
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+        fontWeight: "bold",
+    },
+    appBar: {
+        backgroundColor: "rgb(34,34,34)",
+        marginBottom: 20,
+    },
+}));
+interface Props {
+    children: React.ReactNode;
+}
 
-export default function Layout({
-    children,
-    home,
-}: {
-    children: ReactNode;
-    home?: boolean;
-}) {
+export function Layout({ children }: Props) {
+    const classes = useStyles();
+
     return (
-        <div className={styles.container}>
-            <Head>
-                <link rel="icon" href="/favicon.ico" />
-                <meta
-                    name="description"
-                    content="Learn how to build a personal website using Next.js"
-                />
-                <meta
-                    property="og:image"
-                    content={`https://og-image.vercel.app/${encodeURI(
-                        siteTitle
-                    )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-                />
-                <meta name="og:title" content={siteTitle} />
-                <meta name="twitter:card" content="summary_large_image" />
-            </Head>
-            <header className={styles.header}>
-                {home ? (
-                    <>
-                        <Image
-                            priority
-                            src="/images/profile.jpg"
-                            height={144}
-                            width={144}
-                            alt={name}
-                        />
-                        <h1>{name}</h1>
-                    </>
-                ) : (
-                    <>
-                        <Link href="/">
-                            <a>
-                                <Image
-                                    priority
-                                    src="/images/profile.jpg"
-                                    height={108}
-                                    width={108}
-                                    alt={name}
-                                />
-                            </a>
-                        </Link>
-                        <h2>
-                            <Link href="/">
-                                <a>{name}</a>
-                            </Link>
-                        </h2>
-                    </>
-                )}
-            </header>
-            <main>{children}</main>
-            {!home && (
-                <div className={styles.backToHome}>
-                    <Link href="/">
-                        <a>← Back to home</a>
-                    </Link>
-                </div>
-            )}
-        </div>
+        <>
+            <AppBar position="static" className={classes.appBar}>
+                <Toolbar>
+                    {/* <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        className={classes.menuButton}
+                    >
+                        <MenuIcon />
+                    </IconButton> */}
+                    <Typography variant="h4" className={classes.title}>
+                        Lingual Ninja
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            {children}
+        </>
     );
+}
+
+function NavMenu() {
+    return <header></header>;
 }

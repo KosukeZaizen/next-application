@@ -1,13 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
 import { Page } from "../../pages/articles/[pageName]";
-import Layout, { siteTitle } from "./layout";
+import { Layout } from "./Layout";
 
 export default function Home({ pages }: { pages: Page[] }) {
     return (
-        <Layout home>
+        <Layout>
             <Head>
-                <title>{siteTitle}</title>
+                <title>{"Hello!"}</title>
             </Head>
             <section>
                 <p>[Your Self Introduction]</p>
