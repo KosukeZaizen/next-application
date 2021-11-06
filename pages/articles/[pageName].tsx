@@ -6,7 +6,6 @@ import CharacterComment from "../../components/shared/CharacterComment";
 import { AnchorLink } from "../../components/shared/HashScroll";
 import { Helmet } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
-import ShurikenProgress from "../../components/shared/ShurikenProgress";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { fetchZApps } from "../../lib/fetch";
 import { useScreenSize } from "../../lib/screenSize";
@@ -103,37 +102,29 @@ export function ArticleContent({
         <main style={{ maxWidth: 800 }}>
             <BreadCrumbs title={title} />
             <article style={{ textAlign: "left" }}>
-                {title ? (
-                    <h1
-                        style={{
-                            margin: "25px auto 30px",
-                            textAlign: "center",
-                        }}
-                        className={styles.whiteShadow}
-                    >
-                        {title}
-                    </h1>
-                ) : (
-                    <ShurikenProgress size="10%" />
-                )}
+                <h1
+                    style={{
+                        margin: "25px auto 30px",
+                        textAlign: "center",
+                    }}
+                    className={styles.whiteShadow}
+                >
+                    {title}
+                </h1>
                 <CharacterComment
                     imgNumber={imgNumber}
                     screenWidth={width}
-                    comment={description || <ShurikenProgress size="20%" />}
+                    comment={description}
                     style={{
                         marginBottom: 15,
                     }}
                     commentStyle={{ paddingLeft: 25, paddingRight: 20 }}
                 />
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
-                {content ? (
-                    <Markdown
-                        source={content}
-                        style={{ margin: "25px 0 40px", textShadow }}
-                    />
-                ) : (
-                    <ShurikenProgress size="10%" />
-                )}
+                <Markdown
+                    source={content}
+                    style={{ margin: "25px 0 40px", textShadow }}
+                />
             </article>
         </main>
     );
@@ -142,7 +133,7 @@ export function ArticleContent({
 function BreadCrumbs({ title }: { title: string }) {
     return (
         <div
-            className="breadcrumbs"
+            className={styles.whiteShadow}
             itemScope
             itemType="https://schema.org/BreadcrumbList"
             style={{ textAlign: "left" }}
@@ -223,29 +214,23 @@ function IndexAndAd({
                     >
                         Index
                     </span>
-                    {indexInfo && indexInfo.length > 0 ? (
-                        <ol
-                            style={{
-                                display: "inline-block",
-                                margin: 0,
-                            }}
-                        >
-                            {indexInfo.map(ind => (
-                                <li
-                                    key={ind.linkText}
-                                    style={{ marginTop: 10, marginBottom: 5 }}
-                                >
-                                    <AnchorLink
-                                        targetHash={`#${ind.encodedUrl}`}
-                                    >
-                                        {ind.linkText}
-                                    </AnchorLink>
-                                </li>
-                            ))}
-                        </ol>
-                    ) : (
-                        <ShurikenProgress size="20%" />
-                    )}
+                    <ol
+                        style={{
+                            display: "inline-block",
+                            margin: 0,
+                        }}
+                    >
+                        {indexInfo.map(ind => (
+                            <li
+                                key={ind.linkText}
+                                style={{ marginTop: 10, marginBottom: 5 }}
+                            >
+                                <AnchorLink targetHash={`#${ind.encodedUrl}`}>
+                                    {ind.linkText}
+                                </AnchorLink>
+                            </li>
+                        ))}
+                    </ol>
                 </div>
             </ScrollBox>
             <div
