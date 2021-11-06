@@ -11,6 +11,10 @@ export default function App({ Component, pageProps }: AppProps) {
     return <Component {...pageProps} />;
 }
 
+export function getSubDomain() {
+    return location.hostname.split(".")[0].split(":")[0];
+}
+
 function useSubDomain() {
     useEffect(() => {
         if (commonPaths.includes(location.pathname)) {
@@ -18,7 +22,7 @@ function useSubDomain() {
             return;
         }
 
-        const subDomain = location.hostname.split(".")[0].split(":")[0];
+        const subDomain = getSubDomain();
         const firstPath = location.pathname.split("/")[1];
 
         if (subDomain !== "localhost" && subDomain !== firstPath) {

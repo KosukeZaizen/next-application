@@ -1,5 +1,6 @@
-import * as React from "react";
+import { useMemo } from "react";
 import { Helmet as ReactHelmet } from "react-helmet";
+import { getSubDomain } from "../../pages/_app";
 
 export const Helmet = (props: {
     noindex?: boolean;
@@ -8,6 +9,14 @@ export const Helmet = (props: {
     isHome?: boolean;
     img?: string;
 }) => {
+    const subDomain = useMemo(() => {
+        const sd = getSubDomain();
+        if (sd === "localhost") {
+            return "";
+        }
+        return sd;
+    }, []);
+
     return (
         <div className="application">
             <ReactHelmet>
@@ -18,6 +27,12 @@ export const Helmet = (props: {
                 {props.noindex ? (
                     <meta name="robots" content="noindex" />
                 ) : null}
+                <link
+                    rel="icon"
+                    type="image/png"
+                    href={`${subDomain}Favicon.ico`}
+                    sizes="16x16"
+                />
             </ReactHelmet>
         </div>
     );
