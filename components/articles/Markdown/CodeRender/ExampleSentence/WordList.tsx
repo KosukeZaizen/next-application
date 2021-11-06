@@ -77,8 +77,7 @@ export class WordList extends React.Component<
                         `}
                     >
                         <table
-                            className={markdownStyles.exclude}
-                            style={{ fontSize: "normal" }}
+                            className={`${markdownStyles.exclude} ${markdownStyles.normalFont}`}
                         >
                             <tbody>
                                 {this.props.words &&

@@ -137,3 +137,7 @@
     display: inline-block;
     text-shadow: initial;
 }
+
+.normalFont {
+    font-size: normal;
+}
