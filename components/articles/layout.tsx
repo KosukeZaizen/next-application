@@ -5,9 +5,6 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 
 const useStyles = makeStyles(theme => ({
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
     title: {
         flexGrow: 1,
         fontWeight: "bold",
@@ -17,6 +14,7 @@ const useStyles = makeStyles(theme => ({
         marginBottom: 20,
     },
 }));
+
 interface Props {
     children: React.ReactNode;
 }
@@ -44,8 +42,4 @@ export function Layout({ children }: Props) {
             {children}
         </>
     );
-}
-
-function NavMenu() {
-    return <header></header>;
 }
