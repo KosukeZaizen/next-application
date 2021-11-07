@@ -163,7 +163,7 @@ function FallingImages({
     return (
         <>
             {leaves.map(l => (
-                <FallingImage
+                <FallingImg
                     key={l.id}
                     seasonItem={seasonItem}
                     scale={scale}
@@ -174,7 +174,7 @@ function FallingImages({
     );
 }
 
-function FallingImage({
+function FallingImg({
     l,
     seasonItem,
     scale,
