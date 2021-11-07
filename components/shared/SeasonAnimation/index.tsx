@@ -98,63 +98,13 @@ export const SeasonAnimation = ({
         return () => {
             clearInterval(intervalId);
         };
-    }, [screenWidth, screenHeight]);
+    }, [screenWidth, screenHeight, frequencySec]);
 
     useEffect(() => {
         return () => {
             ls = [];
         };
     }, []);
-
-    let getImg;
-    const seasonItem = seasonItems?.find(item => item.name === season);
-
-    if (!season || season === "none" || !seasonItem) {
-        getImg = () => null;
-    } else {
-        getImg = (l: Leaf) => (
-            <img
-                key={`falling item ${l.id}`}
-                src={appsPublicImg + seasonItem.fileName}
-                alt={`${seasonItem.alt} ${l.id}`}
-                title={`${seasonItem.alt} ${l.id}`}
-                css={css`
-                    will-change: animation;
-                    backface-visibility: hidden;
-                    max-width: ${50 * scale}px;
-                    max-height: ${50 * scale}px;
-                    position: fixed;
-                    top: ${-1.5 * 90 * scale}px;
-                    left: ${l.initialX}px;
-                    z-index: -100;
-                    @media only screen and (max-width: 600px) {
-                        animation: fallSmall 40s 1s ease-out;
-                    }
-                    @media only screen and (min-width: 601px) {
-                        animation: fall 25s 1s ease-out;
-                    }
-                    @keyframes fallSmall {
-                        0% {
-                            transform: translate(0px, 0px) rotate(0deg);
-                        }
-                        100% {
-                            transform: translate(-1000px, 2000px)
-                                rotate(2000deg);
-                        }
-                    }
-                    @keyframes fall {
-                        0% {
-                            transform: translate(0px, 0px) rotate(0deg);
-                        }
-                        100% {
-                            transform: translate(-1000px, 2000px)
-                                rotate(1000deg);
-                        }
-                    }
-                `}
-            />
-        );
-    }
 
     return (
         <>
@@ -172,7 +122,12 @@ export const SeasonAnimation = ({
                     }}
                 />
             )}
-            {leaves.map(getImg)}
+            <FallingImages
+                seasonItems={seasonItems}
+                season={season}
+                leaves={leaves}
+                scale={scale}
+            />
         </>
     );
 };
@@ -188,3 +143,89 @@ export async function getFallingImages(): Promise<FallingImage[]> {
 
     return response.data;
 }
+
+function FallingImages({
+    seasonItems,
+    season,
+    leaves,
+    scale,
+}: {
+    seasonItems: FallingImage[];
+    season: string;
+    leaves: Leaf[];
+    scale: number;
+}) {
+    const seasonItem = seasonItems?.find(item => item.name === season);
+
+    if (!season || season === "none" || !seasonItem) {
+        return null;
+    }
+    return (
+        <>
+            {leaves.map(l => (
+                <FallingImage
+                    key={l.id}
+                    seasonItem={seasonItem}
+                    scale={scale}
+                    l={l}
+                />
+            ))}
+        </>
+    );
+}
+
+function FallingImage({
+    l,
+    seasonItem,
+    scale,
+}: {
+    l: Leaf;
+    seasonItem: FallingImage;
+    scale: number;
+}) {
+    return (
+        <img
+            src={appsPublicImg + seasonItem.fileName}
+            alt={`${seasonItem.alt} ${l.id}`}
+            title={`${seasonItem.alt} ${l.id}`}
+            css={css`
+                will-change: animation;
+                backface-visibility: hidden;
+                max-width: ${50 * scale}px;
+                max-height: ${50 * scale}px;
+                position: fixed;
+                top: ${-1.5 * 90 * scale}px;
+                left: ${l.initialX}px;
+                z-index: -100;
+                ${fallingAnimation}
+            `}
+        />
+    );
+}
+
+const fallingAnimation = `
+@media only screen and (max-width: 600px) {
+    animation: fallSmall 40s 1s ease-out;
+}
+@media only screen and (min-width: 601px) {
+    animation: fall 25s 1s ease-out;
+}
+@keyframes fallSmall {
+    0% {
+        transform: translate(0px, 0px) rotate(0deg);
+    }
+    100% {
+        transform: translate(-1000px, 2000px)
+            rotate(2000deg);
+    }
+}
+@keyframes fall {
+    0% {
+        transform: translate(0px, 0px) rotate(0deg);
+    }
+    100% {
+        transform: translate(-1000px, 2000px)
+            rotate(1000deg);
+    }
+}
+`;
