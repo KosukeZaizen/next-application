@@ -36,7 +36,7 @@ export function PointBox({
                         background: ${background};
                         margin: 45px 0 30px;
                         display: inline-block;
-                        border: border;
+                        border: ${border};
                         &::before {
                             font-size: 15px;
                             position: absolute;
