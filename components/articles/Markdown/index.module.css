@@ -64,11 +64,10 @@
     margin: 0px auto 20px;
     width: 100%;
     max-height: 450px;
-    /* object-fit: contain; */
+    object-fit: contain;
     position: relative;
     filter: drop-shadow(0 0 3px white) drop-shadow(0 0 6px white)
         drop-shadow(0 0 9px white) drop-shadow(0 0 10px white);
-    overflow: hidden;
 }
 
 .markdownArea table:not(.exclude) {

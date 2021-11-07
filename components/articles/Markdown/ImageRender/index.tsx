@@ -1,7 +1,6 @@
-import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
-import { Img } from "../../../shared/Img";
 import { YouTubeVideo } from "../../../shared/YouTubeVideo";
+import styles from "../index.module.css";
 import { Speaker } from "./Speaker";
 import { VocabList } from "./VocabList";
 
@@ -50,28 +49,7 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
     } else if (src === "vocab") {
         return <VocabList genreName={alt} />;
     }
-    // return (
-    //     <Img
-    //         src={src}
-    //         alt={alt}
-    //         title={alt}
-    //         className={styles.renderedImg}
-    //         layout="responsive"
-    //         width="100%"
-    //         height="10%"
-    //         objectFit="cover"
-    //     />
-    // );
-    return <Img src={src} alt={alt} title={alt} pCss={imgCss} />;
+    return (
+        <img src={src} alt={alt} title={alt} className={styles.renderedImg} />
+    );
 };
-
-const imgCss = css`
-    display: inline-block;
-    margin: 0px auto 20px;
-    width: 100%;
-    max-height: 450px;
-    position: relative;
-    filter: drop-shadow(0 0 3px white) drop-shadow(0 0 6px white)
-        drop-shadow(0 0 9px white) drop-shadow(0 0 10px white);
-    overflow: hidden;
-`;

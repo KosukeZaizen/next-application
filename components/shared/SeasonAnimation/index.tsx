@@ -121,7 +121,6 @@ export const SeasonAnimation = ({
                         left: ${-(screenWidth * 0.28)}px;
                         z-index: -110;
                     `}
-                    loading="eager"
                 />
             )}
             <FallingImages
