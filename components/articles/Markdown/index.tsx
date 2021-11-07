@@ -1,5 +1,5 @@
 import { SerializedStyles } from "@emotion/utils";
-import { ReactChildren } from "react";
+import React, { ReactChildren } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import { CodeRender } from "./CodeRender";

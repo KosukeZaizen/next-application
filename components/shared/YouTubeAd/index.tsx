@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 import { BLOB_URL } from "../../../const/public";
 import { ATargetBlank } from "../ATargetBlank";
 

@@ -4,13 +4,11 @@ import { ATargetBlank } from "../ATargetBlank";
 export function YouTubeVideo({
     videoId,
     screenWidth,
-    pageNameForLog,
     style,
     buttonLabel,
 }: {
     videoId: string;
     screenWidth: number;
-    pageNameForLog: string;
     style?: CSSProperties;
     buttonLabel?: string;
 }) {

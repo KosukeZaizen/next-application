@@ -36,7 +36,9 @@ export function ExampleSentence({
                     .replace("E", '"E"')
             );
             setBold(objBold);
-        } catch (ex) {}
+        } catch {
+            // Do nothing
+        }
     }, [boldInfo]);
 
     return (

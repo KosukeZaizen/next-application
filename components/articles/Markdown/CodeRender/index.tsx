@@ -78,7 +78,9 @@ function OriginalExample({ params }: { params: { [key: number]: string } }) {
         try {
             const arrWords: string[] = JSON.parse(strWords);
             threeItemsArrays = sliceByNumber<string>(arrWords, 3);
-        } catch (e) {}
+        } catch {
+            //
+        }
     }
     const words = threeItemsArrays.map((items, i) => ({
         lineNumber: 0,

@@ -30,7 +30,6 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
         return (
             <YouTubeVideo
                 screenWidth={global.window?.innerWidth || 0}
-                pageNameForLog={"markDown embedded"}
                 videoId={alt}
                 buttonLabel={
                     src.includes("-")

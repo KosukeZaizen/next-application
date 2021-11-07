@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import Head from "next/head";
 import Link from "next/link";
+import React from "react";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "../../pages/articles/[pageName]";
 import { Layout } from "./Layout";

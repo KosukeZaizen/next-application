@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes } from "react";
+import React, { AnchorHTMLAttributes } from "react";
 
 export function ATargetBlank(
     props: AnchorHTMLAttributes<HTMLAnchorElement> & { nofollow?: boolean }

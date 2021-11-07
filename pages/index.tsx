@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import React from "react";
 import Articles from "../components/articles/Home";
 import { fetchZApps } from "../lib/fetch";
 import { Page } from "./articles/[pageName]";

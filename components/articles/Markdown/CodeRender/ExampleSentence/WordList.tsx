@@ -49,7 +49,7 @@ export class WordList extends React.Component<
                             className="btn btn-dark btn-xs"
                             onClick={this.hideWordList}
                         >
-                            ▲　Hide vocabulary list
+                            ▲ Hide vocabulary list
                         </button>
                     ) : (
                         <button
@@ -62,7 +62,7 @@ export class WordList extends React.Component<
                             className="btn btn-primary btn-xs"
                             onClick={this.showWordList}
                         >
-                            ▼　Show vocabulary list
+                            ▼ Show vocabulary list
                         </button>
                     )
                 ) : null}

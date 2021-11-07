@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet as ReactHelmet } from "react-helmet";
 import { getSubDomain } from "../../pages/_app";
 

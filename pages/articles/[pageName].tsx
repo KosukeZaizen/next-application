@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
+import React from "react";
 import { Layout } from "../../components/articles/Layout";
 import { Markdown } from "../../components/articles/Markdown";
 import CharacterComment from "../../components/shared/CharacterComment";

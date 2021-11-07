@@ -1,4 +1,5 @@
 import Link from "next/link";
+import React from "react";
 import { ATargetBlank } from "../../../shared/ATargetBlank";
 import { linkShadowStyle } from "./linkShadowStyle";
 
