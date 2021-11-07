@@ -110,11 +110,12 @@ export const SeasonAnimation = ({
     return (
         <>
             {!isFestivalHidden && (
-                <Img
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
                     alt="japanese festival"
                     title="japanese festival"
                     src={appsPublicImg + "japanese-festival.png"}
-                    pCss={css`
+                    css={css`
                         position: absolute;
                         width: 128%;
                         top: ${80 - screenWidth * 0.34}px;

@@ -14,6 +14,7 @@ export const YouTubeAd = ({
         href="http://www.youtube.com/channel/UCii35PcojqMUNkSRalUw35g?sub_confirmation=1"
         style={{ maxWidth: 500, ...style }}
     >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
             src={`${BLOB_URL}/appsPublic/ad/ad1.png`}
             alt="Lingual Ninja YouTube Channel"

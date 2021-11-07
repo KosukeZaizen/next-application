@@ -1,7 +1,6 @@
 import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
-import { Img } from "../Img";
 import styles from "./CharacterComment.module.css";
 
 type TProps = {
@@ -34,10 +33,11 @@ export default function CharacterComment(props: TProps) {
             ref={containerRef}
         >
             <div style={{ flex: 1 }}>
-                <Img
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                     src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
                     alt="Japanese ninja"
-                    pCss={css`
+                    css={css`
                         width: ${(screenWidth * 2) / 10}px;
                         max-width: 120px;
                         height: auto;

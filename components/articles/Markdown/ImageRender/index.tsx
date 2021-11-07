@@ -50,6 +50,7 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
         return <VocabList genreName={alt} />;
     }
     return (
+        // eslint-disable-next-line @next/next/no-img-element
         <img src={src} alt={alt} title={alt} className={styles.renderedImg} />
     );
 };
