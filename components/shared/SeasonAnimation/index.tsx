@@ -114,13 +114,13 @@ export const SeasonAnimation = ({
                     alt="japanese festival"
                     title="japanese festival"
                     src={appsPublicImg + "japanese-festival.png"}
-                    style={{
-                        position: "absolute",
-                        width: "128%",
-                        top: 80 - screenWidth * 0.34,
-                        left: -(screenWidth * 0.28),
-                        zIndex: -110,
-                    }}
+                    pCss={css`
+                        position: absolute;
+                        width: 128%;
+                        top: ${80 - screenWidth * 0.34}px;
+                        left: ${-(screenWidth * 0.28)}px;
+                        z-index: -110;
+                    `}
                 />
             )}
             <FallingImages
@@ -185,15 +185,15 @@ function FallingImg({
     scale: number;
 }) {
     return (
-        <img
+        <Img
             src={appsPublicImg + seasonItem.fileName}
             alt={`${seasonItem.alt} ${l.id}`}
             title={`${seasonItem.alt} ${l.id}`}
-            css={css`
+            pCss={css`
                 will-change: animation;
                 backface-visibility: hidden;
-                max-width: ${50 * scale}px;
-                max-height: ${50 * scale}px;
+                width: ${50 * scale}px;
+                height: ${50 * scale}px;
                 position: fixed;
                 top: ${-1.5 * 90 * scale}px;
                 left: ${l.initialX}px;
@@ -204,29 +204,27 @@ function FallingImg({
     );
 }
 
-const fallingAnimation = `
-@media only screen and (max-width: 600px) {
-    animation: fallSmall 40s 1s ease-out;
-}
-@media only screen and (min-width: 601px) {
-    animation: fall 25s 1s ease-out;
-}
-@keyframes fallSmall {
-    0% {
-        transform: translate(0px, 0px) rotate(0deg);
+const fallingAnimation = css`
+    @media only screen and (max-width: 600px) {
+        animation: fallSmall 40s 1s ease-out;
     }
-    100% {
-        transform: translate(-1000px, 2000px)
-            rotate(2000deg);
+    @media only screen and (min-width: 601px) {
+        animation: fall 25s 1s ease-out;
     }
-}
-@keyframes fall {
-    0% {
-        transform: translate(0px, 0px) rotate(0deg);
+    @keyframes fallSmall {
+        0% {
+            transform: translate(0px, 0px) rotate(0deg);
+        }
+        100% {
+            transform: translate(-1000px, 2000px) rotate(2000deg);
+        }
     }
-    100% {
-        transform: translate(-1000px, 2000px)
-            rotate(1000deg);
+    @keyframes fall {
+        0% {
+            transform: translate(0px, 0px) rotate(0deg);
+        }
+        100% {
+            transform: translate(-1000px, 2000px) rotate(1000deg);
+        }
     }
-}
 `;

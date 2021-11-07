@@ -21,28 +21,3 @@
     margin: 0;
     padding: 0;
 }
-
-.ninjaPic {
-    animation: ninjaCommentAnime 10s linear infinite;
-    animation-delay: 1s;
-}
-@keyframes ninjaCommentAnime {
-    0% {
-        transform: translate3d(0px, 0px, 0px);
-    }
-    2% {
-        transform: translate3d(0px, -10px, 0px);
-    }
-    5% {
-        transform: translate3d(0px, 0px, 0px);
-    }
-    7% {
-        transform: translate3d(0px, -10px, 0px);
-    }
-    10% {
-        transform: translate3d(0px, 0px, 0px);
-    }
-    100% {
-        transform: translate3d(0px, 0px, 0px);
-    }
-}

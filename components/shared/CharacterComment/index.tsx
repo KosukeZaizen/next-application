@@ -1,6 +1,7 @@
-import { SerializedStyles } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
+import { Img } from "../Img";
 import styles from "./CharacterComment.module.css";
 
 type TProps = {
@@ -17,7 +18,7 @@ export default function CharacterComment(props: TProps) {
         imgNumber,
         screenWidth,
         comment,
-        css,
+        css: pCss,
         commentStyle,
         imgStyle,
         containerRef,
@@ -28,22 +29,22 @@ export default function CharacterComment(props: TProps) {
                 display: "flex",
                 maxWidth: 600,
                 margin: "auto",
-                ...css,
+                ...pCss,
             }}
             ref={containerRef}
         >
             <div style={{ flex: 1 }}>
-                <img
+                <Img
                     src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
                     alt="Japanese ninja"
-                    css={{
-                        width: (screenWidth * 2) / 10,
-                        maxWidth: 120,
-                        height: "auto",
-                        verticalAlign: "top",
-                        ...imgStyle,
-                    }}
-                    className={styles.ninjaPic}
+                    pCss={css`
+                        width: ${(screenWidth * 2) / 10}px;
+                        max-width: 120px;
+                        height: auto;
+                        vertical-align: top;
+                        ${imgStyle}
+                        ${animationStyle}
+                    `}
                 />
             </div>
             <div
@@ -72,3 +73,28 @@ export default function CharacterComment(props: TProps) {
         </div>
     );
 }
+
+const animationStyle = css`
+    animation: ninjaCommentAnime 10s linear infinite;
+    animation-delay: 1s;
+    @keyframes ninjaCommentAnime {
+        0% {
+            transform: translate3d(0px, 0px, 0px);
+        }
+        2% {
+            transform: translate3d(0px, -10px, 0px);
+        }
+        5% {
+            transform: translate3d(0px, 0px, 0px);
+        }
+        7% {
+            transform: translate3d(0px, -10px, 0px);
+        }
+        10% {
+            transform: translate3d(0px, 0px, 0px);
+        }
+        100% {
+            transform: translate3d(0px, 0px, 0px);
+        }
+    }
+`;

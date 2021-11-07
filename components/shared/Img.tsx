@@ -1,15 +1,21 @@
-import { Interpolation, Theme } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
 import NextImage, { ImageProps } from "next/image";
 import React from "react";
 
 interface Props extends ImageProps {
-    style?: Interpolation<Theme>;
+    pCss?: SerializedStyles;
+    containerClassName?: string;
 }
 
-export function Img({ style, ...rest }: Props) {
-    if (style) {
+export function Img({ pCss, ...rest }: Props) {
+    if (pCss) {
         return (
-            <div css={style}>
+            <div
+                css={css`
+                    display: inline;
+                    ${pCss}
+                `}
+            >
                 <NextImage
                     layout="responsive"
                     width="100%"
