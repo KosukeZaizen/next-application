@@ -4,7 +4,6 @@ import React from "react";
 
 interface Props extends ImageProps {
     pCss?: SerializedStyles;
-    containerClassName?: string;
 }
 
 export function Img({ pCss, ...rest }: Props) {
@@ -12,7 +11,7 @@ export function Img({ pCss, ...rest }: Props) {
         return (
             <div
                 css={css`
-                    display: inline;
+                    display: inline-block;
                     ${pCss}
                 `}
             >
