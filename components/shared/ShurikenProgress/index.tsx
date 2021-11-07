@@ -19,6 +19,8 @@ export default function ShurikenProgress({ size, style }: Props) {
                 `,
             }}
         >
+            {/* This image should not be lazy loaded */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
                 src={shuriken}
                 alt="shuriken"
