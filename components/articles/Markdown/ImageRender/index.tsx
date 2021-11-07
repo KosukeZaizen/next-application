@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { YouTubeVideo } from "../../../shared/YouTubeVideo";
 import styles from "../index.module.css";
 import { Speaker } from "./Speaker";
@@ -22,6 +22,12 @@ function checkSoundExtension(str: string) {
 }
 
 export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
+    const [screenWidth, setScreenWidth] = useState(0);
+
+    useEffect(() => {
+        setScreenWidth(window.innerWidth);
+    }, []);
+
     if (!src || !alt) {
         return null;
     }
@@ -29,7 +35,7 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
     if (src.startsWith("youtube")) {
         return (
             <YouTubeVideo
-                screenWidth={global.window?.innerWidth || 0}
+                screenWidth={screenWidth}
                 videoId={alt}
                 buttonLabel={
                     src.includes("-")

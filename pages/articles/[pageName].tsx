@@ -52,12 +52,7 @@ const Articles = ({
     const { screenWidth, screenHeight } = useScreenSize();
     return (
         <Layout screenWidth={screenWidth} screenHeight={screenHeight}>
-            <div
-                css={css`
-                    width: 100%;
-                    ${centerStyle}
-                `}
-            >
+            <div css={containerCss}>
                 <Helmet title={title} desc={description} />
                 <ArticleContent
                     title={title}
@@ -105,38 +100,19 @@ export function ArticleContent({
     const isWide = width > 991;
 
     return (
-        <main css={{ maxWidth: 800 }}>
+        <main css={mainCss}>
             <BreadCrumbs title={title} />
-            <article css={{ textAlign: "left" }}>
-                <h1
-                    css={css`
-                        margin: 25px auto 30px;
-                        text-align: center;
-                        ${whiteShadowStyle}
-                    `}
-                >
-                    {title}
-                </h1>
+            <article css={articleCss}>
+                <h1 css={h1TitleCss}>{title}</h1>
                 <CharacterComment
                     imgNumber={imgNumber}
                     screenWidth={width}
                     comment={description}
-                    css={css`
-                        margin-bottom: 15px;
-                    `}
-                    commentStyle={css`
-                        padding-left: 25px;
-                        padding-right: 20px;
-                    `}
+                    css={characterCommentCss}
+                    commentStyle={commentCss}
                 />
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
-                <Markdown
-                    source={content}
-                    style={css`
-                        margin: "25px 0 40px";
-                        ${textShadow};
-                    `}
-                />
+                <Markdown source={content} style={markdownCss} />
             </article>
         </main>
     );
@@ -147,10 +123,7 @@ function BreadCrumbs({ title }: { title: string }) {
         <div
             itemScope
             itemType="https://schema.org/BreadcrumbList"
-            css={css`
-                text-align: left;
-                ${whiteShadowStyle}
-            `}
+            css={breadCrumbsContainerCss}
         >
             <span
                 itemProp="itemListElement"
@@ -158,13 +131,7 @@ function BreadCrumbs({ title }: { title: string }) {
                 itemType="http://schema.org/ListItem"
             >
                 <Link href="/">
-                    <a
-                        itemProp="item"
-                        css={{
-                            marginRight: "5px",
-                            marginLeft: "5px",
-                        }}
-                    >
+                    <a itemProp="item" css={breadCrumbsCss}>
                         <span itemProp="name">{"Home"}</span>
                     </a>
                 </Link>
@@ -176,13 +143,7 @@ function BreadCrumbs({ title }: { title: string }) {
                 itemScope
                 itemType="http://schema.org/ListItem"
             >
-                <span
-                    itemProp="name"
-                    css={{
-                        marginRight: "5px",
-                        marginLeft: "5px",
-                    }}
-                >
+                <span itemProp="name" css={breadCrumbsCss}>
                     {title}
                 </span>
                 <meta itemProp="position" content="2" />
@@ -212,33 +173,11 @@ function IndexAndAd({
                     margin-right: ${isWide ? 30 : undefined};
                 `}
             >
-                <div
-                    css={{
-                        fontSize: "large",
-                        width: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                    }}
-                >
-                    <span
-                        css={{
-                            fontWeight: "bold",
-                            fontSize: "large",
-                        }}
-                    >
-                        Index
-                    </span>
-                    <ol
-                        css={{
-                            display: "inline-block",
-                            margin: 0,
-                        }}
-                    >
+                <div css={indexContainerCss}>
+                    <span css={indexTitleCss}>Index</span>
+                    <ol css={indexOlCss}>
                         {indexInfo.map(ind => (
-                            <li
-                                key={ind.linkText}
-                                css={{ marginTop: 10, marginBottom: 5 }}
-                            >
+                            <li key={ind.linkText} css={indexLiCss}>
                                 <a href={`#${ind.encodedUrl}`}>
                                     {ind.linkText}
                                 </a>
@@ -348,33 +287,98 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
         }
     };
 
-export const whiteShadowStyle = `
-text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,
-    0px 0px 4px white, 0px 0px 5px white, 0px 0px 5px white,
-    0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
-    0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
-    0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
-    0px 0px 6px white, 1px 1px 6px white, -1px 1px 6px white,
-    1px -1px 6px white, -1px -1px 6px white, 2px 2px 6px white,
-    -2px 2px 6px white, 2px -2px 6px white, -2px -2px 6px white,
-    3px 3px 6px white, -3px 3px 6px white, 3px -3px 6px white,
-    -3px -3px 6px white, 0px 0px 8px white, 1px 1px 8px white,
-    -1px 1px 8px white, 1px -1px 8px white, -1px -1px 8px white,
-    2px 2px 8px white, -2px 2px 8px white, 2px -2px 8px white,
-    -2px -2px 8px white, 3px 3px 8px white, -3px 3px 8px white,
-    3px -3px 8px white, -3px -3px 8px white, 0px 0px 10px white,
-    1px 1px 10px white, -1px 1px 10px white, 1px -1px 10px white,
-    -1px -1px 10px white, 2px 2px 10px white, -2px 2px 10px white,
-    2px -2px 10px white, -2px -2px 10px white, 3px 3px 10px white,
-    -3px 3px 10px white, 3px -3px 10px white, -3px -3px 10px white,
-    3px 3px 10px white, -3px 3px 10px white, 3px -3px 10px white,
-    -3px -3px 10px white;
+export const whiteShadowStyle = css`
+    text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,
+        0px 0px 4px white, 0px 0px 5px white, 0px 0px 5px white,
+        0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
+        0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
+        0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
+        0px 0px 6px white, 1px 1px 6px white, -1px 1px 6px white,
+        1px -1px 6px white, -1px -1px 6px white, 2px 2px 6px white,
+        -2px 2px 6px white, 2px -2px 6px white, -2px -2px 6px white,
+        3px 3px 6px white, -3px 3px 6px white, 3px -3px 6px white,
+        -3px -3px 6px white, 0px 0px 8px white, 1px 1px 8px white,
+        -1px 1px 8px white, 1px -1px 8px white, -1px -1px 8px white,
+        2px 2px 8px white, -2px 2px 8px white, 2px -2px 8px white,
+        -2px -2px 8px white, 3px 3px 8px white, -3px 3px 8px white,
+        3px -3px 8px white, -3px -3px 8px white, 0px 0px 10px white,
+        1px 1px 10px white, -1px 1px 10px white, 1px -1px 10px white,
+        -1px -1px 10px white, 2px 2px 10px white, -2px 2px 10px white,
+        2px -2px 10px white, -2px -2px 10px white, 3px 3px 10px white,
+        -3px 3px 10px white, 3px -3px 10px white, -3px -3px 10px white,
+        3px 3px 10px white, -3px 3px 10px white, 3px -3px 10px white,
+        -3px -3px 10px white;
 `;
 
-export const centerStyle = `
+export const centerStyle = css`
     text-align: center;
     & * {
         margin-right: auto;
         margin-left: auto;
     }
+`;
+
+const mainCss = css`
+    max-width: 800px;
+`;
+
+const articleCss = css`
+    text-align: left;
+`;
+
+const h1TitleCss = css`
+    margin: 25px auto 30px;
+    text-align: center;
+    ${whiteShadowStyle}
+`;
+
+const indexContainerCss = css`
+    font-size: large;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+`;
+
+const indexLiCss = css`
+    margin-top: 10px;
+    margin-bottom: 5px;
+`;
+
+const indexOlCss = css`
+    display: inline-block;
+    margin: 0;
+`;
+
+const indexTitleCss = css`
+    font-weight: bold;
+    font-size: large;
+`;
+
+const breadCrumbsContainerCss = css`
+    text-align: left;
+    ${whiteShadowStyle}
+`;
+
+const breadCrumbsCss = css`
+    margin-right: 5px;
+    margin-left: 5px;
+`;
+
+const markdownCss = css`
+    margin: 25px 0 40px;
+    ${textShadow};
+`;
+
+const characterCommentCss = css`
+    margin-bottom: 15px;
+`;
+
+const commentCss = css`
+    padding-left: 25px;
+    padding-right: 20px;
+`;
+
+const containerCss = css`
+    width: 100%;
+    ${centerStyle}
 `;
