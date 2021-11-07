@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { appsPublicImg } from "../../../const/public";
 import { fetchGet } from "../../../lib/fetch";
 import { GetFallingImages } from "../../../pages/api/zApps/fallingImage/getFallingImages";
+import { Img } from "../Img";
 import { FallingImage } from "./type";
 
 let count = 0;
@@ -109,11 +110,11 @@ export const SeasonAnimation = ({
     return (
         <>
             {!isFestivalHidden && (
-                <img
+                <Img
                     alt="japanese festival"
                     title="japanese festival"
                     src={appsPublicImg + "japanese-festival.png"}
-                    css={{
+                    style={{
                         position: "absolute",
                         width: "128%",
                         top: 80 - screenWidth * 0.34,
