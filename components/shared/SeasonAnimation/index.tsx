@@ -190,17 +190,19 @@ function FallingImg({
             src={appsPublicImg + seasonItem.fileName}
             alt={`${seasonItem.alt} ${l.id}`}
             title={`${seasonItem.alt} ${l.id}`}
-            style={css`
-                will-change: animation;
-                backface-visibility: hidden;
-                width: ${50 * scale}px;
-                height: ${50 * scale}px;
-                position: fixed;
-                top: ${-1.5 * 90 * scale}px;
-                left: ${l.initialX}px;
-                z-index: -100;
-                ${fallingAnimation}
-            `}
+            style={css([
+                {
+                    willChange: "animation",
+                    backfaceVisibility: "hidden",
+                    width: 50 * scale,
+                    height: 50 * scale,
+                    position: "fixed",
+                    top: -1.5 * 90 * scale,
+                    left: l.initialX,
+                    zIndex: -100,
+                },
+                fallingAnimation,
+            ])}
         />
     );
 }
