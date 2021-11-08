@@ -1,6 +1,6 @@
-import { css } from "@emotion/react";
 import { Collapse } from "@material-ui/core";
 import React from "react";
+import { getClasses } from "../../../../../lib/css";
 import { centerStyle } from "../../../../../pages/articles/[pageName]";
 import { sentence, word } from "../../../../../types/stories";
 import markdownStyles from "../../index.module.css";
@@ -39,13 +39,7 @@ export class WordList extends React.Component<
                 this.props.words[this.props.s.lineNumber] ? (
                     this.state.showWordList ? (
                         <button
-                            css={{
-                                marginTop: 5,
-                                marginBottom: 2,
-                                height: 28,
-                                paddingTop: 0,
-                                color: "white",
-                            }}
+                            css={cs.openedButton}
                             className="btn btn-dark btn-xs"
                             onClick={this.hideWordList}
                         >
@@ -53,12 +47,7 @@ export class WordList extends React.Component<
                         </button>
                     ) : (
                         <button
-                            css={{
-                                marginTop: 5,
-                                height: 28,
-                                paddingTop: 0,
-                                color: "white",
-                            }}
+                            css={cs.closedButton}
                             className="btn btn-primary btn-xs"
                             onClick={this.showWordList}
                         >
@@ -67,15 +56,7 @@ export class WordList extends React.Component<
                     )
                 ) : null}
                 <Collapse in={this.state.showWordList} timeout={1000}>
-                    <div
-                        css={css`
-                            background-color: #f8f7f8;
-                            max-width: 700px;
-                            margin-left: 0;
-                            margin-right: auto;
-                            ${centerStyle}
-                        `}
-                    >
+                    <div css={[cs.listContainer, centerStyle]}>
                         <table
                             className={`${markdownStyles.exclude} ${markdownStyles.normalFont}`}
                         >
@@ -85,31 +66,15 @@ export class WordList extends React.Component<
                                         this.props.s.lineNumber
                                     ]?.map(w => (
                                         <tr key={w.wordNumber}>
-                                            <td
-                                                css={{
-                                                    minWidth: 100,
-                                                    border: "1px solid",
-                                                }}
-                                            >
+                                            <td css={cs.japaneseTd}>
                                                 {w.kanji}
                                                 <br />
                                                 {w.hiragana
                                                     ? `(${w.hiragana})`
                                                     : null}
                                             </td>
-                                            <td
-                                                css={{
-                                                    paddingLeft: 3,
-                                                    paddingRight: 3,
-                                                    border: "1px solid",
-                                                }}
-                                            >
-                                                <div
-                                                    css={{
-                                                        display: "inline-block",
-                                                        textAlign: "left",
-                                                    }}
-                                                >
+                                            <td css={cs.englishTd}>
+                                                <div css={cs.englishDiv}>
                                                     {w.english}
                                                 </div>
                                             </td>
@@ -123,3 +88,38 @@ export class WordList extends React.Component<
         );
     }
 }
+
+const cs = getClasses({
+    openedButton: {
+        marginTop: 5,
+        marginBottom: 2,
+        height: 28,
+        paddingTop: 0,
+        color: "white",
+    },
+    closedButton: {
+        marginTop: 5,
+        height: 28,
+        paddingTop: 0,
+        color: "white",
+    },
+    listContainer: {
+        backgroundColor: "#f8f7f8",
+        maxWidth: 700,
+        marginLeft: 0,
+        marginRight: "auto",
+    },
+    japaneseTd: {
+        minWidth: 100,
+        border: "1px solid",
+    },
+    englishTd: {
+        paddingLeft: 3,
+        paddingRight: 3,
+        border: "1px solid",
+    },
+    englishDiv: {
+        display: "inline-block",
+        textAlign: "left",
+    },
+});

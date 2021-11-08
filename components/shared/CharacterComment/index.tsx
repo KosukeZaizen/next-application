@@ -1,7 +1,7 @@
 import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
-import { c, getClasses } from "../../../lib/css";
+import { getClasses } from "../../../lib/css";
 import styles from "./CharacterComment.module.css";
 
 type TProps = {
@@ -31,7 +31,7 @@ export default function CharacterComment(props: TProps) {
                     src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
                     alt="Japanese ninja"
                     css={[
-                        c({
+                        css({
                             width: (screenWidth * 2) / 10,
                             maxWidth: 120,
                             height: "auto",

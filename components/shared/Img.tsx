@@ -1,7 +1,6 @@
-import { SerializedStyles } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
 import NextImage, { ImageProps } from "next/image";
 import React from "react";
-import { c } from "../../lib/css";
 
 interface Props extends ImageProps {
     style?: SerializedStyles;
@@ -26,4 +25,4 @@ export function Img({ style, ...rest }: Props) {
     return <NextImage {...rest} />;
 }
 
-const inlineStyle = c({ display: "inline" });
+const inlineStyle = css({ display: "inline" });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ExampleSentence } from ".";
 import { BLOB_URL, Z_APPS_TOP_URL } from "../../../../../const/public";
-import { c } from "../../../../../lib/css";
+import { getClasses } from "../../../../../lib/css";
 import { fetchGet } from "../../../../../lib/fetch";
 import { GetOneSentence } from "../../../../../pages/api/zApps/folktales/getOneSentence";
 import { sentence, word } from "../../../../../types/stories";
@@ -60,14 +60,15 @@ export function FolktaleExample({
         .join(" ");
 
     return (
-        <div id={id} key={id} css={containerStyle}>
+        <div id={id} key={id} css={c.container}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
                 src={`${BLOB_URL}/folktalesImg/${storyName.split("--")[0]}.png`}
                 alt={folktaleTitle}
                 title={folktaleTitle}
                 className={styles.renderedImg}
             />
-            <div css={explanationStyle}>
+            <div css={c.explanation}>
                 {"Below is a sentence from the folktale "}
                 <ATargetBlank
                     href={`${Z_APPS_TOP_URL}/folktales/${storyName}`}
@@ -83,5 +84,7 @@ export function FolktaleExample({
     );
 }
 
-const containerStyle = c({ marginBottom: 25, textShadow: "initial" });
-const explanationStyle = c({ fontWeight: "bold", marginBottom: 20 });
+const c = getClasses({
+    container: { marginBottom: 25, textShadow: "initial" },
+    explanation: { fontWeight: "bold", marginBottom: 20 },
+});

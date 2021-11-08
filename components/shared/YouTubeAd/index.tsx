@@ -1,5 +1,6 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import { BLOB_URL } from "../../../const/public";
+import { Css, getClasses } from "../../../lib/css";
 import { ATargetBlank } from "../ATargetBlank";
 
 export const YouTubeAd = ({
@@ -7,18 +8,18 @@ export const YouTubeAd = ({
     style,
 }: {
     width?: number | string;
-    style?: CSSProperties;
+    style?: Css;
 }) => (
     <ATargetBlank
         nofollow
         href="http://www.youtube.com/channel/UCii35PcojqMUNkSRalUw35g?sub_confirmation=1"
-        style={{ maxWidth: 500, ...style }}
+        css={[cs.width500, style]}
     >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
             src={`${BLOB_URL}/appsPublic/ad/ad1.png`}
             alt="Lingual Ninja YouTube Channel"
-            style={{
+            css={{
                 width: width || "100%",
                 height: "auto",
                 margin: "7px 0",
@@ -26,3 +27,5 @@ export const YouTubeAd = ({
         />
     </ATargetBlank>
 );
+
+const cs = getClasses({ width500: { maxWidth: 500 } });
