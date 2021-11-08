@@ -1,7 +1,7 @@
 import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
-import { c } from "../../../lib/css";
+import { c, getClasses } from "../../../lib/css";
 import styles from "./CharacterComment.module.css";
 
 type TProps = {
@@ -24,8 +24,8 @@ export default function CharacterComment(props: TProps) {
         containerRef,
     } = props;
     return (
-        <div css={[containerStyle, pCss]} ref={containerRef}>
-            <div css={singleFlex}>
+        <div css={[classes.container, pCss]} ref={containerRef}>
+            <div css={classes.flex1}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
@@ -42,7 +42,7 @@ export default function CharacterComment(props: TProps) {
                     ]}
                 />
             </div>
-            <div className={styles.chatting} css={chattingStyle}>
+            <div className={styles.chatting} css={classes.chatting}>
                 <div
                     className={styles.says}
                     css={{
@@ -86,17 +86,17 @@ const animationStyle = css`
     }
 `;
 
-const containerStyle = c({
-    display: "flex",
-    maxWidth: 600,
-    margin: "auto",
-});
-
-const singleFlex = c({ flex: 1 });
-
-const chattingStyle = c({
-    height: "auto",
-    display: "flex",
-    alignItems: "center",
-    flex: 3,
+const classes = getClasses({
+    container: {
+        display: "flex",
+        maxWidth: 600,
+        margin: "auto",
+    },
+    flex1: { flex: 1 },
+    chatting: {
+        height: "auto",
+        display: "flex",
+        alignItems: "center",
+        flex: 3,
+    },
 });
