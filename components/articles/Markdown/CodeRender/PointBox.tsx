@@ -27,8 +27,8 @@ export function PointBox({
     return (
         <>
             <div
-                css={{
-                    ...css`
+                css={[
+                    css`
                         position: relative;
                         padding: 15px 20px 2px;
                         color: black;
@@ -50,8 +50,8 @@ export function PointBox({
                             background: ${titleBackgroundColor};
                         }
                     `,
-                    ...style,
-                }}
+                    style,
+                ]}
             >
                 {children}
             </div>

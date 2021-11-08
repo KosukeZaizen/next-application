@@ -22,7 +22,7 @@ export function TableCellRender({
         return <th {...rest}>{content}</th>;
     }
     return (
-        <td style={{ textAlign: align }} {...rest}>
+        <td css={{ textAlign: align }} {...rest}>
             {content}
         </td>
     );
