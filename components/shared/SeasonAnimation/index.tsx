@@ -190,7 +190,7 @@ function FallingImg({
             src={appsPublicImg + seasonItem.fileName}
             alt={`${seasonItem.alt} ${l.id}`}
             title={`${seasonItem.alt} ${l.id}`}
-            pCss={css`
+            style={css`
                 will-change: animation;
                 backface-visibility: hidden;
                 width: ${50 * scale}px;
