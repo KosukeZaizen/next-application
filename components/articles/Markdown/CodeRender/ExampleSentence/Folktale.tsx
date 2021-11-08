@@ -5,7 +5,7 @@ import { getClasses } from "../../../../../lib/css";
 import { fetchGet } from "../../../../../lib/fetch";
 import { GetOneSentence } from "../../../../../pages/api/zApps/folktales/getOneSentence";
 import { sentence, word } from "../../../../../types/stories";
-import { ATargetBlank } from "../../../../shared/ATargetBlank";
+import { ATargetBlank } from "../../../../shared/Link/ATargetBlank";
 import styles from "../../index.module.css";
 
 export function FolktaleExample({

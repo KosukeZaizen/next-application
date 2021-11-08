@@ -1,7 +1,7 @@
 import React from "react";
 import { BLOB_URL } from "../../../const/public";
 import { Css, getClasses } from "../../../lib/css";
-import { ATargetBlank } from "../ATargetBlank";
+import { ATargetBlank } from "../Link/ATargetBlank";
 
 export const YouTubeAd = ({
     width,

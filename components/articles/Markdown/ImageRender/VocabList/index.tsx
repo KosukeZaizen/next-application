@@ -3,7 +3,7 @@ import { Z_APPS_TOP_URL } from "../../../../../const/public";
 import { fetchGet } from "../../../../../lib/fetch";
 import { GetQuizDataWithoutCache } from "../../../../../pages/api/zApps/vocabQuiz/getQuizDataWithoutCache";
 import { vocab, vocabGenre, VocabGenreId } from "../../../../../types/vocab";
-import { ATargetBlank } from "../../../../shared/ATargetBlank";
+import { ATargetBlank } from "../../../../shared/Link/ATargetBlank";
 import { linkShadowStyle } from "../../LinkBlockRender/linkShadowStyle";
 import { VList } from "./List";
 

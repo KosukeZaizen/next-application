@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { ATargetBlank } from "../ATargetBlank";
+import { ATargetBlank } from "../Link/ATargetBlank";
 
 export function YouTubeVideo({
     videoId,

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { ATargetBlank } from "../../../shared/ATargetBlank";
+import { ATargetBlank } from "../../../shared/Link/ATargetBlank";
 import { linkShadowStyle } from "./linkShadowStyle";
 
 export const LinkRender = (props: {

@@ -2,12 +2,19 @@ import { css } from "@emotion/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import React from "react";
+import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Layout } from "../../components/articles/Layout";
 import { Markdown } from "../../components/articles/Markdown";
+import {
+    FBShareBtn,
+    TwitterShareBtn,
+} from "../../components/articles/SnsShareButton";
 import CharacterComment from "../../components/shared/CharacterComment";
+import FB from "../../components/shared/FaceBook";
 import { Helmet } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
+import { Z_APPS_TOP_URL } from "../../const/public";
 import { fetchZApps } from "../../lib/fetch";
 import { useScreenSize } from "../../lib/screenSize";
 
@@ -29,6 +36,7 @@ interface Props extends Page {
     indexInfo: IndexInfo;
     otherArticles: Page[];
     imgNumber: number;
+    pageName: string;
 }
 
 export function getImgNumber(num: number = 0) {
@@ -44,10 +52,10 @@ const Articles = ({
     title,
     description,
     articleContent,
-    isAboutFolktale,
     indexInfo,
     otherArticles,
     imgNumber,
+    pageName,
 }: Props) => {
     const { screenWidth, screenHeight } = useScreenSize();
     return (
@@ -63,6 +71,7 @@ const Articles = ({
                     otherArticles={otherArticles}
                     indexInfo={indexInfo}
                     imgNumber={imgNumber}
+                    pageName={pageName}
                 />
             </div>
         </Layout>
@@ -86,6 +95,7 @@ interface ArticleContentProps {
     adsense: boolean;
     otherArticles: Page[];
     imgNumber: number;
+    pageName: string;
 }
 export function ArticleContent({
     title,
@@ -93,9 +103,9 @@ export function ArticleContent({
     width,
     indexInfo,
     content,
-    //adsense,
     otherArticles,
     imgNumber,
+    pageName,
 }: ArticleContentProps) {
     const isWide = width > 991;
 
@@ -114,6 +124,53 @@ export function ArticleContent({
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
                 <Markdown source={content} style={markdownCss} />
             </article>
+            <CharacterComment
+                comment={[
+                    <p key="commentContent">
+                        {"If you like this article, please share!"}
+                    </p>,
+                    <FBShareBtn
+                        key="fbShareButton"
+                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                        style={css({
+                            width: 200,
+                            marginTop: 10,
+                        })}
+                    />,
+                    <TwitterShareBtn
+                        key="twitterShareButton"
+                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                        textToShare={title}
+                        style={css({
+                            width: 200,
+                            marginTop: 5,
+                        })}
+                    />,
+                ]}
+                imgNumber={(imgNumber - 1 || 3) - 1 || 3}
+                screenWidth={width}
+            />
+            <hr />
+            <section>
+                <h2
+                    css={css`
+                        margin: 55px 0 55px;
+                        padding: 20px;
+                        color: white;
+                        background: linear-gradient(to top, #035c1d, #047c28);
+                        border-radius: 5px;
+                    `}
+                >
+                    More Articles
+                </h2>
+                <ArticlesList
+                    titleH={"h3"}
+                    articles={otherArticles}
+                    screenWidth={width}
+                />
+            </section>
+            <hr />
+            <FB style={centerStyle} screenWidth={width} />
         </main>
     );
 }
@@ -167,7 +224,7 @@ function IndexAndAd({
             }}
         >
             <ScrollBox
-                style={css`
+                pCss={css`
                     display: inline-block;
                     flex: 1;
                     margin-right: ${isWide ? 30 : undefined};
@@ -270,6 +327,7 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
 
             return {
                 props: {
+                    pageName,
                     url,
                     description,
                     title,
