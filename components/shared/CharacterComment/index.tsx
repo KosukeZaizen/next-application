@@ -1,6 +1,7 @@
 import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
+import { c } from "../../../lib/css";
 import styles from "./CharacterComment.module.css";
 
 type TProps = {
@@ -23,39 +24,25 @@ export default function CharacterComment(props: TProps) {
         containerRef,
     } = props;
     return (
-        <div
-            css={{
-                display: "flex",
-                maxWidth: 600,
-                margin: "auto",
-                ...pCss,
-            }}
-            ref={containerRef}
-        >
-            <div style={{ flex: 1 }}>
+        <div css={[containerStyle, pCss]} ref={containerRef}>
+            <div css={singleFlex}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
                     alt="Japanese ninja"
-                    css={css`
-                        width: ${(screenWidth * 2) / 10}px;
-                        max-width: 120px;
-                        height: auto;
-                        vertical-align: top;
-                        ${imgStyle}
-                        ${animationStyle}
-                    `}
+                    css={[
+                        c({
+                            width: (screenWidth * 2) / 10,
+                            maxWidth: 120,
+                            height: "auto",
+                            verticalAlign: "top",
+                        }),
+                        imgStyle,
+                        animationStyle,
+                    ]}
                 />
             </div>
-            <div
-                className={styles.chatting}
-                css={{
-                    height: "auto",
-                    display: "flex",
-                    alignItems: "center",
-                    flex: 3,
-                }}
-            >
+            <div className={styles.chatting} css={chattingStyle}>
                 <div
                     className={styles.says}
                     css={{
@@ -98,3 +85,18 @@ const animationStyle = css`
         }
     }
 `;
+
+const containerStyle = c({
+    display: "flex",
+    maxWidth: 600,
+    margin: "auto",
+});
+
+const singleFlex = c({ flex: 1 });
+
+const chattingStyle = c({
+    height: "auto",
+    display: "flex",
+    alignItems: "center",
+    flex: 3,
+});

@@ -12,6 +12,7 @@ export default function Home(props: Props) {
             return <Articles {...props} />;
         }
         default: {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const exhaustiveCheck: never = props.type;
         }
     }
