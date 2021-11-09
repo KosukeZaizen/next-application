@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Img } from "../../../shared/Img";
 import { YouTubeVideo } from "../../../shared/YouTubeVideo";
-import styles from "../index.module.css";
 import { Speaker } from "./Speaker";
 import { VocabList } from "./VocabList";
 
@@ -50,13 +49,5 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
     } else if (src === "vocab") {
         return <VocabList genreName={alt} />;
     }
-    return (
-        <Img
-            src={src}
-            alt={alt}
-            title={alt}
-            className={styles.renderedImg}
-            custom
-        />
-    );
+    return <Img src={src} alt={alt} title={alt} autoHeight maxHeight={450} />;
 };

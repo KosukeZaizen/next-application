@@ -1,31 +1,57 @@
 import { css, SerializedStyles } from "@emotion/react";
 import NextImage, { ImageProps } from "next/image";
 import React from "react";
-import styles from "./img.module.css";
 
-interface Props extends ImageProps {
-    containerStyle?: SerializedStyles;
-    containerClassName?: string;
-    custom?: boolean;
-}
+type Props = ImageProps & CustomProps;
 
-export function Img({ containerStyle, custom, ...rest }: Props) {
-    const img = <NextImage layout="fill" objectFit="contain" {...rest} />;
+type CustomProps =
+    | {
+          autoHeight: true;
+          maxHeight?: number;
+          width?: string | number;
+      }
+    | { containerStyle?: SerializedStyles };
 
-    if (containerStyle) {
-        return <div css={[inlineStyle, containerStyle]}>{img}</div>;
-    }
-    if (custom) {
+export function Img(props: Props) {
+    if ("autoHeight" in props) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { autoHeight, maxHeight, width, ...rest } = props;
         return (
             <div
-                css={[inlineStyle, containerStyle]}
-                className={styles.unsetImg}
+                css={css({
+                    width,
+                    "& > div": {
+                        position: "unset !important" as any,
+                    },
+                    "& img": {
+                        maxHeight: maxHeight ? "450px !important" : undefined,
+                    },
+                })}
             >
-                {img}
+                <NextImage
+                    layout="fill"
+                    objectFit="contain"
+                    {...rest}
+                    css={autoHeightImgStyle}
+                />
             </div>
         );
     }
-    return img;
+
+    const { containerStyle, ...rest } = props;
+    if (containerStyle) {
+        return (
+            <div css={[inlineStyle, containerStyle]}>
+                <NextImage layout="fill" objectFit="contain" {...rest} />
+            </div>
+        );
+    }
+
+    return <NextImage layout="fill" objectFit="contain" {...rest} />;
 }
 
 const inlineStyle = css({ position: "relative" });
+const autoHeightImgStyle = css({
+    height: "unset !important" as any,
+    position: "relative !important" as any,
+});
