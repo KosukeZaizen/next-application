@@ -122,7 +122,7 @@ export function ArticleContent({
                     commentStyle={commentCss}
                 />
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
-                <Markdown source={content} style={markdownCss} />
+                <Markdown source={content} style={markdownStyle} />
             </article>
             <CharacterComment
                 comment={[
@@ -424,10 +424,10 @@ const breadCrumbsCss = css`
     margin-left: 5px;
 `;
 
-const markdownCss = css`
-    margin: 25px 0 40px;
-    ${textShadow};
-`;
+const markdownStyle = {
+    margin: "25px 0 40px",
+    textShadow,
+};
 
 const characterCommentCss = css`
     margin-bottom: 15px;
