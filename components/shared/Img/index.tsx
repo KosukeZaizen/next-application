@@ -2,40 +2,20 @@ import { css, SerializedStyles } from "@emotion/react";
 import NextImage, { ImageProps } from "next/image";
 import React from "react";
 
-type Props = ImageProps & CustomProps;
+type Props = NormalImgProps | AutoHeightProps;
 
-type CustomProps =
-    | {
-          autoHeight: true;
-          maxHeight?: number;
-          width?: string | number;
-      }
-    | { containerStyle?: SerializedStyles };
+interface NormalImgProps extends ImageProps {
+    containerStyle?: SerializedStyles;
+}
+interface AutoHeightProps extends ImageProps {
+    autoHeight: true;
+    maxHeight?: number;
+    width?: string | number;
+}
 
 export function Img(props: Props) {
     if ("autoHeight" in props) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { autoHeight, maxHeight, width, ...rest } = props;
-        return (
-            <div
-                css={css({
-                    width,
-                    "& > div": {
-                        position: "unset !important" as any,
-                    },
-                    "& img": {
-                        maxHeight: maxHeight ? "450px !important" : undefined,
-                    },
-                })}
-            >
-                <NextImage
-                    layout="fill"
-                    objectFit="contain"
-                    {...rest}
-                    css={autoHeightImgStyle}
-                />
-            </div>
-        );
+        return <AutoHeightImg {...props} />;
     }
 
     const { containerStyle, ...rest } = props;
@@ -48,6 +28,31 @@ export function Img(props: Props) {
     }
 
     return <NextImage layout="fill" objectFit="contain" {...rest} />;
+}
+
+function AutoHeightImg(props: AutoHeightProps) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { autoHeight, maxHeight, width, ...rest } = props;
+    return (
+        <div
+            css={css({
+                width,
+                "& > div": {
+                    position: "unset !important" as any,
+                },
+                "& img": {
+                    maxHeight: maxHeight ? "450px !important" : undefined,
+                },
+            })}
+        >
+            <NextImage
+                layout="fill"
+                objectFit="contain"
+                {...rest}
+                css={autoHeightImgStyle}
+            />
+        </div>
+    );
 }
 
 const inlineStyle = css({ position: "relative" });
