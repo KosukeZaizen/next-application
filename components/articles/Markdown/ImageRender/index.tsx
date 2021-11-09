@@ -57,11 +57,12 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
             title={alt}
             autoHeight
             maxHeight={450}
-            containerStyle={imgWhiteFilter}
+            containerStyle={imgInArticleStyle}
         />
     );
 };
 
-export const imgWhiteFilter = css({
+export const imgInArticleStyle = css({
     filter: "drop-shadow(0 0 3px white) drop-shadow(0 0 6px white) drop-shadow(0 0 9px white) drop-shadow(0 0 10px white)",
+    margin: "0px auto 20px",
 });

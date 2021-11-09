@@ -7,7 +7,7 @@ import { GetOneSentence } from "../../../../../pages/api/zApps/folktales/getOneS
 import { sentence, word } from "../../../../../types/stories";
 import { Img } from "../../../../shared/Img";
 import { ATargetBlank } from "../../../../shared/Link/ATargetBlank";
-import { imgWhiteFilter } from "../../ImageRender";
+import { imgInArticleStyle } from "../../ImageRender";
 
 export function FolktaleExample({
     storyName,
@@ -68,7 +68,7 @@ export function FolktaleExample({
                 title={folktaleTitle}
                 autoHeight
                 maxHeight={450}
-                containerStyle={imgWhiteFilter}
+                containerStyle={imgInArticleStyle}
             />
             <div css={c.explanation}>
                 {"Below is a sentence from the folktale "}
