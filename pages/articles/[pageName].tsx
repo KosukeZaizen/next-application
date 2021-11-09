@@ -132,19 +132,13 @@ export function ArticleContent({
                     <FBShareBtn
                         key="fbShareButton"
                         urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
-                        style={css({
-                            width: 200,
-                            marginTop: 10,
-                        })}
+                        style={fbButtonStyle}
                     />,
                     <TwitterShareBtn
                         key="twitterShareButton"
                         urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
                         textToShare={title}
-                        style={css({
-                            width: 200,
-                            marginTop: 5,
-                        })}
+                        style={twitterButtonStyle}
                     />,
                 ]}
                 imgNumber={(imgNumber - 1 || 3) - 1 || 3}
@@ -152,17 +146,7 @@ export function ArticleContent({
             />
             <hr />
             <section>
-                <h2
-                    css={css`
-                        margin: 55px 0 55px;
-                        padding: 20px;
-                        color: white;
-                        background: linear-gradient(to top, #035c1d, #047c28);
-                        border-radius: 5px;
-                    `}
-                >
-                    More Articles
-                </h2>
+                <h2 css={h2Style}>More Articles</h2>
                 <ArticlesList
                     titleH={"h3"}
                     articles={otherArticles}
@@ -174,6 +158,24 @@ export function ArticleContent({
         </main>
     );
 }
+
+const fbButtonStyle = css({
+    width: 200,
+    marginTop: 10,
+});
+
+const twitterButtonStyle = css({
+    width: 200,
+    marginTop: 5,
+});
+
+const h2Style = css`
+    margin: 55px 0 55px;
+    padding: 20px;
+    color: white;
+    background: linear-gradient(to top, #035c1d, #047c28);
+    border-radius: 5px;
+`;
 
 function BreadCrumbs({ title }: { title: string }) {
     return (
@@ -226,11 +228,11 @@ function IndexAndAd({
             }}
         >
             <ScrollBox
-                pCss={css`
-                    display: inline-block;
-                    flex: 1;
-                    margin-right: ${isWide ? 30 : undefined};
-                `}
+                pCss={css({
+                    display: "inline-block",
+                    flex: 1,
+                    marginRight: isWide ? 30 : undefined,
+                })}
             >
                 <div css={indexContainerCss}>
                     <span css={indexTitleCss}>Index</span>
@@ -246,19 +248,19 @@ function IndexAndAd({
                 </div>
             </ScrollBox>
             {isWide && (
-                <div
-                    css={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
+                <div css={adStyle}>
                     <YouTubeAd width="90%" />
                 </div>
             )}
         </div>
     );
 }
+
+const adStyle = {
+    flex: 1,
+    display: "flex",
+    alignItems: "center",
+};
 
 export default Articles;
 
