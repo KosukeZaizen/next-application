@@ -386,9 +386,10 @@ const articleCss = css`
     text-align: left;
 `;
 
-const h1TitleCss = css`
+export const h1TitleCss = css`
     margin: 25px auto 30px;
     text-align: center;
+    line-height: 1.3;
     ${whiteShadowStyle}
 `;
 

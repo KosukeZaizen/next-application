@@ -16,6 +16,7 @@ const styles = {
         fontWeight: "bold",
         color: "white",
     },
+    sideMargin: { marginRight: 15, marginLeft: 15 },
 } as const;
 
 interface Props {
@@ -46,7 +47,7 @@ export function Layout({ children, screenWidth, screenHeight }: Props) {
                     </Link>
                 </Toolbar>
             </AppBar>
-            {children}
+            <div css={styles.sideMargin}>{children}</div>
             <SeasonAnimation
                 frequencySec={2}
                 screenWidth={screenWidth}
