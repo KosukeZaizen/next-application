@@ -1,0 +1,7 @@
+/* https://dev.to/tanahmed/next-image-make-image-fill-available-space-272o */
+.unsetImg {
+    width: 100%;
+}
+.unsetImg > div {
+    position: unset !important;
+}

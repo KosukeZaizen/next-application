@@ -62,10 +62,11 @@
 .markdownArea img.renderedImg {
     display: inline-block;
     margin: 0px auto 20px;
-    width: 100%;
+    width: 100% !important;
+    height: unset !important;
     max-height: 450px;
     object-fit: contain;
-    position: relative;
+    position: relative !important;
     filter: drop-shadow(0 0 3px white) drop-shadow(0 0 6px white)
         drop-shadow(0 0 9px white) drop-shadow(0 0 10px white);
 }

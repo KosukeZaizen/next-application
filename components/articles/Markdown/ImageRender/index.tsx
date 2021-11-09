@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Img } from "../../../shared/Img";
 import { YouTubeVideo } from "../../../shared/YouTubeVideo";
 import styles from "../index.module.css";
 import { Speaker } from "./Speaker";
@@ -50,7 +51,12 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
         return <VocabList genreName={alt} />;
     }
     return (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={alt} title={alt} className={styles.renderedImg} />
+        <Img
+            src={src}
+            alt={alt}
+            title={alt}
+            className={styles.renderedImg}
+            custom
+        />
     );
 };
