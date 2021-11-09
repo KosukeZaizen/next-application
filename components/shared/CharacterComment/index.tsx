@@ -2,6 +2,7 @@ import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
 import { getClasses } from "../../../lib/css";
+import { Img } from "../Img";
 import styles from "./CharacterComment.module.css";
 
 type TProps = {
@@ -26,20 +27,20 @@ export default function CharacterComment(props: TProps) {
     return (
         <div css={[classes.container, pCss]} ref={containerRef}>
             <div css={classes.flex1}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Img
                     src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
                     alt="Japanese ninja"
-                    css={[
-                        css({
+                    containerStyle={css([
+                        {
                             width: (screenWidth * 2) / 10,
                             maxWidth: 120,
                             height: "auto",
                             verticalAlign: "top",
-                        }),
+                        },
                         imgStyle,
                         animationStyle,
-                    ]}
+                    ])}
+                    autoHeight
                 />
             </div>
             <div className={styles.chatting} css={classes.chatting}>
