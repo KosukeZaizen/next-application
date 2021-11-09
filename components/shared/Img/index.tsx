@@ -43,7 +43,9 @@ function AutoHeightImg(props: AutoHeightProps) {
                         position: "unset !important" as any,
                     },
                     "& img": {
-                        maxHeight: maxHeight ? "450px !important" : undefined,
+                        maxHeight: maxHeight
+                            ? `${maxHeight}px !important`
+                            : undefined,
                     },
                 }),
                 containerStyle,
