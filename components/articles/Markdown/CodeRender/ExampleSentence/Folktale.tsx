@@ -5,8 +5,8 @@ import { getClasses } from "../../../../../lib/css";
 import { fetchGet } from "../../../../../lib/fetch";
 import { GetOneSentence } from "../../../../../pages/api/zApps/folktales/getOneSentence";
 import { sentence, word } from "../../../../../types/stories";
+import { Img } from "../../../../shared/Img";
 import { ATargetBlank } from "../../../../shared/Link/ATargetBlank";
-import styles from "../../index.module.css";
 
 export function FolktaleExample({
     storyName,
@@ -61,12 +61,12 @@ export function FolktaleExample({
 
     return (
         <div id={id} key={id} css={c.container}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Img
                 src={`${BLOB_URL}/folktalesImg/${storyName.split("--")[0]}.png`}
                 alt={folktaleTitle}
                 title={folktaleTitle}
-                className={styles.renderedImg}
+                autoHeight
+                maxHeight={450}
             />
             <div css={c.explanation}>
                 {"Below is a sentence from the folktale "}
