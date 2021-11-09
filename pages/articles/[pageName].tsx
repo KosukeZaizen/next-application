@@ -345,8 +345,8 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
         }
     };
 
-export const whiteShadowStyle = css`
-    text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,
+export const whiteShadowStyle = css({
+    textShadow: `0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,
         0px 0px 4px white, 0px 0px 5px white, 0px 0px 5px white,
         0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
         0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
@@ -365,8 +365,8 @@ export const whiteShadowStyle = css`
         2px -2px 10px white, -2px -2px 10px white, 3px 3px 10px white,
         -3px 3px 10px white, 3px -3px 10px white, -3px -3px 10px white,
         3px 3px 10px white, -3px 3px 10px white, 3px -3px 10px white,
-        -3px -3px 10px white;
-`;
+        -3px -3px 10px white`,
+});
 
 export const centerStyle = css`
     text-align: center;

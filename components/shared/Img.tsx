@@ -3,26 +3,19 @@ import NextImage, { ImageProps } from "next/image";
 import React from "react";
 
 interface Props extends ImageProps {
-    style?: SerializedStyles;
+    containerStyle?: SerializedStyles;
     containerClassName?: string;
 }
 
-export function Img({ style, ...rest }: Props) {
-    if (style) {
+export function Img({ containerStyle, ...rest }: Props) {
+    if (containerStyle) {
         return (
-            <div css={[inlineStyle, style]}>
-                <NextImage
-                    layout="responsive"
-                    width="100%"
-                    height="100%"
-                    objectFit="contain"
-                    objectPosition="top left"
-                    {...rest}
-                />
+            <div css={[inlineStyle, containerStyle]}>
+                <NextImage layout="fill" objectFit="contain" {...rest} />
             </div>
         );
     }
     return <NextImage {...rest} />;
 }
 
-const inlineStyle = css({ display: "inline" });
+const inlineStyle = css({ position: "relative" });

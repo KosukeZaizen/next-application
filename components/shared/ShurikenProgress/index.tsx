@@ -6,7 +6,7 @@ import { centerStyle } from "../../../pages/articles/[pageName]";
 const shuriken = appsPublicImg + "shuriken.png";
 
 interface Props {
-    size?: string;
+    size?: string | number;
     style?: SerializedStyles;
 }
 export default function ShurikenProgress({ size, style }: Props) {

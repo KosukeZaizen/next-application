@@ -186,11 +186,8 @@ function FallingImg({
     scale: number;
 }) {
     return (
-        <Img
-            src={appsPublicImg + seasonItem.fileName}
-            alt={`${seasonItem.alt} ${l.id}`}
-            title={`${seasonItem.alt} ${l.id}`}
-            style={css([
+        <div
+            css={[
                 {
                     willChange: "animation",
                     backfaceVisibility: "hidden",
@@ -202,8 +199,15 @@ function FallingImg({
                     zIndex: -100,
                 },
                 fallingAnimation,
-            ])}
-        />
+            ]}
+        >
+            <Img
+                src={appsPublicImg + seasonItem.fileName}
+                alt={`${seasonItem.alt} ${l.id}`}
+                title={`${seasonItem.alt} ${l.id}`}
+                layout="fill"
+            />
+        </div>
     );
 }
 
