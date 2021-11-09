@@ -191,8 +191,6 @@ function FallingImg({
                 {
                     willChange: "animation",
                     backfaceVisibility: "hidden",
-                    width: 50 * scale,
-                    height: 50 * scale,
                     position: "fixed",
                     top: -1.5 * 90 * scale,
                     left: l.initialX,
@@ -205,6 +203,7 @@ function FallingImg({
                 src={appsPublicImg + seasonItem.fileName}
                 alt={`${seasonItem.alt} ${l.id}`}
                 title={`${seasonItem.alt} ${l.id}`}
+                containerStyle={css({ width: 50 * scale, height: 50 * scale })}
             />
         </div>
     );
