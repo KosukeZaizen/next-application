@@ -1,5 +1,7 @@
 import * as React from "react";
+import { css } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
+import { Img } from "../shared/Img";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
 import ShurikenProgress from "../shared/ShurikenProgress";
@@ -73,15 +75,16 @@ export function ArticlesList({
                                         href={`${url}/${page.url}`}
                                         style={{ display: "block", flex: 1 }}
                                     >
-                                        <img
+                                        <Img
                                             alt={page.title}
                                             src={page.imgPath}
-                                            style={{
+                                            containerStyle={css({
                                                 width: "100%",
-                                                maxHeight: 150,
-                                                objectFit: "cover",
-                                                margin: "0",
-                                            }}
+                                                margin: 0,
+                                            })}
+                                            autoHeight
+                                            maxHeight={150}
+                                            objectFit={"cover"}
                                         />
                                     </LinkOrA>
                                 )}
