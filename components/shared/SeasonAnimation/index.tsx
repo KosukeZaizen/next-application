@@ -110,18 +110,18 @@ export const SeasonAnimation = ({
     return (
         <>
             {!isFestivalHidden && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Img
                     alt="japanese festival"
                     title="japanese festival"
                     src={appsPublicImg + "japanese-festival.png"}
-                    css={css`
+                    containerStyle={css`
                         position: absolute;
                         width: 128%;
                         top: ${80 - screenWidth * 0.34}px;
                         left: ${-(screenWidth * 0.28)}px;
                         z-index: -110;
                     `}
+                    autoHeight
                 />
             )}
             <FallingImages
