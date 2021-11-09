@@ -11,6 +11,7 @@ interface AutoHeightProps extends ImageProps {
     autoHeight: true;
     maxHeight?: number;
     width?: string | number;
+    containerStyle?: SerializedStyles;
 }
 
 export function Img(props: Props) {
@@ -32,18 +33,21 @@ export function Img(props: Props) {
 
 function AutoHeightImg(props: AutoHeightProps) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { autoHeight, maxHeight, width, ...rest } = props;
+    const { autoHeight, maxHeight, width, containerStyle, ...rest } = props;
     return (
         <div
-            css={css({
-                width,
-                "& > div": {
-                    position: "unset !important" as any,
-                },
-                "& img": {
-                    maxHeight: maxHeight ? "450px !important" : undefined,
-                },
-            })}
+            css={[
+                css({
+                    width,
+                    "& > div": {
+                        position: "unset !important" as any,
+                    },
+                    "& img": {
+                        maxHeight: maxHeight ? "450px !important" : undefined,
+                    },
+                }),
+                containerStyle,
+            ]}
         >
             <NextImage
                 layout="fill"

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { css } from "../../../../lib/css";
 import { Img } from "../../../shared/Img";
 import { YouTubeVideo } from "../../../shared/YouTubeVideo";
 import { Speaker } from "./Speaker";
@@ -49,5 +50,18 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
     } else if (src === "vocab") {
         return <VocabList genreName={alt} />;
     }
-    return <Img src={src} alt={alt} title={alt} autoHeight maxHeight={450} />;
+    return (
+        <Img
+            src={src}
+            alt={alt}
+            title={alt}
+            autoHeight
+            maxHeight={450}
+            containerStyle={imgWhiteFilter}
+        />
+    );
 };
+
+export const imgWhiteFilter = css({
+    filter: "drop-shadow(0 0 3px white) drop-shadow(0 0 6px white) drop-shadow(0 0 9px white) drop-shadow(0 0 10px white)",
+});
