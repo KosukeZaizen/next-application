@@ -10,7 +10,6 @@ interface NormalImgProps extends ImageProps {
 interface AutoHeightProps extends ImageProps {
     autoHeight: true;
     maxHeight?: number;
-    width?: string | number;
     containerStyle?: SerializedStyles;
 }
 

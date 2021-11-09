@@ -221,6 +221,8 @@ function IndexAndAd({
             css={{
                 display: "flex",
                 flexDirection: isWide ? "row" : "column",
+                position: "relative",
+                top: 15,
             }}
         >
             <ScrollBox
@@ -243,19 +245,17 @@ function IndexAndAd({
                     </ol>
                 </div>
             </ScrollBox>
-            <div
-                css={{
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                    marginTop: isWide ? undefined : 25,
-                }}
-            >
-                <YouTubeAd width={isWide ? "90%" : undefined} />
-            </div>
+            {isWide && (
+                <div
+                    css={{
+                        flex: 1,
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                >
+                    <YouTubeAd width="90%" />
+                </div>
+            )}
         </div>
     );
 }
