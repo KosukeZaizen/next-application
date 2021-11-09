@@ -8,14 +8,11 @@ interface Props extends ImageProps {
 }
 
 export function Img({ containerStyle, ...rest }: Props) {
+    const img = <NextImage layout="fill" objectFit="contain" {...rest} />;
     if (containerStyle) {
-        return (
-            <div css={[inlineStyle, containerStyle]}>
-                <NextImage layout="fill" objectFit="contain" {...rest} />
-            </div>
-        );
+        return <div css={[inlineStyle, containerStyle]}>{img}</div>;
     }
-    return <NextImage {...rest} />;
+    return img;
 }
 
 const inlineStyle = css({ position: "relative" });

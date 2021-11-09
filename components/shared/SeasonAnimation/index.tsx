@@ -205,7 +205,6 @@ function FallingImg({
                 src={appsPublicImg + seasonItem.fileName}
                 alt={`${seasonItem.alt} ${l.id}`}
                 title={`${seasonItem.alt} ${l.id}`}
-                layout="fill"
             />
         </div>
     );
