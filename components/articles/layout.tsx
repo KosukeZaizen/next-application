@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import React from "react";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
+import { PopupAd } from "../shared/YouTubeAd/Popup";
 
 const styles = {
     appBar: {
@@ -51,6 +52,7 @@ export function Layout({ children, screenWidth, screenHeight }: Props) {
                 screenWidth={screenWidth}
                 screenHeight={screenHeight}
             />
+            <PopupAd />
         </>
     );
 }
