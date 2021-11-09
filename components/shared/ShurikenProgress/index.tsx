@@ -2,6 +2,7 @@ import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { appsPublicImg } from "../../../const/public";
 import { centerStyle } from "../../../pages/articles/[pageName]";
+import { Img } from "../Img";
 
 const shuriken = appsPublicImg + "shuriken.png";
 
@@ -12,12 +13,14 @@ interface Props {
 export default function ShurikenProgress({ size, style }: Props) {
     return (
         <div css={[style, centerStyle]}>
-            {/* This image should not be lazy loaded */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Img
                 src={shuriken}
                 alt="shuriken"
-                css={[css({ width: size, height: size }), shurikenAnime]}
+                containerStyle={css([
+                    { width: size, height: size },
+                    shurikenAnime,
+                ])}
+                loading="eager"
             />
         </div>
     );

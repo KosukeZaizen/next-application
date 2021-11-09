@@ -122,6 +122,7 @@ export const SeasonAnimation = ({
                         z-index: -110;
                     `}
                     autoHeight
+                    loading="eager"
                 />
             )}
             <FallingImages
