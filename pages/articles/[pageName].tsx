@@ -264,89 +264,6 @@ const adStyle = {
 
 export default Articles;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const response: Response = await fetchZApps("api/Articles/GetAllArticles");
-    const pages: Page[] = await response.json();
-    return {
-        paths: pages
-            .map(p => p.url?.toLowerCase())
-            .filter(u => u)
-            .map(u => `/articles/${u}`),
-        fallback: "blocking",
-    };
-};
-
-export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
-    async ({ params }) => {
-        try {
-            const pageName = params?.pageName;
-            if (!pageName) {
-                return { notFound: true, revalidate: 10 };
-            }
-
-            // Redirect to lower case
-            const lowerPageName = pageName.toLowerCase();
-            if (pageName !== lowerPageName) {
-                return {
-                    redirect: {
-                        permanent: true,
-                        destination: lowerPageName,
-                    },
-                };
-            }
-
-            // Article
-            const response: Response = await fetchZApps(
-                `api/Articles/GetArticle?p=${pageName}`
-            );
-            const {
-                url,
-                description,
-                title,
-                isAboutFolktale,
-                articleContent,
-                imgPath,
-            }: Page = await response.json();
-
-            // Other articles
-            const param = `?num=10&${
-                isAboutFolktale ? "&isAboutFolktale=true" : ""
-            }`;
-            const responseOther: Response = await fetchZApps(
-                "api/Articles/GetRandomArticles" + param
-            );
-            const articles: Page[] = await responseOther.json();
-            const otherArticles = articles.filter(a => a.title !== title);
-
-            const indexInfo = articleContent
-                .split("\n")
-                .filter(c => c.includes("##") && !c.includes("###"))
-                .map(c => {
-                    const linkText = c.split("#").join("").trim();
-                    const encodedUrl = encodeURIComponent(linkText);
-                    return { linkText, encodedUrl };
-                });
-
-            return {
-                props: {
-                    pageName,
-                    url,
-                    description,
-                    title,
-                    isAboutFolktale,
-                    articleContent,
-                    imgPath,
-                    indexInfo,
-                    otherArticles,
-                    imgNumber: getImgNumber(pageName.length),
-                },
-                revalidate: 10,
-            };
-        } catch {
-            return { notFound: true, revalidate: 10 };
-        }
-    };
-
 export const whiteShadowStyle = css({
     textShadow: `0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,
         0px 0px 4px white, 0px 0px 5px white, 0px 0px 5px white,
@@ -443,3 +360,86 @@ const containerCss = css`
     width: 100%;
     ${centerStyle}
 `;
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    const response: Response = await fetchZApps("api/Articles/GetAllArticles");
+    const pages: Page[] = await response.json();
+    return {
+        paths: pages
+            .map(p => p.url?.toLowerCase())
+            .filter(u => u)
+            .map(u => `/articles/${u}`),
+        fallback: "blocking",
+    };
+};
+
+export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
+    async ({ params }) => {
+        try {
+            const pageName = params?.pageName;
+            if (!pageName) {
+                return { notFound: true, revalidate: 10 };
+            }
+
+            // Redirect to lower case
+            const lowerPageName = pageName.toLowerCase();
+            if (pageName !== lowerPageName) {
+                return {
+                    redirect: {
+                        permanent: true,
+                        destination: lowerPageName,
+                    },
+                };
+            }
+
+            // Article
+            const response: Response = await fetchZApps(
+                `api/Articles/GetArticle?p=${pageName}`
+            );
+            const {
+                url,
+                description,
+                title,
+                isAboutFolktale,
+                articleContent,
+                imgPath,
+            }: Page = await response.json();
+
+            // Other articles
+            const param = `?num=10&${
+                isAboutFolktale ? "&isAboutFolktale=true" : ""
+            }`;
+            const responseOther: Response = await fetchZApps(
+                "api/Articles/GetRandomArticles" + param
+            );
+            const articles: Page[] = await responseOther.json();
+            const otherArticles = articles.filter(a => a.title !== title);
+
+            const indexInfo = articleContent
+                .split("\n")
+                .filter(c => c.includes("##") && !c.includes("###"))
+                .map(c => {
+                    const linkText = c.split("#").join("").trim();
+                    const encodedUrl = encodeURIComponent(linkText);
+                    return { linkText, encodedUrl };
+                });
+
+            return {
+                props: {
+                    pageName,
+                    url,
+                    description,
+                    title,
+                    isAboutFolktale,
+                    articleContent,
+                    imgPath,
+                    indexInfo,
+                    otherArticles,
+                    imgNumber: getImgNumber(pageName.length),
+                },
+                revalidate: 10,
+            };
+        } catch {
+            return { notFound: true, revalidate: 10 };
+        }
+    };
