@@ -24,7 +24,7 @@ export function useScreenSize() {
 
         setScreenWidth(window.innerWidth);
         setScreenHeight(window.innerHeight);
-    }, []);
+    }, [getUnmounted]);
 
     return { screenWidth, screenHeight };
 }

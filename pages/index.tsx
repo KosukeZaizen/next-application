@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import React from "react";
 import Articles from "../components/articles/Home";
 import { fetchZApps } from "../lib/fetch";
 import { Page } from "./articles/[pageName]";
@@ -11,6 +12,7 @@ export default function Home(props: Props) {
             return <Articles {...props} />;
         }
         default: {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const exhaustiveCheck: never = props.type;
         }
     }

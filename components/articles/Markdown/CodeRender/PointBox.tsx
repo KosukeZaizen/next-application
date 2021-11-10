@@ -1,4 +1,5 @@
-import { CSSProperties } from "react";
+import { css, SerializedStyles } from "@emotion/react";
+import React from "react";
 
 export function PointBox({
     language,
@@ -7,7 +8,7 @@ export function PointBox({
 }: {
     language: string;
     children: React.ReactNode;
-    style?: CSSProperties;
+    style?: SerializedStyles;
 }) {
     let content = "'NOTE'";
     let background = "#e3f5d8";
@@ -25,31 +26,33 @@ export function PointBox({
 
     return (
         <>
-            <style jsx>{`
-                .beforeDiv::before {
-                    font-size: 15px;
-                    position: absolute;
-                    top: -23px;
-                    left: 0;
-                    height: 23px;
-                    padding: 0 1em;
-                    content: ${content};
-                    color: #fff;
-                    border-radius: 10px 10px 0 0;
-                    background: ${titleBackgroundColor};
-                }
-                .beforeDiv {
-                    position: relative;
-                    padding: 15px 20px 2px;
-                    color: black;
-                    border-radius: 2px 10px 10px 10px;
-                    background: ${background};
-                    margin: 45px 0 30px;
-                    display: inline-block;
-                    border: border;
-                }
-            `}</style>
-            <div className="beforeDiv" style={style}>
+            <div
+                css={[
+                    css`
+                        position: relative;
+                        padding: 15px 20px 2px;
+                        color: black;
+                        border-radius: 2px 10px 10px 10px;
+                        background: ${background};
+                        margin: 45px 0 30px;
+                        display: inline-block;
+                        border: ${border};
+                        &::before {
+                            font-size: 15px;
+                            position: absolute;
+                            top: -23px;
+                            left: 0;
+                            height: 23px;
+                            padding: 0 1em;
+                            content: ${content};
+                            color: #fff;
+                            border-radius: 10px 10px 0 0;
+                            background: ${titleBackgroundColor};
+                        }
+                    `,
+                    style,
+                ]}
+            >
                 {children}
             </div>
         </>

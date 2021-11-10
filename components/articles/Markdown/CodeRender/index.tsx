@@ -1,5 +1,6 @@
 import React from "react";
 import { Markdown } from "..";
+import { getClasses } from "../../../../lib/css";
 import { sentence } from "../../../../types/stories";
 import styles from "../index.module.css";
 import { ExampleSentence } from "./ExampleSentence";
@@ -50,7 +51,7 @@ export const CodeRender = ({
     }
 
     return (
-        <PointBox language={language} style={{ textShadow: "initial" }}>
+        <PointBox language={language} style={cs.initialShadow}>
             <Markdown source={value} noLinkShadow />
         </PointBox>
     );
@@ -72,7 +73,9 @@ function OriginalExample({ params }: { params: { [key: number]: string } }) {
         try {
             const arrWords: string[] = JSON.parse(strWords);
             threeItemsArrays = sliceByNumber<string>(arrWords, 3);
-        } catch (e) {}
+        } catch {
+            //
+        }
     }
     const words = threeItemsArrays.map((items, i) => ({
         lineNumber: 0,
@@ -83,7 +86,7 @@ function OriginalExample({ params }: { params: { [key: number]: string } }) {
     }));
 
     return (
-        <div style={{ marginBottom: 20, marginTop: 10, textShadow: "initial" }}>
+        <div css={cs.exampleContainer}>
             <ExampleSentence
                 s={s}
                 boldInfo={params[4]}
@@ -93,3 +96,14 @@ function OriginalExample({ params }: { params: { [key: number]: string } }) {
         </div>
     );
 }
+
+const cs = getClasses({
+    initialShadow: {
+        textShadow: "initial",
+    },
+    exampleContainer: {
+        marginBottom: 20,
+        marginTop: 10,
+        textShadow: "initial",
+    },
+});

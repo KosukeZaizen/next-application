@@ -6,7 +6,9 @@ import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 import LazyLoad from "react-lazyload";
 import { BLOB_URL } from "../../../../../const/public";
+import { getClasses } from "../../../../../lib/css";
 import { vocab, vocabGenre } from "../../../../../types/vocab";
+import { Img } from "../../../../shared/Img";
 import ShurikenProgress from "../../../../shared/ShurikenProgress";
 
 const tableHeadStyle: React.CSSProperties = {
@@ -36,7 +38,7 @@ export function VList({
     return vocabList && vocabList.length > 0 ? (
         <Table aria-label="simple table" style={style}>
             <TableHead>
-                <TableRow style={{ backgroundColor: "papayawhip" }}>
+                <TableRow css={{ backgroundColor: "papayawhip" }}>
                     <TableCell style={tableHeadStyle} align="center">
                         Kanji
                     </TableCell>
@@ -152,20 +154,25 @@ class Speaker extends React.Component<
         const { showImg } = this.state;
         const { vocabSound } = this;
         return showImg ? (
-            <img
+            <Img
                 alt="vocab speaker"
+                title="vocab speaker"
                 src={BLOB_URL + "/vocabulary-quiz/img/speaker.png"}
-                style={{ width: "60%", maxWidth: 30, cursor: "pointer" }}
+                containerStyle={c.img}
                 onClick={() => {
                     vocabSound && vocabSound.play();
                 }}
             />
         ) : (
-            <ShurikenProgress
-                key="circle"
-                size="100%"
-                style={{ width: "60%", maxWidth: 30 }}
-            />
+            <ShurikenProgress key="circle" size={25} style={c.shuriken} />
         );
     }
 }
+
+const c = getClasses({
+    img: { width: 30, height: 30, cursor: "pointer" },
+    shuriken: {
+        width: 30,
+        height: 30,
+    },
+});

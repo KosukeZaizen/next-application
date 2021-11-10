@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import React from "react";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
+import { PopupAd } from "../shared/YouTubeAd/Popup";
 
 const styles = {
     appBar: {
@@ -15,6 +16,7 @@ const styles = {
         fontWeight: "bold",
         color: "white",
     },
+    sideMargin: { marginRight: 15, marginLeft: 15 },
 } as const;
 
 interface Props {
@@ -45,12 +47,13 @@ export function Layout({ children, screenWidth, screenHeight }: Props) {
                     </Link>
                 </Toolbar>
             </AppBar>
-            {children}
+            <div css={styles.sideMargin}>{children}</div>
             <SeasonAnimation
                 frequencySec={2}
                 screenWidth={screenWidth}
                 screenHeight={screenHeight}
             />
+            <PopupAd />
         </>
     );
 }

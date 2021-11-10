@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { YouTubeAd } from ".";
+import { getClasses } from "../../../lib/css";
 
 export const PopupAd = () => {
     const [isShown, setIsShown] = React.useState(false);
@@ -13,7 +14,7 @@ export const PopupAd = () => {
                     const date = new Date(savedDate);
                     const dif = new Date().getTime() - date.getTime();
                     if (dif < 1000 * 60 * 60 * 24 * 14) {
-                        // ２週間出さない
+                        // Don't show for two weeks
                         return;
                     }
                 }
@@ -43,7 +44,7 @@ export const PopupAd = () => {
 
     return (
         <div
-            style={{
+            css={{
                 position: "fixed",
                 left: 0,
                 top: 0,
@@ -53,32 +54,11 @@ export const PopupAd = () => {
                 transition: "2s",
             }}
         >
-            <div
-                style={{
-                    position: "fixed",
-                    left: 0,
-                    top: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "gray",
-                    opacity: 0.5,
-                }}
-            ></div>
+            <div css={c.grayDiv} />
 
-            <div
-                style={{
-                    position: "fixed",
-                    left: 0,
-                    top: 0,
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
+            <div css={c.container}>
                 <div
-                    style={{
+                    css={{
                         width: adWidth - 20,
                         height: adWidth,
                         backgroundColor: "white",
@@ -92,10 +72,7 @@ export const PopupAd = () => {
                     onClick={ev => ev.stopPropagation()}
                 >
                     <YouTubeAd width={adWidth - 60} />
-                    <div
-                        onClick={close}
-                        style={{ cursor: "pointer", color: "black" }}
-                    >
+                    <div onClick={close} css={c.close}>
                         Close
                     </div>
                 </div>
@@ -103,3 +80,26 @@ export const PopupAd = () => {
         </div>
     );
 };
+
+const c = getClasses({
+    container: {
+        position: "fixed",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    grayDiv: {
+        position: "fixed",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "gray",
+        opacity: 0.5,
+    },
+    close: { cursor: "pointer", color: "black" },
+});

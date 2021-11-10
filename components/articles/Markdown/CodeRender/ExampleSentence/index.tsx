@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getClasses } from "../../../../../lib/css";
 import { sentence, word } from "../../../../../types/stories";
 import { AudioControl } from "./AudioControl";
 import { WordList } from "./WordList";
@@ -36,145 +37,71 @@ export function ExampleSentence({
                     .replace("E", '"E"')
             );
             setBold(objBold);
-        } catch (ex) {}
+        } catch {
+            // Do nothing
+        }
     }, [boldInfo]);
 
     return (
         <>
-            <span style={{ fontSize: "small", marginBottom: 5 }}>
+            <span css={classes.langNames}>
                 {s.kanji && (
-                    <span
-                        style={{
-                            backgroundColor: "#fff0f2",
-                            padding: 2,
-                            margin: 3,
-                        }}
-                    >
+                    <span css={classes.kanji}>
                         <b>K</b>: Kanji
                     </span>
                 )}
                 {s.hiragana && (
-                    <span
-                        style={{
-                            backgroundColor: "#ffffe0",
-                            padding: 2,
-                            margin: 3,
-                        }}
-                    >
+                    <span css={classes.hiragana}>
                         <b>H</b>: Hiragana
                     </span>
                 )}
                 {s.romaji && (
-                    <span
-                        style={{
-                            backgroundColor: "#f0fff2",
-                            padding: 2,
-                            margin: 3,
-                        }}
-                    >
+                    <span css={classes.romaji}>
                         <b>R</b>: Romaji
                     </span>
                 )}
                 {s.english && (
-                    <span
-                        style={{
-                            backgroundColor: "#f0f8ff",
-                            padding: 2,
-                            margin: 3,
-                        }}
-                    >
+                    <span css={classes.english}>
                         <b>E</b>: English
                     </span>
                 )}
             </span>
             {s.kanji && (
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        width: "100%",
-                        backgroundColor: "#fff0f2",
-                        borderRadius: 5,
-                    }}
-                >
-                    <div
-                        style={{
-                            fontWeight: "bold",
-                            marginRight: "1em",
-                        }}
-                    >
+                <div css={classes.kanjiContainer}>
+                    <div css={classes.langAbbr}>
                         <abbr title="kanji">Ｋ</abbr>:
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div css={classes.width100}>
                         {getBoldSentence(s.kanji, bold?.K)}
                     </div>
                 </div>
             )}
             {s.hiragana && (
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        width: "100%",
-                        backgroundColor: "#ffffe0",
-                        borderRadius: 5,
-                    }}
-                >
-                    <div
-                        style={{
-                            fontWeight: "bold",
-                            marginRight: "1em",
-                        }}
-                    >
+                <div css={classes.hiraganaContainer}>
+                    <div css={classes.langAbbr}>
                         <abbr title="hiragana">Ｈ</abbr>:
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div css={classes.width100}>
                         {getBoldSentence(s.hiragana, bold?.H)}
                     </div>
                 </div>
             )}
             {s.romaji && (
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        width: "100%",
-                        backgroundColor: "#f0fff2",
-                        borderRadius: 5,
-                    }}
-                >
-                    <div
-                        style={{
-                            fontWeight: "bold",
-                            marginRight: "1em",
-                        }}
-                    >
+                <div css={classes.romajiContainer}>
+                    <div css={classes.langAbbr}>
                         <abbr title="romaji">Ｒ</abbr>:
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div css={classes.width100}>
                         {getBoldSentence(s.romaji, bold?.R)}
                     </div>
                 </div>
             )}
             {s.english && (
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        width: "100%",
-                        backgroundColor: "#f0f8ff",
-                        borderRadius: 5,
-                    }}
-                >
-                    <div
-                        style={{
-                            fontWeight: "bold",
-                            marginRight: "1em",
-                        }}
-                    >
+                <div css={classes.englishContainer}>
+                    <div css={classes.langAbbr}>
                         <abbr title="english">Ｅ</abbr>:
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div css={classes.width100}>
                         {getBoldSentence(s.english, bold?.E)}
                     </div>
                 </div>
@@ -212,7 +139,7 @@ function getBoldSentence(sentence: string, minAndMax?: number[]) {
         );
         arrToShow.push(
             <span key={min}>
-                <strong style={{ color: "red" }}>{strongPart}</strong>
+                <strong css={classes.colorRed}>{strongPart}</strong>
                 {thirdPart}
             </span>
         );
@@ -225,3 +152,61 @@ function getBoldSentence(sentence: string, minAndMax?: number[]) {
         </>
     );
 }
+
+const classes = getClasses({
+    langNames: { fontSize: "small", marginBottom: 5 },
+    kanji: {
+        backgroundColor: "#fff0f2",
+        padding: 2,
+        margin: 3,
+    },
+    hiragana: {
+        backgroundColor: "#ffffe0",
+        padding: 2,
+        margin: 3,
+    },
+    romaji: {
+        backgroundColor: "#f0fff2",
+        padding: 2,
+        margin: 3,
+    },
+    english: {
+        backgroundColor: "#f0f8ff",
+        padding: 2,
+        margin: 3,
+    },
+    colorRed: { color: "red" },
+    width100: { width: "100%" },
+    langAbbr: {
+        fontWeight: "bold",
+        marginRight: "1em",
+    },
+    kanjiContainer: {
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+        backgroundColor: "#fff0f2",
+        borderRadius: 5,
+    },
+    hiraganaContainer: {
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+        backgroundColor: "#ffffe0",
+        borderRadius: 5,
+    },
+    romajiContainer: {
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+        backgroundColor: "#f0fff2",
+        borderRadius: 5,
+    },
+    englishContainer: {
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+        backgroundColor: "#f0f8ff",
+        borderRadius: 5,
+    },
+});

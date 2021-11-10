@@ -1,17 +1,14 @@
-import { Button } from "@material-ui/core";
 import React, { CSSProperties } from "react";
-import { ATargetBlank } from "../ATargetBlank";
+import { ATargetBlank } from "../Link/ATargetBlank";
 
 export function YouTubeVideo({
     videoId,
     screenWidth,
-    pageNameForLog,
     style,
     buttonLabel,
 }: {
     videoId: string;
     screenWidth: number;
-    pageNameForLog: string;
     style?: CSSProperties;
     buttonLabel?: string;
 }) {
@@ -51,22 +48,22 @@ export function YouTubeVideo({
                     nofollow
                     href="http://www.youtube.com/channel/UCii35PcojqMUNkSRalUw35g?sub_confirmation=1"
                 >
-                    <style jsx>{`
-                        button:hover {
-                            opacity: 0.5;
-                        }
-                    `}</style>
-                    <Button
-                        style={{
+                    <button
+                        css={{
                             marginTop: 5,
                             width: "100%",
                             backgroundColor: "red",
                             color: "white",
+                            "&:hover": {
+                                opacity: 0.5,
+                                backgroundColor: "red",
+                            },
                         }}
+                        className="btn btn-danger"
                     >
                         {buttonLabel ||
                             "Click to subscribe to this YouTube channel!"}
-                    </Button>
+                    </button>
                 </ATargetBlank>
             </div>
         </div>

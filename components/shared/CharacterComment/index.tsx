@@ -1,14 +1,17 @@
+import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
+import { getClasses } from "../../../lib/css";
+import { Img } from "../Img";
 import styles from "./CharacterComment.module.css";
 
 type TProps = {
     imgNumber: number;
     screenWidth: number;
     comment: string | React.ReactNode;
-    style?: React.CSSProperties;
-    commentStyle?: React.CSSProperties;
-    imgStyle?: React.CSSProperties;
+    css?: SerializedStyles;
+    commentStyle?: SerializedStyles;
+    imgStyle?: SerializedStyles;
     containerRef?: React.RefObject<HTMLDivElement>;
 };
 export default function CharacterComment(props: TProps) {
@@ -16,47 +19,34 @@ export default function CharacterComment(props: TProps) {
         imgNumber,
         screenWidth,
         comment,
-        style,
+        css: pCss,
         commentStyle,
         imgStyle,
         containerRef,
     } = props;
     return (
-        <div
-            style={{
-                display: "flex",
-                maxWidth: 600,
-                margin: "auto",
-                ...style,
-            }}
-            ref={containerRef}
-        >
-            <div style={{ flex: 1 }}>
-                <img
+        <div css={[classes.container, pCss]} ref={containerRef}>
+            <div css={classes.flex1}>
+                <Img
                     src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
                     alt="Japanese ninja"
-                    style={{
-                        width: (screenWidth * 2) / 10,
-                        maxWidth: 120,
-                        height: "auto",
-                        verticalAlign: "top",
-                        ...imgStyle,
-                    }}
-                    className={styles.ninjaPic}
+                    containerStyle={css([
+                        {
+                            width: (screenWidth * 2) / 10,
+                            maxWidth: 120,
+                            height: "auto",
+                            verticalAlign: "top",
+                        },
+                        imgStyle,
+                        animationStyle,
+                    ])}
+                    autoHeight
                 />
             </div>
-            <div
-                className={styles.chatting}
-                style={{
-                    height: "auto",
-                    display: "flex",
-                    alignItems: "center",
-                    flex: 3,
-                }}
-            >
+            <div className={styles.chatting} css={classes.chatting}>
                 <div
                     className={styles.says}
-                    style={{
+                    css={{
                         width:
                             screenWidth > 767
                                 ? (screenWidth * 7) / 10 - 15
@@ -71,3 +61,43 @@ export default function CharacterComment(props: TProps) {
         </div>
     );
 }
+
+const animationStyle = css`
+    animation: ninjaCommentAnime 10s linear infinite;
+    animation-delay: 1s;
+    @keyframes ninjaCommentAnime {
+        0% {
+            transform: translate3d(0px, 0px, 0px);
+        }
+        2% {
+            transform: translate3d(0px, -10px, 0px);
+        }
+        5% {
+            transform: translate3d(0px, 0px, 0px);
+        }
+        7% {
+            transform: translate3d(0px, -10px, 0px);
+        }
+        10% {
+            transform: translate3d(0px, 0px, 0px);
+        }
+        100% {
+            transform: translate3d(0px, 0px, 0px);
+        }
+    }
+`;
+
+const classes = getClasses({
+    container: {
+        display: "flex",
+        maxWidth: 600,
+        margin: "auto",
+    },
+    flex1: { flex: 1 },
+    chatting: {
+        height: "auto",
+        display: "flex",
+        alignItems: "center",
+        flex: 3,
+    },
+});

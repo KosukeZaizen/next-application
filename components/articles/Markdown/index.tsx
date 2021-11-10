@@ -1,6 +1,7 @@
-import { ReactChildren } from "react";
+import React, { CSSProperties, ReactChildren } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
+import { css } from "../../../lib/css";
 import { CodeRender } from "./CodeRender";
 import { HeadingRenderer } from "./HeadingRenderer";
 import { ImageRender } from "./ImageRender";
@@ -11,7 +12,7 @@ import { TableCellRender } from "./Table/TableCellRender";
 
 interface MarkdownProps {
     source: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     section?: boolean;
     noLinkShadow?: boolean;
 }
@@ -49,14 +50,10 @@ export function Markdown({
 }
 
 function ParagraphRender({ children }: { children: ReactChildren }) {
-    return (
-        <span
-            style={{
-                display: "block",
-                marginBottom: 15,
-            }}
-        >
-            {children}
-        </span>
-    );
+    return <span css={paragraphStyle}>{children}</span>;
 }
+
+const paragraphStyle = css({
+    display: "block",
+    marginBottom: 15,
+});

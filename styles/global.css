@@ -6,4 +6,5 @@ abbr[title] {
 
 a {
     text-decoration: none;
+    cursor: pointer;
 }

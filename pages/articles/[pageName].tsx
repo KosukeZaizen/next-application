@@ -1,15 +1,22 @@
+import { css } from "@emotion/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
-import * as React from "react";
+import React from "react";
+import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Layout } from "../../components/articles/Layout";
 import { Markdown } from "../../components/articles/Markdown";
+import {
+    FBShareBtn,
+    TwitterShareBtn,
+} from "../../components/articles/SnsShareButton";
 import CharacterComment from "../../components/shared/CharacterComment";
+import FB from "../../components/shared/FaceBook";
 import { Helmet } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
+import { Z_APPS_TOP_URL } from "../../const/public";
 import { fetchZApps } from "../../lib/fetch";
 import { useScreenSize } from "../../lib/screenSize";
-import styles from "../../styles/articles.module.css";
 
 export interface Page {
     url?: string;
@@ -29,6 +36,7 @@ interface Props extends Page {
     indexInfo: IndexInfo;
     otherArticles: Page[];
     imgNumber: number;
+    pageName: string;
 }
 
 export function getImgNumber(num: number = 0) {
@@ -44,15 +52,15 @@ const Articles = ({
     title,
     description,
     articleContent,
-    isAboutFolktale,
     indexInfo,
     otherArticles,
     imgNumber,
+    pageName,
 }: Props) => {
     const { screenWidth, screenHeight } = useScreenSize();
     return (
         <Layout screenWidth={screenWidth} screenHeight={screenHeight}>
-            <div style={{ width: "100%" }} className={styles.center}>
+            <div css={containerCss}>
                 <Helmet title={title} desc={description} />
                 <ArticleContent
                     title={title}
@@ -63,6 +71,7 @@ const Articles = ({
                     otherArticles={otherArticles}
                     indexInfo={indexInfo}
                     imgNumber={imgNumber}
+                    pageName={pageName}
                 />
             </div>
         </Layout>
@@ -86,6 +95,7 @@ interface ArticleContentProps {
     adsense: boolean;
     otherArticles: Page[];
     imgNumber: number;
+    pageName: string;
 }
 export function ArticleContent({
     title,
@@ -93,51 +103,86 @@ export function ArticleContent({
     width,
     indexInfo,
     content,
-    //adsense,
     otherArticles,
     imgNumber,
+    pageName,
 }: ArticleContentProps) {
     const isWide = width > 991;
 
     return (
-        <main style={{ maxWidth: 800 }}>
+        <main css={mainCss}>
             <BreadCrumbs title={title} />
-            <article style={{ textAlign: "left" }}>
-                <h1
-                    style={{
-                        margin: "25px auto 30px",
-                        textAlign: "center",
-                    }}
-                    className={styles.whiteShadow}
-                >
-                    {title}
-                </h1>
+            <article css={articleCss}>
+                <h1 css={h1TitleCss}>{title}</h1>
                 <CharacterComment
                     imgNumber={imgNumber}
                     screenWidth={width}
                     comment={description}
-                    style={{
-                        marginBottom: 15,
-                    }}
-                    commentStyle={{ paddingLeft: 25, paddingRight: 20 }}
+                    css={characterCommentCss}
+                    commentStyle={commentCss}
                 />
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
-                <Markdown
-                    source={content}
-                    style={{ margin: "25px 0 40px", textShadow }}
-                />
+                <Markdown source={content} style={markdownStyle} />
             </article>
+            <CharacterComment
+                comment={[
+                    <p key="commentContent">
+                        {"If you like this article, please share!"}
+                    </p>,
+                    <FBShareBtn
+                        key="fbShareButton"
+                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                        style={fbButtonStyle}
+                    />,
+                    <TwitterShareBtn
+                        key="twitterShareButton"
+                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                        textToShare={title}
+                        style={twitterButtonStyle}
+                    />,
+                ]}
+                imgNumber={(imgNumber - 1 || 3) - 1 || 3}
+                screenWidth={width}
+            />
+            <hr />
+            <section>
+                <h2 css={h2Style}>More Articles</h2>
+                <ArticlesList
+                    titleH={"h3"}
+                    articles={otherArticles}
+                    screenWidth={width}
+                />
+            </section>
+            <hr />
+            <FB style={centerStyle} screenWidth={width} />
         </main>
     );
 }
 
+const fbButtonStyle = css({
+    width: 200,
+    marginTop: 10,
+});
+
+const twitterButtonStyle = css({
+    width: 200,
+    marginTop: 5,
+});
+
+const h2Style = css`
+    margin: 55px 0 55px;
+    padding: 20px;
+    color: white;
+    background: linear-gradient(to top, #035c1d, #047c28);
+    border-radius: 5px;
+`;
+
 function BreadCrumbs({ title }: { title: string }) {
     return (
         <div
-            className={styles.whiteShadow}
             itemScope
             itemType="https://schema.org/BreadcrumbList"
-            style={{ textAlign: "left" }}
+            css={breadCrumbsContainerCss}
         >
             <span
                 itemProp="itemListElement"
@@ -145,13 +190,7 @@ function BreadCrumbs({ title }: { title: string }) {
                 itemType="http://schema.org/ListItem"
             >
                 <Link href="/">
-                    <a
-                        itemProp="item"
-                        style={{
-                            marginRight: "5px",
-                            marginLeft: "5px",
-                        }}
-                    >
+                    <a itemProp="item" css={breadCrumbsCss}>
                         <span itemProp="name">{"Home"}</span>
                     </a>
                 </Link>
@@ -163,13 +202,7 @@ function BreadCrumbs({ title }: { title: string }) {
                 itemScope
                 itemType="http://schema.org/ListItem"
             >
-                <span
-                    itemProp="name"
-                    style={{
-                        marginRight: "5px",
-                        marginLeft: "5px",
-                    }}
-                >
+                <span itemProp="name" css={breadCrumbsCss}>
                     {title}
                 </span>
                 <meta itemProp="position" content="2" />
@@ -187,45 +220,25 @@ function IndexAndAd({
 }) {
     return (
         <div
-            style={{
+            css={{
                 display: "flex",
                 flexDirection: isWide ? "row" : "column",
+                position: "relative",
+                top: 15,
             }}
         >
             <ScrollBox
-                style={{
+                pCss={css({
                     display: "inline-block",
                     flex: 1,
                     marginRight: isWide ? 30 : undefined,
-                }}
+                })}
             >
-                <div
-                    style={{
-                        fontSize: "large",
-                        width: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                    }}
-                >
-                    <span
-                        style={{
-                            fontWeight: "bold",
-                            fontSize: "large",
-                        }}
-                    >
-                        Index
-                    </span>
-                    <ol
-                        style={{
-                            display: "inline-block",
-                            margin: 0,
-                        }}
-                    >
+                <div css={indexContainerCss}>
+                    <span css={indexTitleCss}>Index</span>
+                    <ol css={indexOlCss}>
                         {indexInfo.map(ind => (
-                            <li
-                                key={ind.linkText}
-                                style={{ marginTop: 10, marginBottom: 5 }}
-                            >
+                            <li key={ind.linkText} css={indexLiCss}>
                                 <a href={`#${ind.encodedUrl}`}>
                                     {ind.linkText}
                                 </a>
@@ -234,22 +247,20 @@ function IndexAndAd({
                     </ol>
                 </div>
             </ScrollBox>
-            <div
-                style={{
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                    marginTop: isWide ? undefined : 25,
-                }}
-            >
-                <YouTubeAd width={isWide ? "90%" : undefined} />
-            </div>
+            {isWide && (
+                <div css={adStyle}>
+                    <YouTubeAd width="90%" />
+                </div>
+            )}
         </div>
     );
 }
+
+const adStyle = {
+    flex: 1,
+    display: "flex",
+    alignItems: "center",
+};
 
 export default Articles;
 
@@ -318,6 +329,7 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
 
             return {
                 props: {
+                    pageName,
                     url,
                     description,
                     title,
@@ -334,3 +346,100 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
             return { notFound: true, revalidate: 10 };
         }
     };
+
+export const whiteShadowStyle = css({
+    textShadow: `0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,
+        0px 0px 4px white, 0px 0px 5px white, 0px 0px 5px white,
+        0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
+        0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
+        0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
+        0px 0px 6px white, 1px 1px 6px white, -1px 1px 6px white,
+        1px -1px 6px white, -1px -1px 6px white, 2px 2px 6px white,
+        -2px 2px 6px white, 2px -2px 6px white, -2px -2px 6px white,
+        3px 3px 6px white, -3px 3px 6px white, 3px -3px 6px white,
+        -3px -3px 6px white, 0px 0px 8px white, 1px 1px 8px white,
+        -1px 1px 8px white, 1px -1px 8px white, -1px -1px 8px white,
+        2px 2px 8px white, -2px 2px 8px white, 2px -2px 8px white,
+        -2px -2px 8px white, 3px 3px 8px white, -3px 3px 8px white,
+        3px -3px 8px white, -3px -3px 8px white, 0px 0px 10px white,
+        1px 1px 10px white, -1px 1px 10px white, 1px -1px 10px white,
+        -1px -1px 10px white, 2px 2px 10px white, -2px 2px 10px white,
+        2px -2px 10px white, -2px -2px 10px white, 3px 3px 10px white,
+        -3px 3px 10px white, 3px -3px 10px white, -3px -3px 10px white,
+        3px 3px 10px white, -3px 3px 10px white, 3px -3px 10px white,
+        -3px -3px 10px white`,
+});
+
+export const centerStyle = css`
+    text-align: center;
+    & * {
+        margin-right: auto;
+        margin-left: auto;
+    }
+`;
+
+const mainCss = css`
+    max-width: 800px;
+`;
+
+const articleCss = css`
+    text-align: left;
+`;
+
+export const h1TitleCss = css`
+    margin: 25px auto 30px;
+    text-align: center;
+    line-height: 1.3;
+    ${whiteShadowStyle}
+`;
+
+const indexContainerCss = css`
+    font-size: large;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+`;
+
+const indexLiCss = css`
+    margin-top: 10px;
+    margin-bottom: 5px;
+`;
+
+const indexOlCss = css`
+    display: inline-block;
+    margin: 0;
+`;
+
+const indexTitleCss = css`
+    font-weight: bold;
+    font-size: large;
+`;
+
+const breadCrumbsContainerCss = css`
+    text-align: left;
+    ${whiteShadowStyle}
+`;
+
+const breadCrumbsCss = css`
+    margin-right: 5px;
+    margin-left: 5px;
+`;
+
+const markdownStyle = {
+    margin: "25px 0 40px",
+    textShadow,
+};
+
+const characterCommentCss = css`
+    margin-bottom: 15px;
+`;
+
+const commentCss = css`
+    padding-left: 25px;
+    padding-right: 20px;
+`;
+
+const containerCss = css`
+    width: 100%;
+    ${centerStyle}
+`;

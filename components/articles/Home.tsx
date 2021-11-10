@@ -1,5 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
+import React from "react";
+import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "../../pages/articles/[pageName]";
 import { Layout } from "./Layout";
@@ -12,7 +14,7 @@ export default function Home({ pages }: { pages: Page[] }) {
                 <title>{"Hello!"}</title>
             </Head>
             <section>
-                <p>[Your Self Introduction]</p>
+                <p css={c.red}>[Your Self Introduction]</p>
                 <p>
                     (This is a sample website - you’ll be building a site like
                     this in{" "}
@@ -35,3 +37,5 @@ export default function Home({ pages }: { pages: Page[] }) {
         </Layout>
     );
 }
+
+const c = getClasses({ red: { color: "red" } });

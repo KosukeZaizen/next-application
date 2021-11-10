@@ -1,3 +1,4 @@
+import React from "react";
 import { Helmet } from "../components/shared/Helmet";
 
 function PageNotFound() {

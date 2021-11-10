@@ -1,5 +1,8 @@
 import React from "react";
+import { css } from "../../../../lib/css";
 
 export const InlineCodeRender = (props: any) => {
-    return <strong style={{ color: "red" }}>{props.value}</strong>;
+    return <strong css={red}>{props.value}</strong>;
 };
+
+const red = css({ color: "red" });

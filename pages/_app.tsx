@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppProps } from "next/dist/shared/lib/router/router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "../styles/global.css";
 
 const commonPaths = ["/", "/sitemap.xml"];

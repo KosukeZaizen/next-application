@@ -32,7 +32,7 @@ export class AudioControl extends React.Component<AudioControlProps> {
             <audio
                 ref={this.refAudio}
                 src={audioPath}
-                style={{
+                css={{
                     width: "100%",
                     height: "30px",
                     marginTop: "5px",

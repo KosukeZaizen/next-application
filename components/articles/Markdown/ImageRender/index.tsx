@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { css } from "../../../../lib/css";
+import { Img } from "../../../shared/Img";
 import { YouTubeVideo } from "../../../shared/YouTubeVideo";
-import styles from "../index.module.css";
 import { Speaker } from "./Speaker";
 import { VocabList } from "./VocabList";
 
@@ -22,6 +23,12 @@ function checkSoundExtension(str: string) {
 }
 
 export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
+    const [screenWidth, setScreenWidth] = useState(0);
+
+    useEffect(() => {
+        setScreenWidth(window.innerWidth);
+    }, []);
+
     if (!src || !alt) {
         return null;
     }
@@ -29,8 +36,7 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
     if (src.startsWith("youtube")) {
         return (
             <YouTubeVideo
-                screenWidth={global.window?.innerWidth || 0}
-                pageNameForLog={"markDown embedded"}
+                screenWidth={screenWidth}
                 videoId={alt}
                 buttonLabel={
                     src.includes("-")
@@ -45,6 +51,18 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
         return <VocabList genreName={alt} />;
     }
     return (
-        <img src={src} alt={alt} title={alt} className={styles.renderedImg} />
+        <Img
+            src={src}
+            alt={alt}
+            title={alt}
+            autoHeight
+            maxHeight={450}
+            containerStyle={imgInArticleStyle}
+        />
     );
 };
+
+export const imgInArticleStyle = css({
+    filter: "drop-shadow(0 0 3px white) drop-shadow(0 0 6px white) drop-shadow(0 0 9px white) drop-shadow(0 0 10px white)",
+    margin: "0px auto 20px",
+});

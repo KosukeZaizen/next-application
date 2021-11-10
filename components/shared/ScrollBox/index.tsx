@@ -1,13 +1,15 @@
+import { SerializedStyles } from "@emotion/utils";
+import React from "react";
 import styles from "./style.module.css";
 
 interface Props {
-    style?: React.CSSProperties;
+    pCss?: SerializedStyles;
     children: React.ReactNode;
 }
 export const ScrollBox = (props: Props) => {
-    const { children, style } = props;
+    const { children, pCss } = props;
     return (
-        <div style={style} className={styles["style-scroll"]}>
+        <div css={pCss} className={styles["style-scroll"]}>
             {children}
         </div>
     );
