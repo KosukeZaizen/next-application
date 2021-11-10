@@ -6,8 +6,8 @@ export const whiteShadow = Array.from(Array(50).keys())
     .map(n => `0 0 ${n / 10}px white`)
     .join(",");
 
-export const linkShadowStyle: SerializedStyles = css`
-    text-shadow: initial;
-    background-color: white;
-    box-shadow: ${whiteShadow};
-`;
+export const linkShadowStyle: SerializedStyles = css({
+    textShadow: "initial",
+    backgroundColor: "white",
+    boxShadow: whiteShadow,
+});
