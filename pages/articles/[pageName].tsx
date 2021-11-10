@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import React from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
+import { Author } from "../../components/articles/Author";
 import { Layout } from "../../components/articles/Layout";
 import { Markdown } from "../../components/articles/Markdown";
 import {
@@ -144,6 +145,8 @@ export function ArticleContent({
                 imgNumber={(imgNumber - 1 || 3) - 1 || 3}
                 screenWidth={width}
             />
+            <hr />
+            <Author style={css({ marginTop: 45 })} screenWidth={width} />
             <hr />
             <section>
                 <h2 css={h2Style}>More Articles</h2>

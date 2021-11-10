@@ -20,7 +20,9 @@ export const FBShareBtn = (props: TFBProps) => {
                 src={BLOB_URL + "/vocabulary-quiz/img/shareOnFacebook.png"}
                 alt="Share on Facebook"
                 containerStyle={style}
-                autoHeight
+                layout="intrinsic"
+                width={200}
+                height={32}
             />
         </ATargetBlank>
     );
@@ -43,7 +45,9 @@ export const TwitterShareBtn = (props: TTWProps) => {
                 src={BLOB_URL + "/vocabulary-quiz/img/shareOnTwitter.png"}
                 alt="Share on Twitter"
                 containerStyle={style}
-                autoHeight
+                layout="intrinsic"
+                width={200}
+                height={32}
             />
         </ATargetBlank>
     );
