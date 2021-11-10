@@ -106,10 +106,7 @@ export function PersonComment(props: CommentProps) {
                     src={image}
                     alt="Kosuke Zaizen"
                     title="Kosuke Zaizen"
-                    containerStyle={css({
-                        maxWidth: 300,
-                        verticalAlign: "top",
-                    })}
+                    containerStyle={c.pcImg}
                     autoHeight
                 />
             </div>
@@ -148,6 +145,10 @@ const c = getClasses({
         maxWidth: 300,
         objectFit: "contain",
         margin: "auto",
+    },
+    pcImg: {
+        maxWidth: 300,
+        verticalAlign: "top",
     },
     imgContainer: { margin: "0 auto 20px" },
     margin10: { margin: 10 },
