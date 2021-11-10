@@ -36,17 +36,19 @@ function AutoHeightImg(props: AutoHeightProps) {
     return (
         <div
             css={[
-                css({
-                    width,
-                    "& > div": {
-                        position: "unset !important" as any,
-                    },
+                {
+                    width: width,
                     "& img": {
                         maxHeight: maxHeight
                             ? `${maxHeight}px !important`
                             : undefined,
                     },
-                }),
+                },
+                css`
+                    & > div {
+                        position: unset !important;
+                    }
+                `,
                 containerStyle,
             ]}
         >
@@ -61,7 +63,7 @@ function AutoHeightImg(props: AutoHeightProps) {
 }
 
 const inlineStyle = css({ position: "relative" });
-const autoHeightImgStyle = css({
-    height: "unset !important" as any,
-    position: "relative !important" as any,
-});
+const autoHeightImgStyle = css`
+    height: unset !important;
+    position: relative !important;
+`;

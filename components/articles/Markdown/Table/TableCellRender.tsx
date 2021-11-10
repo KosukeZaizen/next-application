@@ -9,7 +9,6 @@ export function TableCellRender({
     children: JSX.Element | JSX.Element[];
     isHeader: boolean;
     align: "left" | "right" | "center";
-    [key: string]: any;
 }) {
     const content = Children.map(children, c => {
         if (c.props.value === "<br />") {
