@@ -1,8 +1,7 @@
 {
-  "files.eol": "\n",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true,
     "source.fixAll.eslint": true
   },
   "appService.defaultWebAppToDeploy": "/subscriptions/847fd013-d3ed-4a13-b7a7-342cc2291e1b/resourceGroups/NetworkWatcherRG/providers/Microsoft.Web/sites/next-application",

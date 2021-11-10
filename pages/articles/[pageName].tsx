@@ -39,7 +39,7 @@ interface Props extends Page {
     pageName: string;
 }
 
-export function getImgNumber(num: number = 0) {
+export function getImgNumber(num = 0) {
     const today = new Date();
     const todayNumber = today.getMonth() + today.getDate() + num;
     const mod = todayNumber % 30;

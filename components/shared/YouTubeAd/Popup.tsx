@@ -21,7 +21,7 @@ export const PopupAd = () => {
                 setIsTimerStarted(true);
                 setTimeout(() => setIsShown(true), 10);
             };
-            var body = document.querySelector("body");
+            const body = document.querySelector("body");
             if (!body) {
                 return;
             }
