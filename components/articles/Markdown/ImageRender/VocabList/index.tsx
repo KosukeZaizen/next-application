@@ -34,11 +34,13 @@ export function VocabList({ genreName }: { genreName: string }) {
                 href={`${Z_APPS_TOP_URL}/vocabulary-list#${encodeURIComponent(
                     genreAndVocab.vocabGenre.genreName
                 )}`}
-                style={{
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                    ...linkShadowStyle,
-                }}
+                css={[
+                    {
+                        marginRight: "auto",
+                        marginLeft: "auto",
+                    },
+                    linkShadowStyle,
+                ]}
             >
                 {"Check all vocab lists >>"}
             </ATargetBlank>

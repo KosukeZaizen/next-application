@@ -110,20 +110,23 @@ export const SeasonAnimation = ({
     return (
         <>
             {!isFestivalHidden && (
-                <Img
-                    alt="japanese festival"
-                    title="japanese festival"
-                    src={appsPublicImg + "japanese-festival.png"}
-                    containerStyle={css`
+                <div
+                    css={css`
                         position: absolute;
                         width: 128%;
                         top: ${80 - screenWidth * 0.34}px;
                         left: ${-(screenWidth * 0.28)}px;
                         z-index: -110;
                     `}
-                    autoHeight
-                    loading="eager"
-                />
+                >
+                    <Img
+                        alt="japanese festival"
+                        title="japanese festival"
+                        src={appsPublicImg + "japanese-festival.png"}
+                        autoHeight
+                        loading="eager"
+                    />
+                </div>
             )}
             <FallingImages
                 seasonItems={seasonItems}
@@ -204,7 +207,10 @@ function FallingImg({
                 src={appsPublicImg + seasonItem.fileName}
                 alt={`${seasonItem.alt} ${l.id}`}
                 title={`${seasonItem.alt} ${l.id}`}
-                containerStyle={css({ width: 50 * scale, height: 50 * scale })}
+                containerStyle={{
+                    width: 50 * scale,
+                    height: 50 * scale,
+                }}
             />
         </div>
     );

@@ -1,16 +1,17 @@
 import { css, SerializedStyles } from "@emotion/react";
 import NextImage, { ImageProps } from "next/image";
 import React from "react";
+import { Css } from "../../../lib/css";
 
 type Props = NormalImgProps | AutoHeightProps;
 
 interface NormalImgProps extends ImageProps {
-    containerStyle?: SerializedStyles;
+    containerStyle?: SerializedStyles | Css;
 }
 interface AutoHeightProps extends ImageProps {
     autoHeight: true;
     maxHeight?: number;
-    containerStyle?: SerializedStyles;
+    containerStyle?: SerializedStyles | Css;
 }
 
 export function Img(props: Props) {
@@ -21,7 +22,7 @@ export function Img(props: Props) {
     const { containerStyle, ...rest } = props;
     if (containerStyle) {
         return (
-            <div css={[inlineStyle, containerStyle]}>
+            <div css={[relative, containerStyle]}>
                 <NextImage layout="fill" objectFit="contain" {...rest} />
             </div>
         );
@@ -49,6 +50,7 @@ function AutoHeightImg(props: AutoHeightProps) {
                         position: unset !important;
                     }
                 `,
+                relative,
                 containerStyle,
             ]}
         >
@@ -62,7 +64,7 @@ function AutoHeightImg(props: AutoHeightProps) {
     );
 }
 
-const inlineStyle = css({ position: "relative" });
+const relative = css({ position: "relative" });
 const autoHeightImgStyle = css`
     height: unset !important;
     position: relative !important;
