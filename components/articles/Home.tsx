@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
-import { getClasses } from "../../lib/css";
+import { css, getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "../../pages/articles/[pageName]";
 import CharacterComment from "../shared/CharacterComment";
@@ -27,10 +27,9 @@ export default function Home({ pages }: { pages: Page[] }) {
                     imgNumber={imgNumber}
                     screenWidth={screenWidth}
                     comment={description.split("! ").map((d, i, arr) => (
-                        <span key={i}>
-                            {d + (i < arr.length - 1 ? "! " : "")}
-                        </span>
+                        <p key={i}>{d + (i < arr.length - 1 ? "! " : "")}</p>
                     ))}
+                    commentStyle={c.comment}
                 />
                 <div css={c.container}>
                     <ArticlesList
@@ -56,6 +55,10 @@ const c = getClasses({
         },
         whiteShadowStyle,
     ],
+    comment: {
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
     container: { margin: "20px 0" },
     red: { color: "red" },
     author: { marginTop: 45 },
