@@ -207,10 +207,9 @@ function FallingImg({
                 src={appsPublicImg + seasonItem.fileName}
                 alt={`${seasonItem.alt} ${l.id}`}
                 title={`${seasonItem.alt} ${l.id}`}
-                containerStyle={{
-                    width: 50 * scale,
-                    height: 50 * scale,
-                }}
+                layout="fixed"
+                width={50 * scale}
+                height={50 * scale}
             />
         </div>
     );

@@ -22,7 +22,7 @@ export function Img(props: Props) {
     const { containerStyle, ...rest } = props;
     if (containerStyle) {
         return (
-            <div css={[relative, containerStyle]}>
+            <div css={[containerStyle, parentRelative]}>
                 <NextImage layout="fill" objectFit="contain" {...rest} />
             </div>
         );
@@ -45,13 +45,8 @@ function AutoHeightImg(props: AutoHeightProps) {
                             : undefined,
                     },
                 },
-                css`
-                    & > div {
-                        position: unset !important;
-                    }
-                `,
-                relative,
                 containerStyle,
+                parentRelative,
             ]}
         >
             <NextImage
@@ -64,8 +59,12 @@ function AutoHeightImg(props: AutoHeightProps) {
     );
 }
 
-const relative = css({ position: "relative" });
 const autoHeightImgStyle = css`
     height: unset !important;
     position: relative !important;
+`;
+const parentRelative = css`
+    & > div {
+        position: relative !important;
+    }
 `;
