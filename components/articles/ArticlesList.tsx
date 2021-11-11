@@ -81,10 +81,14 @@ export function ArticlesList({
                                         <AutoHeightImg
                                             alt={page.title}
                                             src={page.imgPath}
-                                            maxHeight={150}
                                             objectFit={"cover"}
+                                            maxHeight={isWide ? 150 : undefined}
+                                            width={
+                                                isWide
+                                                    ? "100%"
+                                                    : screenWidth - 155
+                                            }
                                             containerStyle={{
-                                                width: "100%",
                                                 margin: 0,
                                             }}
                                         />
