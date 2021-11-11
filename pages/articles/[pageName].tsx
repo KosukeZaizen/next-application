@@ -4,7 +4,13 @@ import Link from "next/link";
 import React from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Author } from "../../components/articles/Author";
-import { Layout } from "../../components/articles/Layout";
+import {
+    centerStyle,
+    getImgNumber,
+    h1TitleCss,
+    Layout,
+    whiteShadowStyle,
+} from "../../components/articles/Layout";
 import { Markdown } from "../../components/articles/Markdown";
 import {
     FBShareBtn,
@@ -40,15 +46,6 @@ interface Props extends Page {
     pageName: string;
 }
 
-export function getImgNumber(num = 0) {
-    const today = new Date();
-    const todayNumber = today.getMonth() + today.getDate() + num;
-    const mod = todayNumber % 30;
-    if (mod > 22) return 2;
-    if (mod > 14) return 3;
-    return 1;
-}
-
 const Articles = ({
     title,
     description,
@@ -61,20 +58,18 @@ const Articles = ({
     const { screenWidth, screenHeight } = useScreenSize();
     return (
         <Layout screenWidth={screenWidth} screenHeight={screenHeight}>
-            <div css={containerCss}>
-                <Helmet title={title} desc={description} />
-                <ArticleContent
-                    title={title}
-                    description={description}
-                    width={screenWidth}
-                    content={articleContent}
-                    adsense={true}
-                    otherArticles={otherArticles}
-                    indexInfo={indexInfo}
-                    imgNumber={imgNumber}
-                    pageName={pageName}
-                />
-            </div>
+            <Helmet title={title} desc={description} />
+            <ArticleContent
+                title={title}
+                description={description}
+                width={screenWidth}
+                content={articleContent}
+                adsense={true}
+                otherArticles={otherArticles}
+                indexInfo={indexInfo}
+                imgNumber={imgNumber}
+                pageName={pageName}
+            />
         </Layout>
     );
 };
@@ -350,50 +345,12 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
         }
     };
 
-export const whiteShadowStyle = css({
-    textShadow: `0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,
-        0px 0px 4px white, 0px 0px 5px white, 0px 0px 5px white,
-        0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
-        0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
-        0px 0px 5px white, 0px 0px 5px white, 0px 0px 5px white,
-        0px 0px 6px white, 1px 1px 6px white, -1px 1px 6px white,
-        1px -1px 6px white, -1px -1px 6px white, 2px 2px 6px white,
-        -2px 2px 6px white, 2px -2px 6px white, -2px -2px 6px white,
-        3px 3px 6px white, -3px 3px 6px white, 3px -3px 6px white,
-        -3px -3px 6px white, 0px 0px 8px white, 1px 1px 8px white,
-        -1px 1px 8px white, 1px -1px 8px white, -1px -1px 8px white,
-        2px 2px 8px white, -2px 2px 8px white, 2px -2px 8px white,
-        -2px -2px 8px white, 3px 3px 8px white, -3px 3px 8px white,
-        3px -3px 8px white, -3px -3px 8px white, 0px 0px 10px white,
-        1px 1px 10px white, -1px 1px 10px white, 1px -1px 10px white,
-        -1px -1px 10px white, 2px 2px 10px white, -2px 2px 10px white,
-        2px -2px 10px white, -2px -2px 10px white, 3px 3px 10px white,
-        -3px 3px 10px white, 3px -3px 10px white, -3px -3px 10px white,
-        3px 3px 10px white, -3px 3px 10px white, 3px -3px 10px white,
-        -3px -3px 10px white`,
-});
-
-export const centerStyle = css`
-    text-align: center;
-    & * {
-        margin-right: auto;
-        margin-left: auto;
-    }
-`;
-
 const mainCss = css`
     max-width: 800px;
 `;
 
 const articleCss = css`
     text-align: left;
-`;
-
-export const h1TitleCss = css`
-    margin: 25px auto 30px;
-    text-align: center;
-    line-height: 1.3;
-    ${whiteShadowStyle}
 `;
 
 const indexContainerCss = css`
