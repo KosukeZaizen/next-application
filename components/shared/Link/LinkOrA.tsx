@@ -1,20 +1,24 @@
-import { css } from "@emotion/react";
+import { SerializedStyles } from "@emotion/react";
 import Link from "next/link";
 import React, { AnchorHTMLAttributes } from "react";
 import { ATargetBlank } from "./ATargetBlank";
 
-export function LinkOrA(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
-    const { href, style, ...rest } = props;
+interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
+    pCss?: SerializedStyles;
+}
+
+export function LinkOrA(props: Props) {
+    const { href, pCss, ...rest } = props;
     if (!href) {
         return null;
     }
 
     if (href.startsWith("https://")) {
-        return <ATargetBlank {...props} style={style} />;
+        return <ATargetBlank {...props} pCss={pCss} />;
     }
     return (
         <Link href={href}>
-            <a {...rest} css={css({ ...style })} />
+            <a {...rest} css={pCss} />
         </Link>
     );
 }

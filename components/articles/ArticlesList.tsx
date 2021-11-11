@@ -1,4 +1,5 @@
 import * as React from "react";
+import { getClasses } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
 import { AutoHeightImg } from "../shared/Img";
 import { LinkOrA } from "../shared/Link/LinkOrA";
@@ -27,19 +28,12 @@ export function ArticlesList({
         <>
             {articles.length > 0 ? (
                 articles.map(page => (
-                    <article
-                        key={page.title}
-                        style={{
-                            marginBottom: 45,
-                            textAlign: "left",
-                            maxWidth: 900,
-                        }}
-                    >
+                    <article key={page.title} css={c.article}>
                         <ScrollBox>
                             <LinkOrA href={`${url}/${page.url}`}>
                                 {titleH === "h3" ? (
                                     <h3
-                                        style={{
+                                        css={{
                                             fontSize: isWide
                                                 ? "xx-large"
                                                 : "x-large",
@@ -51,7 +45,7 @@ export function ArticlesList({
                                     </h3>
                                 ) : (
                                     <h2
-                                        style={{
+                                        css={{
                                             fontSize: isWide
                                                 ? "xx-large"
                                                 : "x-large",
@@ -63,7 +57,7 @@ export function ArticlesList({
                                 )}
                             </LinkOrA>
                             <div
-                                style={{
+                                css={{
                                     display: "flex",
                                     flexDirection: isWide ? "row" : "column",
                                     marginTop: 25,
@@ -72,11 +66,7 @@ export function ArticlesList({
                                 {page.imgPath && (
                                     <LinkOrA
                                         href={`${url}/${page.url}`}
-                                        style={{
-                                            display: "inline-block",
-                                            flex: 1,
-                                            position: "relative",
-                                        }}
+                                        pCss={c.articleLink}
                                     >
                                         <AutoHeightImg
                                             alt={page.title}
@@ -88,22 +78,13 @@ export function ArticlesList({
                                                     ? "100%"
                                                     : screenWidth - 155
                                             }
-                                            containerStyle={{
-                                                margin: 0,
-                                            }}
+                                            containerStyle={c.imgContainer}
                                         />
                                     </LinkOrA>
                                 )}
-                                <div
-                                    style={{
-                                        margin: 0,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        flex: 2,
-                                    }}
-                                >
+                                <div css={c.articleDesc}>
                                     <p
-                                        style={{
+                                        css={{
                                             margin: isWide
                                                 ? "0 20px 10px 20px"
                                                 : "10px 0 0",
@@ -125,3 +106,24 @@ export function ArticlesList({
         </>
     );
 }
+
+const c = getClasses({
+    article: {
+        marginBottom: 45,
+        textAlign: "left",
+        maxWidth: 900,
+    },
+    articleDesc: {
+        margin: 0,
+        display: "flex",
+        alignItems: "center",
+        flex: 2,
+    },
+    imgContainer: {
+        margin: 0,
+    },
+    articleLink: {
+        display: "block",
+        flex: 1,
+    },
+});
