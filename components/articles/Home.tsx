@@ -1,15 +1,13 @@
-import Head from "next/head";
-import Link from "next/link";
 import React from "react";
-import { css, getClasses } from "../../lib/css";
+import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "../../pages/articles/[pageName]";
 import CharacterComment from "../shared/CharacterComment";
 import FB from "../shared/FaceBook";
-import { Helmet } from "../shared/Helmet";
 import { ArticlesList } from "./ArticlesList";
 import { Author } from "./Author";
-import { centerStyle, getImgNumber, Layout, whiteShadowStyle } from "./Layout";
+import { Layout, getImgNumber, whiteShadowStyle } from "./Layout";
+import { Helmet } from "../shared/Helmet";
 
 const title = "Articles about Japan";
 const description =
