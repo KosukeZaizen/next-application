@@ -1,5 +1,4 @@
 import * as React from "react";
-import { css } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
 import { AutoHeightImg } from "../shared/Img";
 import { LinkOrA } from "../shared/Link/LinkOrA";
@@ -73,17 +72,21 @@ export function ArticlesList({
                                 {page.imgPath && (
                                     <LinkOrA
                                         href={`${url}/${page.url}`}
-                                        style={{ display: "block", flex: 1 }}
+                                        style={{
+                                            display: "inline-block",
+                                            flex: 1,
+                                            position: "relative",
+                                        }}
                                     >
                                         <AutoHeightImg
                                             alt={page.title}
                                             src={page.imgPath}
-                                            containerStyle={css({
-                                                width: "100%",
-                                                margin: 0,
-                                            })}
                                             maxHeight={150}
                                             objectFit={"cover"}
+                                            containerStyle={{
+                                                width: "100%",
+                                                margin: 0,
+                                            }}
                                         />
                                     </LinkOrA>
                                 )}

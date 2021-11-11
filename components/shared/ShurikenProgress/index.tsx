@@ -12,14 +12,13 @@ interface Props {
 }
 export default function ShurikenProgress({ size, style }: Props) {
     return (
-        <div css={[style, centerStyle]}>
+        <div css={[style, centerStyle, shurikenAnime]}>
             <Img
                 src={shuriken}
                 alt="shuriken"
-                containerStyle={css([
-                    { width: size, height: size },
-                    shurikenAnime,
-                ])}
+                layout="fixed"
+                width={size}
+                height={size}
                 loading="eager"
             />
         </div>

@@ -13,18 +13,7 @@ interface AutoHeightProps extends ImageProps {
     containerStyle?: SerializedStyles | Css;
 }
 
-export function Img(props: Props) {
-    const { containerStyle, ...rest } = props;
-    if (containerStyle) {
-        return (
-            <div css={[containerStyle, parentRelative]}>
-                <NextImage layout="fill" objectFit="contain" {...rest} />
-            </div>
-        );
-    }
-
-    return <NextImage layout="fill" objectFit="contain" {...rest} />;
-}
+export const Img = NextImage;
 
 export function AutoHeightImg({
     maxHeight,
@@ -62,7 +51,10 @@ const autoHeightImgStyle = css`
     position: relative !important;
 `;
 const parentRelative = css`
+    position: relative;
     & > div {
         position: relative !important;
+        width: 100%;
+        height: 100%;
     }
 `;

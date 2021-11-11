@@ -159,7 +159,7 @@ export function ArticleContent({
 
 const fbButtonStyle = css({
     width: 200,
-    marginTop: 10,
+    marginTop: 15,
 });
 
 const twitterButtonStyle = css({
@@ -397,9 +397,4 @@ const characterCommentCss = css`
 const commentCss = css`
     padding-left: 25px;
     padding-right: 20px;
-`;
-
-const containerCss = css`
-    width: 100%;
-    ${centerStyle}
 `;

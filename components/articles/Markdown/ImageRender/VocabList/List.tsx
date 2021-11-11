@@ -154,15 +154,19 @@ class Speaker extends React.Component<
         const { showImg } = this.state;
         const { vocabSound } = this;
         return showImg ? (
-            <Img
-                alt="vocab speaker"
-                title="vocab speaker"
-                src={BLOB_URL + "/vocabulary-quiz/img/speaker.png"}
-                containerStyle={c.img}
-                onClick={() => {
-                    vocabSound && vocabSound.play();
-                }}
-            />
+            <div css={c.img}>
+                <Img
+                    alt="vocab speaker"
+                    title="vocab speaker"
+                    src={BLOB_URL + "/vocabulary-quiz/img/speaker.png"}
+                    onClick={() => {
+                        vocabSound && vocabSound.play();
+                    }}
+                    layout="fixed"
+                    width={30}
+                    height={30}
+                />
+            </div>
         ) : (
             <ShurikenProgress key="circle" size={25} style={c.shuriken} />
         );
@@ -170,7 +174,7 @@ class Speaker extends React.Component<
 }
 
 const c = getClasses({
-    img: { width: 30, height: 30, cursor: "pointer" },
+    img: { cursor: "pointer" },
     shuriken: {
         width: 30,
         height: 30,
