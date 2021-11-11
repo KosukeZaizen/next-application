@@ -32,7 +32,7 @@ export function Img(props: Props) {
 }
 
 function AutoHeightImg(props: AutoHeightProps) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line autofix/no-unused-vars
     const { autoHeight, maxHeight, width, containerStyle, ...rest } = props;
     return (
         <div
