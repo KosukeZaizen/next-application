@@ -3,11 +3,6 @@ import NextImage, { ImageProps } from "next/image";
 import React from "react";
 import { Css } from "../../../lib/css";
 
-type Props = NormalImgProps | AutoHeightProps;
-
-interface NormalImgProps extends ImageProps {
-    containerStyle?: SerializedStyles | Css;
-}
 interface AutoHeightProps extends ImageProps {
     maxHeight?: number;
     containerStyle?: SerializedStyles | Css;
