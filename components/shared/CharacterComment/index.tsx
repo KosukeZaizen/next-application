@@ -2,7 +2,8 @@ import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { BLOB_URL } from "../../../const/public";
 import { getClasses } from "../../../lib/css";
-import { Img } from "../Img";
+import { AutoHeightImg } from "../Img";
+
 import styles from "./CharacterComment.module.css";
 
 type TProps = {
@@ -27,7 +28,7 @@ export default function CharacterComment(props: TProps) {
     return (
         <div css={[classes.container, pCss]} ref={containerRef}>
             <div css={classes.flex1}>
-                <Img
+                <AutoHeightImg
                     src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
                     alt="Japanese ninja"
                     containerStyle={css([
@@ -40,7 +41,6 @@ export default function CharacterComment(props: TProps) {
                         imgStyle,
                         animationStyle,
                     ])}
-                    autoHeight
                 />
             </div>
             <div className={styles.chatting} css={classes.chatting}>

@@ -9,16 +9,11 @@ interface NormalImgProps extends ImageProps {
     containerStyle?: SerializedStyles | Css;
 }
 interface AutoHeightProps extends ImageProps {
-    autoHeight: true;
     maxHeight?: number;
     containerStyle?: SerializedStyles | Css;
 }
 
 export function Img(props: Props) {
-    if ("autoHeight" in props) {
-        return <AutoHeightImg {...props} />;
-    }
-
     const { containerStyle, ...rest } = props;
     if (containerStyle) {
         return (
@@ -31,9 +26,12 @@ export function Img(props: Props) {
     return <NextImage layout="fill" objectFit="contain" {...rest} />;
 }
 
-function AutoHeightImg(props: AutoHeightProps) {
-    // eslint-disable-next-line autofix/no-unused-vars
-    const { autoHeight, maxHeight, width, containerStyle, ...rest } = props;
+export function AutoHeightImg({
+    maxHeight,
+    width,
+    containerStyle,
+    ...rest
+}: AutoHeightProps) {
     return (
         <div
             css={[

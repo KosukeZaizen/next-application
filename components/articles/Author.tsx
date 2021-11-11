@@ -4,7 +4,7 @@ import * as React from "react";
 import { CSSProperties } from "react";
 import { appsPublicImg } from "../../const/public";
 import { css } from "../../lib/css";
-import { Img } from "../shared/Img";
+import { AutoHeightImg } from "../shared/Img";
 import { ScrollBox } from "../shared/ScrollBox";
 import { Markdown } from "./Markdown";
 import { getClasses } from "../../lib/css";
@@ -47,12 +47,11 @@ export const Author = ({ style, screenWidth, isLink }: AuthorProps) => {
             ) : (
                 <div>
                     <div css={c.imgContainer}>
-                        <Img
+                        <AutoHeightImg
                             src={image}
                             alt="Kosuke Zaizen"
                             title="Kosuke Zaizen"
                             containerStyle={c.img}
-                            autoHeight
                         />
                     </div>
                     <div
@@ -102,12 +101,11 @@ export function PersonComment(props: CommentProps) {
             }}
         >
             <div css={c.personContainer}>
-                <Img
+                <AutoHeightImg
                     src={image}
                     alt="Kosuke Zaizen"
                     title="Kosuke Zaizen"
                     containerStyle={c.pcImg}
-                    autoHeight
                 />
             </div>
             <div css={c.chatting}>

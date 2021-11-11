@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { appsPublicImg } from "../../../const/public";
 import { fetchGet } from "../../../lib/fetch";
 import { GetFallingImages } from "../../../pages/api/zApps/fallingImage/getFallingImages";
-import { Img } from "../Img";
+import { AutoHeightImg, Img } from "../Img";
 import { FallingImage } from "./type";
 
 let count = 0;
@@ -119,11 +119,10 @@ export const SeasonAnimation = ({
                         z-index: -110;
                     `}
                 >
-                    <Img
+                    <AutoHeightImg
                         alt="japanese festival"
                         title="japanese festival"
                         src={appsPublicImg + "japanese-festival.png"}
-                        autoHeight
                         loading="eager"
                     />
                 </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { BLOB_URL } from "../../../../const/public";
 import { getClasses } from "../../../../lib/css";
-import { Img } from "../../../shared/Img";
+import { AutoHeightImg } from "../../../shared/Img";
 import ShurikenProgress from "../../../shared/ShurikenProgress";
 
 interface SpeakerProps {
@@ -55,14 +55,13 @@ export class Speaker extends React.Component<
         const { vocabSound } = this;
         return showImg ? (
             <button css={c.greenBtn} className="btn">
-                <Img
+                <AutoHeightImg
                     alt={alt}
                     src={BLOB_URL + "/articles/img/speaker.png"}
                     containerStyle={c.img}
                     onClick={() => {
                         vocabSound && vocabSound.play();
                     }}
-                    autoHeight
                 />
             </button>
         ) : (

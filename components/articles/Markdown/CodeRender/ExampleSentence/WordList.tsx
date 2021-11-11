@@ -1,8 +1,8 @@
 import { Collapse } from "@material-ui/core";
 import React from "react";
 import { getClasses } from "../../../../../lib/css";
-import { centerStyle } from "../../../../../pages/articles/[pageName]";
 import { sentence, word } from "../../../../../types/stories";
+import { centerStyle } from "../../../Layout";
 import markdownStyles from "../../index.module.css";
 
 interface WordListProps {

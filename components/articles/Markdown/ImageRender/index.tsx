@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { css } from "../../../../lib/css";
-import { Img } from "../../../shared/Img";
+import { AutoHeightImg } from "../../../shared/Img";
 import { YouTubeVideo } from "../../../shared/YouTubeVideo";
 import { Speaker } from "./Speaker";
 import { VocabList } from "./VocabList";
@@ -51,11 +51,10 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
         return <VocabList genreName={alt} />;
     }
     return (
-        <Img
+        <AutoHeightImg
             src={src}
             alt={alt}
             title={alt}
-            autoHeight
             maxHeight={450}
             containerStyle={imgInArticleStyle}
         />

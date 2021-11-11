@@ -1,7 +1,7 @@
 import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { appsPublicImg } from "../../../const/public";
-import { centerStyle } from "../../../pages/articles/[pageName]";
+import { centerStyle } from "../../articles/Layout";
 import { Img } from "../Img";
 
 const shuriken = appsPublicImg + "shuriken.png";
