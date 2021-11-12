@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { appsPublicImg } from "../../../const/public";
 import { fetchGet } from "../../../lib/fetch";
 import { GetFallingImages } from "../../../pages/api/zApps/fallingImage/getFallingImages";
-import { AutoHeightImg, Img } from "../Img";
+import { Img } from "../Img";
 import { FallingImage } from "./type";
 
 let count = 0;
@@ -113,17 +113,21 @@ export const SeasonAnimation = ({
                 <div
                     css={css`
                         position: absolute;
-                        width: 128%;
-                        top: ${80 - screenWidth * 0.34}px;
+                        width: ${screenWidth * 1.28}px;
+                        height: ${screenWidth * 1.28 * (21 / 48)}px;
+                        top: ${70 - screenWidth * 0.33}px;
                         left: ${-(screenWidth * 0.28)}px;
                         z-index: -110;
                     `}
                 >
-                    <AutoHeightImg
+                    <Img
                         alt="japanese festival"
                         title="japanese festival"
                         src={appsPublicImg + "japanese-festival.png"}
                         loading="eager"
+                        layout="fixed"
+                        width={screenWidth * 1.28}
+                        height={screenWidth * 1.28 * (21 / 48)}
                     />
                 </div>
             )}
