@@ -107,14 +107,17 @@ export const SeasonAnimation = ({
         };
     }, []);
 
+    const festivalWidth = screenWidth * 1.28;
+    const festivalHeight = festivalWidth * (21 / 48);
+
     return (
         <>
             {!isFestivalHidden && (
                 <div
                     css={css`
                         position: absolute;
-                        width: ${screenWidth * 1.28}px;
-                        height: ${screenWidth * 1.28 * (21 / 48)}px;
+                        width: ${festivalWidth}px;
+                        height: ${festivalHeight}px;
                         top: ${70 - screenWidth * 0.33}px;
                         left: ${-(screenWidth * 0.28)}px;
                         z-index: -110;
@@ -126,8 +129,8 @@ export const SeasonAnimation = ({
                         src={appsPublicImg + "japanese-festival.png"}
                         loading="eager"
                         layout="fixed"
-                        width={screenWidth * 1.28}
-                        height={screenWidth * 1.28 * (21 / 48)}
+                        width={festivalWidth}
+                        height={festivalHeight}
                     />
                 </div>
             )}
