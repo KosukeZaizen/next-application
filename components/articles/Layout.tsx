@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
 
@@ -21,6 +21,12 @@ interface Props {
 }
 
 export function Layout({ children, screenWidth, screenHeight }: Props) {
+    useEffect(() => {
+        const { style } = window.document.body;
+        style.overflowY = "auto";
+        style.overflowX = "hidden";
+    }, []);
+
     return (
         <>
             <AppBar position="static" style={styles.appBar}>

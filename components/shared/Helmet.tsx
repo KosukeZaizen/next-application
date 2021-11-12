@@ -1,7 +1,6 @@
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Helmet as ReactHelmet } from "react-helmet";
-import { getSubDomain } from "../../pages/_app";
 
 export const Helmet = ({
     noindex,
@@ -42,15 +41,3 @@ export const Helmet = ({
         </ReactHelmet>
     );
 };
-
-function useSubDomain() {
-    const [subDomain, setSubDomain] = useState("");
-    useEffect(() => {
-        const sd = getSubDomain();
-        if (sd !== "localhost") {
-            setSubDomain(sd);
-        }
-    }, []);
-
-    return subDomain;
-}

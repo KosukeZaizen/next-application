@@ -7,6 +7,8 @@ import { GetFallingImages } from "../../../pages/api/zApps/fallingImage/getFalli
 import { Img } from "../Img";
 import { FallingImage } from "./type";
 
+const festivalImgPath = appsPublicImg + "japanese-festival.png";
+
 let count = 0;
 let ls: Leaf[] = [];
 let intervalId = 0;
@@ -116,8 +118,6 @@ export const SeasonAnimation = ({
                 <div
                     css={css`
                         position: absolute;
-                        width: ${festivalWidth}px;
-                        height: ${festivalHeight}px;
                         top: ${70 - screenWidth * 0.33}px;
                         left: ${-(screenWidth * 0.28)}px;
                         z-index: -110;
@@ -126,7 +126,7 @@ export const SeasonAnimation = ({
                     <Img
                         alt="japanese festival"
                         title="japanese festival"
-                        src={appsPublicImg + "japanese-festival.png"}
+                        src={festivalImgPath}
                         loading="eager"
                         layout="fixed"
                         width={festivalWidth}

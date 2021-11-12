@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 
 export function useScreenSize() {
-    const [screenWidth, setScreenWidth] = useState(0);
-    const [screenHeight, setScreenHeight] = useState(0);
+    const [screenWidth, setScreenWidth] = useState(300);
+    const [screenHeight, setScreenHeight] = useState(300);
     const { getUnmounted } = useUnmounted();
 
     useEffect(() => {
