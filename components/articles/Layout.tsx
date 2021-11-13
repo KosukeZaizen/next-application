@@ -2,8 +2,8 @@ import { css } from "@emotion/react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Link from "next/link";
 import React, { useEffect } from "react";
+import { A } from "../shared/Link/A";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
 
@@ -39,24 +39,20 @@ export function Layout({ children, screenWidth, screenHeight }: Props) {
                     >
                         <MenuIcon />
                     </IconButton> */}
-                    <Link href="/">
-                        <a>
-                            <Typography
-                                variant="h4"
-                                style={{
-                                    flexGrow: 1,
-                                    fontWeight: "bold",
-                                    color: "white",
-                                    fontSize:
-                                        screenWidth > 600
-                                            ? undefined
-                                            : "x-large",
-                                }}
-                            >
-                                Lingual Ninja
-                            </Typography>
-                        </a>
-                    </Link>
+                    <A href="/">
+                        <Typography
+                            variant="h4"
+                            style={{
+                                flexGrow: 1,
+                                fontWeight: "bold",
+                                color: "white",
+                                fontSize:
+                                    screenWidth > 600 ? undefined : "x-large",
+                            }}
+                        >
+                            Lingual Ninja
+                        </Typography>
+                    </A>
                 </Toolbar>
             </AppBar>
             <div css={mainContainerStyle}>{children}</div>

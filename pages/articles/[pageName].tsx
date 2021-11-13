@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Link from "next/link";
 import React from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Author } from "../../components/articles/Author";
@@ -20,6 +19,7 @@ import {
 import CharacterComment from "../../components/shared/CharacterComment";
 import FB from "../../components/shared/FaceBook";
 import { Helmet, HelmetProps } from "../../components/shared/Helmet";
+import { A } from "../../components/shared/Link/A";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
@@ -190,11 +190,9 @@ function BreadCrumbs({ title }: { title: string }) {
                 itemScope
                 itemType="http://schema.org/ListItem"
             >
-                <Link href="/">
-                    <a itemProp="item" css={breadCrumbsCss}>
-                        <span itemProp="name">{"Home"}</span>
-                    </a>
-                </Link>
+                <A href="/" itemProp="item" pCss={breadCrumbsCss}>
+                    <span itemProp="name">{"Home"}</span>
+                </A>
                 <meta itemProp="position" content="1" />
             </span>
             {" > "}

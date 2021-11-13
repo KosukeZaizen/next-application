@@ -1,5 +1,5 @@
-import Link from "next/link";
 import React from "react";
+import { A } from "../../../shared/Link/A";
 import { ATargetBlank } from "../../../shared/Link/ATargetBlank";
 import { linkShadowStyle } from "./linkShadowStyle";
 
@@ -32,8 +32,8 @@ const LinkRenderBase = ({
         );
     }
     return (
-        <Link href={href}>
-            <a css={style}>{children}</a>
-        </Link>
+        <A href={href} pCss={style}>
+            {children}
+        </A>
     );
 };
