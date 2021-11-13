@@ -17,7 +17,7 @@ interface Props
 export function A({ href, pCss, onClick, ...rest }: Props) {
     return (
         <Link href={href}>
-            {/* Add <a href> for SEO */}
+            {/* Add <a href> for crawlers */}
             <a
                 href={href}
                 css={pCss}
