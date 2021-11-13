@@ -10,6 +10,19 @@ interface AutoHeightProps extends ImageProps {
 
 export const Img = NextImage;
 
+export function CenterImg(props: ImageProps) {
+    return (
+        <Img
+            layout="responsive"
+            width="100%"
+            height="100%"
+            objectFit="contain"
+            objectPosition="50% 50%"
+            {...props}
+        />
+    );
+}
+
 export function AutoHeightImg({
     maxHeight,
     width,

@@ -1,7 +1,7 @@
 import React from "react";
 import { BLOB_URL } from "../../../../const/public";
 import { getClasses } from "../../../../lib/css";
-import { AutoHeightImg } from "../../../shared/Img";
+import { CenterImg } from "../../../shared/Img";
 import ShurikenProgress from "../../../shared/ShurikenProgress";
 
 interface SpeakerProps {
@@ -56,15 +56,16 @@ export class Speaker extends React.Component<
 
         if (showImg) {
             return (
-                <button css={c.greenBtn} className="btn">
-                    <AutoHeightImg
+                <button
+                    css={c.greenBtn}
+                    className="btn"
+                    onClick={() => {
+                        vocabSound && vocabSound.play();
+                    }}
+                >
+                    <CenterImg
                         alt={alt}
                         src={BLOB_URL + "/articles/img/speaker.png"}
-                        containerStyle={c.img}
-                        onClick={() => {
-                            vocabSound && vocabSound.play();
-                        }}
-                        width="100%"
                     />
                 </button>
             );
@@ -81,8 +82,6 @@ const c = getClasses({
         minWidth: 40,
         minHeight: 40,
         padding: 5,
-    },
-    img: {
         cursor: "pointer",
         zIndex: 900,
     },
