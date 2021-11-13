@@ -25,7 +25,7 @@ function useSubDomain() {
         const subDomain = getSubDomain();
         const firstPath = location.pathname.split("/")[1];
 
-        if (subDomain !== "localhost" && subDomain !== firstPath) {
+        if (!["localhost", "next-application", firstPath].includes(subDomain)) {
             // subDomain and firstPath don't match
             const arrHost = location.hostname.split(".");
             arrHost[0] = firstPath;
