@@ -1,4 +1,5 @@
 import { SerializedStyles } from "@emotion/utils";
+import Link from "next/link";
 import * as React from "react";
 import { CSSProperties } from "react";
 import { appsPublicImg } from "../../const/public";
@@ -8,7 +9,6 @@ import { ScrollBox } from "../shared/ScrollBox";
 import { Markdown } from "./Markdown";
 import { getClasses } from "../../lib/css";
 import classes from "../shared/CharacterComment/CharacterComment.module.css";
-import { A } from "../shared/Link/A";
 
 const image = appsPublicImg + "KosukeZaizen.jpg";
 
@@ -20,7 +20,13 @@ type AuthorProps = {
 export const Author = ({ style, screenWidth, isLink }: AuthorProps) => {
     const isCommentUsed = screenWidth > 767;
     const isVeryNarrow = screenWidth < 500;
-    const author = isLink ? <A href="/developer">Author</A> : "Author";
+    const author = isLink ? (
+        <Link href="/developer">
+            <a>Author</a>
+        </Link>
+    ) : (
+        "Author"
+    );
 
     return (
         <ScrollBox pCss={css([c.scroll, style])}>
