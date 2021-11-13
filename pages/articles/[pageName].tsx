@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Author } from "../../components/articles/Author";
+import { domain, siteName } from "../../components/articles/Home";
 import {
     centerStyle,
     getImgNumber,
@@ -18,7 +19,7 @@ import {
 } from "../../components/articles/SnsShareButton";
 import CharacterComment from "../../components/shared/CharacterComment";
 import FB from "../../components/shared/FaceBook";
-import { Helmet } from "../../components/shared/Helmet";
+import { Helmet, HelmetProps } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
@@ -44,6 +45,7 @@ interface Props extends Page {
     otherArticles: Page[];
     imgNumber: number;
     pageName: string;
+    helmetProps: HelmetProps;
 }
 
 const Articles = ({
@@ -54,11 +56,12 @@ const Articles = ({
     otherArticles,
     imgNumber,
     pageName,
+    helmetProps,
 }: Props) => {
     const { screenWidth, screenHeight } = useScreenSize();
     return (
         <Layout screenWidth={screenWidth} screenHeight={screenHeight}>
-            <Helmet title={title} desc={description} />
+            <Helmet {...helmetProps} />
             <ArticleContent
                 title={title}
                 description={description}
@@ -337,6 +340,13 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
                     indexInfo,
                     otherArticles,
                     imgNumber: getImgNumber(pageName.length),
+                    helmetProps: {
+                        title: siteName,
+                        desc: description,
+                        domain,
+                        ogImg: imgPath,
+                        siteName,
+                    },
                 },
                 revalidate: 10,
             };

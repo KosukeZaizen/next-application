@@ -19,11 +19,9 @@ export class Speaker extends React.Component<
 
     constructor(props: SpeakerProps) {
         super(props);
-
         this.state = {
             showImg: false,
         };
-
         this.didUnmount = false;
     }
 
@@ -40,7 +38,9 @@ export class Speaker extends React.Component<
         this.vocabSound.src = src;
 
         this.vocabSound.oncanplaythrough = () => {
-            if (!this.didUnmount) this.setState({ showImg: true });
+            if (!this.didUnmount) {
+                this.setState({ showImg: true });
+            }
         };
         this.vocabSound.load();
     };
@@ -53,31 +53,41 @@ export class Speaker extends React.Component<
         const { alt } = this.props;
         const { showImg } = this.state;
         const { vocabSound } = this;
-        return showImg ? (
-            <button css={c.greenBtn} className="btn">
-                <AutoHeightImg
-                    alt={alt}
-                    src={BLOB_URL + "/articles/img/speaker.png"}
-                    containerStyle={c.img}
-                    onClick={() => {
-                        vocabSound && vocabSound.play();
-                    }}
-                />
-            </button>
-        ) : (
-            <ShurikenProgress key="circle" size="100%" style={c.shuriken} />
-        );
+
+        if (showImg) {
+            return (
+                <button css={c.greenBtn} className="btn">
+                    <AutoHeightImg
+                        alt={alt}
+                        src={BLOB_URL + "/articles/img/speaker.png"}
+                        containerStyle={c.img}
+                        onClick={() => {
+                            vocabSound && vocabSound.play();
+                        }}
+                        width="100%"
+                    />
+                </button>
+            );
+        }
+        return <ShurikenProgress key="circle" size={40} style={c.shuriken} />;
     }
 }
 
 const c = getClasses({
-    greenBtn: { backgroundColor: "green", width: "20%", maxWidth: 70 },
+    greenBtn: {
+        backgroundColor: "green",
+        width: "20%",
+        maxWidth: 70,
+        minWidth: 40,
+        minHeight: 40,
+        padding: 5,
+    },
     img: {
         cursor: "pointer",
         zIndex: 900,
     },
     shuriken: {
         width: "60%",
-        maxWidth: 30,
+        maxWidth: 40,
     },
 });

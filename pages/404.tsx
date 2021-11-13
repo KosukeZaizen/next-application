@@ -4,7 +4,13 @@ import { Helmet } from "../components/shared/Helmet";
 function PageNotFound() {
     return (
         <>
-            <Helmet noindex />
+            <Helmet
+                title={"Page not found"}
+                desc={"The page was not found."}
+                domain={""}
+                siteName={""}
+                noindex
+            />
             <h1>The page was not found.</h1>
         </>
     );

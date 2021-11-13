@@ -14,7 +14,7 @@ export function LinkOrA(props: Props) {
     }
 
     if (href.startsWith("https://")) {
-        return <ATargetBlank {...props} pCss={pCss} />;
+        return <ATargetBlank {...props} pCss={pCss} href={href} />;
     }
     return (
         <Link href={href}>

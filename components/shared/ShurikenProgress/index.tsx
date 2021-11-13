@@ -1,7 +1,6 @@
 import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { appsPublicImg } from "../../../const/public";
-import { centerStyle } from "../../articles/Layout";
 import { Img } from "../Img";
 
 const shuriken = appsPublicImg + "shuriken.png";
@@ -12,7 +11,7 @@ interface Props {
 }
 export default function ShurikenProgress({ size, style }: Props) {
     return (
-        <div css={[style, centerStyle, shurikenAnime]}>
+        <div css={[style, shurikenAnime]}>
             <Img
                 src={shuriken}
                 alt="shuriken"
@@ -20,12 +19,16 @@ export default function ShurikenProgress({ size, style }: Props) {
                 width={size}
                 height={size}
                 loading="eager"
+                objectFit="contain"
             />
         </div>
     );
 }
 
 const shurikenAnime = css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     animation: shurikenProgress 1s infinite;
     @keyframes shurikenProgress {
         0% {

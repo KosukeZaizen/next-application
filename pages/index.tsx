@@ -1,10 +1,11 @@
 import { GetServerSideProps } from "next";
 import React from "react";
-import Articles from "../components/articles/Home";
-import { fetchZApps } from "../lib/fetch";
-import { Page } from "./articles/[pageName]";
+import Articles, {
+    ArticlesHomeProps,
+    getArticleHomeProps,
+} from "../components/articles/Home";
 
-type Props = { type: "articles"; pages: Page[] };
+type Props = ArticlesHomeProps;
 
 export default function Home(props: Props) {
     switch (props.type) {
@@ -24,12 +25,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     },
 }) => {
     console.log("host", host);
-    const response: Response = await fetchZApps("api/Articles/GetAllArticles");
-    const pages: Page[] = await response.json();
-    return {
-        props: {
-            type: "articles",
-            pages,
-        },
-    };
+
+    // Articles
+    const props = await getArticleHomeProps();
+
+    return { props };
 };
