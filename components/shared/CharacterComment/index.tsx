@@ -14,6 +14,7 @@ type TProps = {
     commentStyle?: SerializedStyles;
     imgStyle?: SerializedStyles;
     containerRef?: React.RefObject<HTMLDivElement>;
+    loading?: "eager" | "lazy";
 };
 export default function CharacterComment(props: TProps) {
     const {
@@ -24,6 +25,7 @@ export default function CharacterComment(props: TProps) {
         commentStyle,
         imgStyle,
         containerRef,
+        loading,
     } = props;
     return (
         <div css={[classes.container, pCss]} ref={containerRef}>
@@ -41,6 +43,7 @@ export default function CharacterComment(props: TProps) {
                         imgStyle,
                         animationStyle,
                     ])}
+                    loading={loading}
                 />
             </div>
             <div className={styles.chatting} css={classes.chatting}>
