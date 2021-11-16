@@ -173,7 +173,7 @@ function FallingImages({
         return null;
     }
     return (
-        <>
+        <div css={fallingAnimation}>
             {leaves.map(l => (
                 <FallingImg
                     key={l.id}
@@ -182,7 +182,7 @@ function FallingImages({
                     l={l}
                 />
             ))}
-        </>
+        </div>
     );
 }
 
@@ -197,17 +197,11 @@ function FallingImg({
 }) {
     return (
         <div
-            css={[
-                {
-                    willChange: "animation",
-                    backfaceVisibility: "hidden",
-                    position: "fixed",
-                    top: -1.5 * 90 * scale,
-                    left: l.initialX,
-                    zIndex: -100,
-                },
-                fallingAnimation,
-            ]}
+            style={{
+                top: -1.5 * 90 * scale,
+                left: l.initialX,
+            }}
+            className="fallingImg"
         >
             <Img
                 src={appsPublicImg + seasonItem.fileName}
@@ -222,11 +216,21 @@ function FallingImg({
 }
 
 const fallingAnimation = css`
+    & .fallingImg {
+        will-change: animation;
+        backface-visibility: hidden;
+        position: fixed;
+        z-index: -100;
+    }
     @media only screen and (max-width: 600px) {
-        animation: fallSmall 40s 1s ease-out;
+        & .fallingImg {
+            animation: fallSmall 40s 1s ease-out;
+        }
     }
     @media only screen and (min-width: 601px) {
-        animation: fall 25s 1s ease-out;
+        & .fallingImg {
+            animation: fall 25s 1s ease-out;
+        }
     }
     @keyframes fallSmall {
         0% {
