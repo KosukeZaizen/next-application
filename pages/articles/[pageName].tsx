@@ -342,7 +342,7 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
                     otherArticles,
                     imgNumber: getImgNumber(pageName.length),
                     helmetProps: {
-                        title: siteName,
+                        title,
                         desc: description,
                         domain,
                         ogImg: imgPath,

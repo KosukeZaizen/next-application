@@ -22,7 +22,7 @@ export const Helmet = ({
     siteName,
 }: HelmetProps) => {
     const router = useRouter();
-    const path = router.pathname;
+    const path = router.asPath;
     const url = `https://${domain}${path}`;
     const subDomain = domain.split(".")[0];
 
@@ -49,7 +49,7 @@ export const Helmet = ({
             <link
                 rel="icon"
                 type="image/png"
-                href={`${subDomain}Favicon.ico`}
+                href={`/${subDomain}Favicon.ico`}
                 sizes="16x16"
             />
         </ReactHelmet>
