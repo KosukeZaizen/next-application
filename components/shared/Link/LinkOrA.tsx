@@ -18,7 +18,7 @@ export function LinkOrA(props: Props) {
     }
     return (
         <Link href={href}>
-            <a {...rest} css={pCss} href={href} />
+            <a {...rest} css={pCss} />
         </Link>
     );
 }
