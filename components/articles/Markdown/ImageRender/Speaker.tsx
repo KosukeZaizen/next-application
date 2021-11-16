@@ -1,7 +1,6 @@
 import React from "react";
 import { BLOB_URL } from "../../../../const/public";
 import { getClasses } from "../../../../lib/css";
-import { CenterImg } from "../../../shared/Img";
 import ShurikenProgress from "../../../shared/ShurikenProgress";
 
 interface SpeakerProps {
@@ -63,9 +62,18 @@ export class Speaker extends React.Component<
                         vocabSound && vocabSound.play();
                     }}
                 >
-                    <CenterImg
+                    <img
                         alt={alt}
                         src={BLOB_URL + "/articles/img/speaker.png"}
+                        style={{
+                            width: "60%",
+                            maxWidth: 60,
+                            cursor: "pointer",
+                            zIndex: 900,
+                        }}
+                        onClick={() => {
+                            vocabSound && vocabSound.play();
+                        }}
                     />
                 </button>
             );
@@ -77,13 +85,6 @@ export class Speaker extends React.Component<
 const c = getClasses({
     greenBtn: {
         backgroundColor: "green",
-        width: "20%",
-        maxWidth: 70,
-        minWidth: 40,
-        minHeight: 40,
-        padding: 5,
-        cursor: "pointer",
-        zIndex: 900,
     },
     shuriken: {
         width: "60%",

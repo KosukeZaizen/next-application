@@ -8,7 +8,6 @@ import LazyLoad from "react-lazyload";
 import { BLOB_URL } from "../../../../../const/public";
 import { getClasses } from "../../../../../lib/css";
 import { vocab, vocabGenre } from "../../../../../types/vocab";
-import { Img } from "../../../../shared/Img";
 import ShurikenProgress from "../../../../shared/ShurikenProgress";
 
 const tableHeadStyle: React.CSSProperties = {
@@ -154,29 +153,23 @@ class Speaker extends React.Component<
         const { showImg } = this.state;
         const { vocabSound } = this;
         return showImg ? (
-            <div css={c.img}>
-                <Img
-                    alt="vocab speaker"
-                    title="vocab speaker"
-                    src={BLOB_URL + "/vocabulary-quiz/img/speaker.png"}
-                    onClick={() => {
-                        vocabSound && vocabSound.play();
-                    }}
-                    layout="fixed"
-                    width={30}
-                    height={30}
-                />
-            </div>
+            <img
+                alt="vocab speaker"
+                src={BLOB_URL + "/vocabulary-quiz/img/speaker.png"}
+                css={{ width: "60%", maxWidth: 30, cursor: "pointer" }}
+                onClick={() => {
+                    vocabSound && vocabSound.play();
+                }}
+            />
         ) : (
-            <ShurikenProgress key="circle" size={25} style={c.shuriken} />
+            <ShurikenProgress size="100%" style={c.shuriken} />
         );
     }
 }
 
 const c = getClasses({
-    img: { cursor: "pointer" },
     shuriken: {
-        width: 30,
-        height: 30,
+        width: "60%",
+        maxWidth: 30,
     },
 });

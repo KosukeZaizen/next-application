@@ -1,7 +1,7 @@
 import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
 import { appsPublicImg } from "../../../const/public";
-import { Img } from "../Img";
+import { getClasses } from "../../../lib/css";
 
 const shuriken = appsPublicImg + "shuriken.png";
 
@@ -11,31 +11,33 @@ interface Props {
 }
 export default function ShurikenProgress({ size, style }: Props) {
     return (
-        <div css={[style, shurikenAnime]}>
-            <Img
+        <div css={[c.container, style]}>
+            <img
                 src={shuriken}
                 alt="shuriken"
-                layout="fixed"
-                width={size}
-                height={size}
-                loading="eager"
-                objectFit="contain"
+                css={[{ width: size, height: size }, c.shuriken]}
             />
         </div>
     );
 }
 
-const shurikenAnime = css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: shurikenProgress 1s infinite;
-    @keyframes shurikenProgress {
-        0% {
-            transform: rotate(0deg);
+const c = getClasses({
+    container: css`
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `,
+    shuriken: css`
+        object-fit: "contain";
+        object-position: "50% 50%";
+        animation: shurikenProgress 1s infinite;
+        @keyframes shurikenProgress {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-`;
+    `,
+});

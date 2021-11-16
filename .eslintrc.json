@@ -30,7 +30,8 @@
         "@typescript-eslint/no-unsafe-assignment": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": "warn",
-        "unused-imports/no-unused-imports-ts": "warn"
+        "unused-imports/no-unused-imports-ts": "warn",
+        "@next/next/no-img-element": "off"
     },
     "settings": {
         "react": {

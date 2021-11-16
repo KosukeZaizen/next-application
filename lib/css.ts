@@ -12,7 +12,7 @@ export const css: (
 ) => SerializedStyles = emoCss;
 
 export const getClasses = <T extends string>(styles: {
-    [key in T]: CSSObject | [CSSObject, SerializedStyles];
+    [key in T]: CSSObject | SerializedStyles | (CSSObject | SerializedStyles)[];
 }) =>
     (Object.keys(styles) as (keyof typeof styles)[]).reduce((acc, val) => {
         return { ...acc, [val]: emoCss(styles[val]) };
