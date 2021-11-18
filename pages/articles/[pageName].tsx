@@ -61,7 +61,6 @@ const Articles = ({
     helmetProps,
 }: Props) => {
     const { screenWidth, screenHeight } = useScreenSize();
-    const { isCompleteFirstRender } = useIsCompleteFirstRender();
 
     return (
         <Layout
@@ -79,7 +78,6 @@ const Articles = ({
                 indexInfo={indexInfo}
                 imgNumber={imgNumber}
                 pageName={pageName}
-                isCompleteFirstRender={isCompleteFirstRender}
             />
         </Layout>
     );
@@ -103,7 +101,6 @@ interface ArticleContentProps {
     otherArticles: Page[];
     imgNumber: number;
     pageName: string;
-    isCompleteFirstRender: boolean;
 }
 export function ArticleContent({
     title,
@@ -114,8 +111,9 @@ export function ArticleContent({
     otherArticles,
     imgNumber,
     pageName,
-    isCompleteFirstRender,
 }: ArticleContentProps) {
+    const { isCompleteFirstRender } = useIsCompleteFirstRender();
+
     const isWide = width > 991;
 
     return (

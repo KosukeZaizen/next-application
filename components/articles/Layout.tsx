@@ -36,8 +36,6 @@ export function Layout({
         style.overflowX = "hidden";
     }, []);
 
-    const { isFrontend } = useIsFrontend();
-
     return (
         <>
             <Helmet {...helmetProps} />
@@ -71,21 +69,22 @@ export function Layout({
                     </Link>
                 </Toolbar>
             </AppBar>
-            {isFrontend && <div css={mainContainerStyle}>{children}</div>}
+            <div css={mainContainerStyle}>{children}</div>
             <SeasonAnimation
                 frequencySec={2}
                 screenWidth={screenWidth}
                 screenHeight={screenHeight}
             />
             <PopupAd />
-            <LoadingAnimation isFrontend={isFrontend} />
+            <LoadingAnimation />
         </>
     );
 }
 
-const millisecondsToFadeOut = 950;
+const millisecondsToFadeOut = 450;
 
-function LoadingAnimation({ isFrontend }: { isFrontend: boolean }) {
+function LoadingAnimation() {
+    const { isFrontend } = useIsFrontend();
     const [isAnimationShown, setIsAnimationShown] = useState(true);
 
     useEffect(() => {
