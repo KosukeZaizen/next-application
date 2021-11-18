@@ -3,17 +3,18 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { useIsFrontend } from "../../lib/hooks/useIsFrontend";
+import React, { useEffect, useState } from "react";
 import { Helmet, HelmetProps } from "../shared/Helmet";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
 
+const maxZIndex = 2147483647;
 const styles = {
     appBar: {
         backgroundColor: "rgb(34, 34, 34)",
         marginBottom: 20,
+        zIndex: maxZIndex,
     },
 } as const;
 
@@ -22,6 +23,7 @@ interface Props {
     screenWidth: number;
     screenHeight: number;
     helmetProps: HelmetProps;
+    isFrontend: boolean;
 }
 
 export function Layout({
@@ -29,6 +31,7 @@ export function Layout({
     screenWidth,
     screenHeight,
     helmetProps,
+    isFrontend,
 }: Props) {
     useEffect(() => {
         const { style } = window.document.body;
@@ -38,6 +41,7 @@ export function Layout({
 
     return (
         <>
+            <LoadingAnimation isFrontend={isFrontend} />
             <Helmet {...helmetProps} />
             <AppBar position="static" style={styles.appBar}>
                 <Toolbar>
@@ -69,37 +73,53 @@ export function Layout({
                     </Link>
                 </Toolbar>
             </AppBar>
-            <div css={mainContainerStyle}>{children}</div>
+            {isFrontend && <div css={mainContainerStyle}>{children}</div>}
             <SeasonAnimation
                 frequencySec={2}
                 screenWidth={screenWidth}
                 screenHeight={screenHeight}
             />
             <PopupAd />
-            <LoadingAnimation />
         </>
     );
 }
 
-function LoadingAnimation() {
-    const { isFrontend } = useIsFrontend();
+const millisecondsToFadeOut = 950;
 
-    return (
-        <div css={loadingStyle}>
-            <ShurikenProgress size="30%" />
-        </div>
-    );
+function LoadingAnimation({ isFrontend }: { isFrontend: boolean }) {
+    const [isAnimationShown, setIsAnimationShown] = useState(true);
+
+    useEffect(() => {
+        if (isFrontend) {
+            setTimeout(() => {
+                setIsAnimationShown(false);
+            }, millisecondsToFadeOut + 50);
+        }
+    }, [isFrontend]);
+
+    if (isAnimationShown) {
+        return (
+            <div css={[loadingStyle, { opacity: isFrontend ? 0 : 1 }]}>
+                <ShurikenProgress size="30%" />
+            </div>
+        );
+    }
+    return null;
 }
 
 const loadingStyle = css`
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2147483647;
+    z-index: ${maxZIndex - 1};
     background-color: white;
+    transition-property: "opacity";
+    transition-duration: ${millisecondsToFadeOut}ms;
 `;
 
 export const whiteShadowStyle = css({

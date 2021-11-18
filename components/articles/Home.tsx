@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "../../pages/articles/[pageName]";
@@ -9,6 +9,7 @@ import { Author } from "./Author";
 import { Layout, getImgNumber, whiteShadowStyle } from "./Layout";
 import { HelmetProps } from "../shared/Helmet";
 import { fetchZApps } from "../../lib/fetch";
+import { useIsFrontend } from "../../lib/hooks/useIsFrontend";
 
 export const siteName = "Articles about Japan";
 const desc =
@@ -25,12 +26,19 @@ export interface ArticlesHomeProps {
 
 export default function Home({ pages, helmetProps }: ArticlesHomeProps) {
     const { screenWidth, screenHeight } = useScreenSize();
+    const { isFrontend } = useIsFrontend();
+
+    const pagesToShow = useMemo(
+        () => (isFrontend ? pages.slice(0, 3) : pages),
+        [pages, isFrontend]
+    );
 
     return (
         <Layout
             screenWidth={screenWidth}
             screenHeight={screenHeight}
             helmetProps={helmetProps}
+            isFrontend={isFrontend}
         >
             <main css={c.main}>
                 <h1 css={c.h1}>{siteName}</h1>
@@ -46,13 +54,15 @@ export default function Home({ pages, helmetProps }: ArticlesHomeProps) {
                 <div css={c.container}>
                     <ArticlesList
                         titleH={"h2"}
-                        articles={pages}
+                        articles={pagesToShow}
                         screenWidth={screenWidth}
                         imgLoading="noTime"
                     />
-                    <Author style={c.author} screenWidth={screenWidth} />
+                    {isFrontend && (
+                        <Author style={c.author} screenWidth={screenWidth} />
+                    )}
                 </div>
-                <FB style={c.fb} screenWidth={screenWidth} />
+                {isFrontend && <FB style={c.fb} screenWidth={screenWidth} />}
             </main>
         </Layout>
     );
