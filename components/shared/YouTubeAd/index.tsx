@@ -1,8 +1,7 @@
 import { SerializedStyles } from "@emotion/utils";
 import React from "react";
 import { BLOB_URL } from "../../../const/public";
-import { css, getClasses } from "../../../lib/css";
-import { AutoHeightImg } from "../Img";
+import { getClasses } from "../../../lib/css";
 import { ATargetBlank } from "../Link/ATargetBlank";
 
 export const YouTubeAd = ({
@@ -17,13 +16,13 @@ export const YouTubeAd = ({
         href="http://www.youtube.com/channel/UCii35PcojqMUNkSRalUw35g?sub_confirmation=1"
         css={[cs.width500, style]}
     >
-        <AutoHeightImg
+        <img
             src={`${BLOB_URL}/appsPublic/ad/ad1.png`}
             alt="Lingual Ninja YouTube Channel"
-            containerStyle={css({
+            css={{
                 margin: "7px auto",
-            })}
-            width={width || "100%"}
+                width: width || "100%",
+            }}
         />
     </ATargetBlank>
 );

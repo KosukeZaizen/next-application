@@ -1,7 +1,6 @@
 import * as React from "react";
 import { getClasses } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
-import { AutoHeightImg } from "../shared/Img";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
 import ShurikenProgress from "../shared/ShurikenProgress";
@@ -68,17 +67,20 @@ export function ArticlesList({
                                         href={`${url}/${page.url}`}
                                         pCss={c.articleLink}
                                     >
-                                        <AutoHeightImg
+                                        <img
                                             alt={page.title}
                                             src={page.imgPath}
-                                            objectFit={"cover"}
-                                            maxHeight={isWide ? 150 : undefined}
-                                            width={
-                                                isWide
-                                                    ? "100%"
-                                                    : screenWidth - 155
-                                            }
-                                            containerStyle={c.imgContainer}
+                                            css={[
+                                                c.imgContainer,
+                                                {
+                                                    width: isWide
+                                                        ? "100%"
+                                                        : screenWidth - 155,
+                                                    maxHeight: isWide
+                                                        ? 150
+                                                        : undefined,
+                                                },
+                                            ]}
                                         />
                                     </LinkOrA>
                                 )}
@@ -121,6 +123,7 @@ const c = getClasses({
     },
     imgContainer: {
         margin: 0,
+        objectFit: "cover",
     },
     articleLink: {
         display: "block",
