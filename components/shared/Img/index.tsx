@@ -40,7 +40,7 @@ export function AutoHeightImg(props: AutoHeightProps) {
         return <img alt={alt} {...rest} css={containerStyle} />;
     }
 
-    const { maxHeight, width, containerStyle, loading, alt, ...rest } = props;
+    const { maxHeight, width, containerStyle, alt, ...rest } = props;
     return (
         <div
             css={[
@@ -59,7 +59,7 @@ export function AutoHeightImg(props: AutoHeightProps) {
             <NextImage
                 layout="fill"
                 objectFit="contain"
-                loading={loading || "eager"}
+                loading="eager"
                 alt={alt}
                 {...rest}
                 css={autoHeightImgStyle}
