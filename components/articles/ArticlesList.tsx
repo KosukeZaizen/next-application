@@ -26,8 +26,10 @@ export function ArticlesList({
         ? "https://articles.lingual-ninja.com/articles"
         : "/articles";
 
-    const imgWidth = isWide ? "100%" : screenWidth - 155;
-    const imgMaxHeight = isWide ? 150 : undefined;
+    const imgSize = {
+        width: isWide ? "100%" : screenWidth - 155,
+        maxHeight: isWide ? 150 : undefined,
+    };
 
     return (
         <>
@@ -76,16 +78,9 @@ export function ArticlesList({
                                         <AutoHeightImg
                                             alt={page.title}
                                             src={page.imgPath}
-                                            css={[
-                                                c.imgContainer,
-                                                {
-                                                    width: imgWidth,
-                                                    maxHeight: imgMaxHeight,
-                                                },
-                                            ]}
-                                            width={imgWidth}
-                                            maxHeight={imgMaxHeight}
+                                            css={c.imgContainer}
                                             loading={imgLoading}
+                                            {...imgSize}
                                         />
                                     </LinkOrA>
                                 )}

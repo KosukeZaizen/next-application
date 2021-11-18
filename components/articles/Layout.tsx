@@ -4,7 +4,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import React, { useEffect } from "react";
+import { useIsFrontend } from "../../lib/hooks/useIsFrontend";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
+import ShurikenProgress from "../shared/ShurikenProgress";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
 
 const styles = {
@@ -66,9 +68,31 @@ export function Layout({ children, screenWidth, screenHeight }: Props) {
                 screenHeight={screenHeight}
             />
             <PopupAd />
+            <LoadingAnimation />
         </>
     );
 }
+
+function LoadingAnimation() {
+    const { isFrontend } = useIsFrontend();
+
+    return (
+        <div css={loadingStyle}>
+            <ShurikenProgress size="30%" />
+        </div>
+    );
+}
+
+const loadingStyle = css`
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2147483647;
+    background-color: white;
+`;
 
 export const whiteShadowStyle = css({
     textShadow: `0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,

@@ -12,6 +12,7 @@ interface SlowImgProps extends Omit<ImageProps, "loading"> {
 }
 
 interface NoTimeImgProps extends Omit<ImageProps, "loading" | "src" | "alt"> {
+    maxHeight?: number;
     containerStyle?: SerializedStyles | Css;
     loading: "noTime";
     src: string;
@@ -36,8 +37,21 @@ export function CenterImg(props: ImageProps) {
 
 export function AutoHeightImg(props: AutoHeightProps) {
     if (props.loading === "noTime") {
-        const { containerStyle, alt, loading: _loading, ...rest } = props;
-        return <img alt={alt} {...rest} css={containerStyle} />;
+        const {
+            containerStyle,
+            alt,
+            loading: _loading,
+            width,
+            maxHeight,
+            ...rest
+        } = props;
+        return (
+            <img
+                alt={alt}
+                {...rest}
+                css={[containerStyle, { width, maxHeight }]}
+            />
+        );
     }
 
     const { maxHeight, width, containerStyle, alt, ...rest } = props;
