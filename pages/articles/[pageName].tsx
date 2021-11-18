@@ -25,7 +25,7 @@ import ShurikenProgress from "../../components/shared/ShurikenProgress";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
 import { fetchZApps } from "../../lib/fetch";
-import { useIsFrontend } from "../../lib/hooks/useIsFrontend";
+import { useIsCompleteFirstRender } from "../../lib/hooks/useIsFrontend";
 import { useScreenSize } from "../../lib/screenSize";
 
 export interface Page {
@@ -61,14 +61,13 @@ const Articles = ({
     helmetProps,
 }: Props) => {
     const { screenWidth, screenHeight } = useScreenSize();
-    const { isFrontend } = useIsFrontend();
+    const { isCompleteFirstRender } = useIsCompleteFirstRender();
 
     return (
         <Layout
             screenWidth={screenWidth}
             screenHeight={screenHeight}
             helmetProps={helmetProps}
-            isFrontend={isFrontend}
         >
             <ArticleContent
                 title={title}
@@ -80,7 +79,7 @@ const Articles = ({
                 indexInfo={indexInfo}
                 imgNumber={imgNumber}
                 pageName={pageName}
-                isFrontend={isFrontend}
+                isCompleteFirstRender={isCompleteFirstRender}
             />
         </Layout>
     );
@@ -104,7 +103,7 @@ interface ArticleContentProps {
     otherArticles: Page[];
     imgNumber: number;
     pageName: string;
-    isFrontend: boolean;
+    isCompleteFirstRender: boolean;
 }
 export function ArticleContent({
     title,
@@ -115,7 +114,7 @@ export function ArticleContent({
     otherArticles,
     imgNumber,
     pageName,
-    isFrontend,
+    isCompleteFirstRender,
 }: ArticleContentProps) {
     const isWide = width > 991;
 
@@ -133,13 +132,13 @@ export function ArticleContent({
                     loading="noTime"
                 />
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
-                {isFrontend ? (
+                {isCompleteFirstRender ? (
                     <Markdown source={content} style={markdownStyle} />
                 ) : (
                     <ShurikenProgress size="30%" />
                 )}
             </article>
-            {isFrontend && (
+            {isCompleteFirstRender && (
                 <>
                     <CharacterComment
                         comment={[

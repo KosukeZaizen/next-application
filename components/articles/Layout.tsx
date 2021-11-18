@@ -4,6 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useIsFrontend } from "../../lib/hooks/useIsFrontend";
 import { Helmet, HelmetProps } from "../shared/Helmet";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";
@@ -21,7 +22,6 @@ interface Props {
     screenWidth: number;
     screenHeight: number;
     helmetProps: HelmetProps;
-    isFrontend: boolean;
 }
 
 export function Layout({
@@ -29,13 +29,14 @@ export function Layout({
     screenWidth,
     screenHeight,
     helmetProps,
-    isFrontend,
 }: Props) {
     useEffect(() => {
         const { style } = window.document.body;
         style.overflowY = "auto";
         style.overflowX = "hidden";
     }, []);
+
+    const { isFrontend } = useIsFrontend();
 
     return (
         <>

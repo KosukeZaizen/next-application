@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 
-export function useIsFrontend() {
-    const [isFrontend, setIsFrontend] = useState(false);
+export function useIsCompleteFirstRender() {
+    const [isCompleteFirstRender, setIsCompleteFirstRender] = useState(false);
 
     useEffect(() => {
-        setIsFrontend(true);
+        setIsCompleteFirstRender(true);
     }, []);
 
-    return { isFrontend };
+    return { isCompleteFirstRender };
+}
+
+const state = { isFrontend: false };
+export function useIsFrontend() {
+    useEffect(() => {
+        state.isFrontend = true;
+    }, []);
+
+    return { isFrontend: state.isFrontend };
 }
