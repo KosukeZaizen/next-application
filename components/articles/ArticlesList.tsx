@@ -1,6 +1,7 @@
 import * as React from "react";
 import { getClasses } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
+import { AutoHeightImg } from "../shared/Img";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
 import ShurikenProgress from "../shared/ShurikenProgress";
@@ -10,18 +11,23 @@ interface ArticlesListProps {
     screenWidth: number;
     titleH: "h2" | "h3";
     isTargetBlank?: boolean;
+    imgLoading: "eager" | "noTime";
 }
 export function ArticlesList({
     articles,
     screenWidth,
     titleH,
     isTargetBlank,
+    imgLoading,
 }: ArticlesListProps) {
     const isWide = screenWidth > 767;
 
     const url = isTargetBlank
         ? "https://articles.lingual-ninja.com/articles"
         : "/articles";
+
+    const imgWidth = isWide ? "100%" : screenWidth - 155;
+    const imgMaxHeight = isWide ? 150 : undefined;
 
     return (
         <>
@@ -67,20 +73,19 @@ export function ArticlesList({
                                         href={`${url}/${page.url}`}
                                         pCss={c.articleLink}
                                     >
-                                        <img
+                                        <AutoHeightImg
                                             alt={page.title}
                                             src={page.imgPath}
                                             css={[
                                                 c.imgContainer,
                                                 {
-                                                    width: isWide
-                                                        ? "100%"
-                                                        : screenWidth - 155,
-                                                    maxHeight: isWide
-                                                        ? 150
-                                                        : undefined,
+                                                    width: imgWidth,
+                                                    maxHeight: imgMaxHeight,
                                                 },
                                             ]}
+                                            width={imgWidth}
+                                            maxHeight={imgMaxHeight}
+                                            loading={imgLoading}
                                         />
                                     </LinkOrA>
                                 )}

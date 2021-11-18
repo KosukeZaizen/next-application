@@ -55,6 +55,7 @@ export default function Home({ pages, helmetProps }: ArticlesHomeProps) {
                         titleH={"h2"}
                         articles={pagesToShow}
                         screenWidth={screenWidth}
+                        imgLoading="noTime"
                     />
                     {isFrontend && (
                         <Author style={c.author} screenWidth={screenWidth} />

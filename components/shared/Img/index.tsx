@@ -3,10 +3,17 @@ import NextImage, { ImageProps } from "next/image";
 import React from "react";
 import { Css } from "../../../lib/css";
 
-interface AutoHeightProps extends Omit<ImageProps, "loading" | "src" | "alt"> {
+type AutoHeightProps = SlowImgProps | NoTimeImgProps;
+
+interface SlowImgProps extends Omit<ImageProps, "loading"> {
     maxHeight?: number;
     containerStyle?: SerializedStyles | Css;
-    loading?: ImageProps["loading"] | "noTime";
+    loading?: ImageProps["loading"];
+}
+
+interface NoTimeImgProps extends Omit<ImageProps, "loading" | "src" | "alt"> {
+    containerStyle?: SerializedStyles | Css;
+    loading: "noTime";
     src: string;
     alt: string;
 }
@@ -27,18 +34,13 @@ export function CenterImg(props: ImageProps) {
     );
 }
 
-export function AutoHeightImg({
-    maxHeight,
-    width,
-    containerStyle,
-    loading,
-    alt,
-    ...rest
-}: AutoHeightProps) {
-    if (loading === "noTime") {
-        return <img alt={alt} {...rest} />;
+export function AutoHeightImg(props: AutoHeightProps) {
+    if (props.loading === "noTime") {
+        const { containerStyle, alt, loading: _loading, ...rest } = props;
+        return <img alt={alt} {...rest} css={containerStyle} />;
     }
 
+    const { maxHeight, width, containerStyle, loading, alt, ...rest } = props;
     return (
         <div
             css={[

@@ -166,6 +166,7 @@ export function ArticleContent({
                             titleH={"h3"}
                             articles={otherArticles}
                             screenWidth={width}
+                            imgLoading="noTime"
                         />
                     </section>
                     <hr />
