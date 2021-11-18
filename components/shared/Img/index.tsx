@@ -8,9 +8,7 @@ interface AutoHeightProps extends ImageProps {
     containerStyle?: SerializedStyles | Css;
 }
 
-export const Img = (props: ImageProps) => (
-    <NextImage loading="eager" {...props} />
-);
+export const Img = NextImage;
 
 export function CenterImg(props: ImageProps) {
     return (
@@ -20,6 +18,7 @@ export function CenterImg(props: ImageProps) {
             height="100%"
             objectFit="contain"
             objectPosition="50% 50%"
+            loading="eager"
             {...props}
         />
     );
