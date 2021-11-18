@@ -123,6 +123,7 @@ export function ArticleContent({
                     comment={description}
                     css={characterCommentCss}
                     commentStyle={commentCss}
+                    loading="eager"
                 />
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
                 {isFrontend ? (
