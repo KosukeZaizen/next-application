@@ -21,9 +21,11 @@ import CharacterComment from "../../components/shared/CharacterComment";
 import FB from "../../components/shared/FaceBook";
 import { Helmet, HelmetProps } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
+import ShurikenProgress from "../../components/shared/ShurikenProgress";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
 import { fetchZApps } from "../../lib/fetch";
+import { useIsFrontend } from "../../lib/hooks/useIsFrontend";
 import { useScreenSize } from "../../lib/screenSize";
 
 export interface Page {
@@ -108,6 +110,8 @@ export function ArticleContent({
 }: ArticleContentProps) {
     const isWide = width > 991;
 
+    const { isFrontend } = useIsFrontend();
+
     return (
         <main css={mainCss}>
             <BreadCrumbs title={title} />
@@ -121,41 +125,52 @@ export function ArticleContent({
                     commentStyle={commentCss}
                 />
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
-                <Markdown source={content} style={markdownStyle} />
+                {isFrontend ? (
+                    <Markdown source={content} style={markdownStyle} />
+                ) : (
+                    <ShurikenProgress size="20%" />
+                )}
             </article>
-            <CharacterComment
-                comment={[
-                    <p key="commentContent">
-                        {"If you like this article, please share!"}
-                    </p>,
-                    <FBShareBtn
-                        key="fbShareButton"
-                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
-                        style={fbButtonStyle}
-                    />,
-                    <TwitterShareBtn
-                        key="twitterShareButton"
-                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
-                        textToShare={title}
-                        style={twitterButtonStyle}
-                    />,
-                ]}
-                imgNumber={(imgNumber - 1 || 3) - 1 || 3}
-                screenWidth={width}
-            />
-            <hr />
-            <Author style={css({ marginTop: 45 })} screenWidth={width} />
-            <hr />
-            <section>
-                <h2 css={h2Style}>More Articles</h2>
-                <ArticlesList
-                    titleH={"h3"}
-                    articles={otherArticles}
-                    screenWidth={width}
-                />
-            </section>
-            <hr />
-            <FB style={centerStyle} screenWidth={width} />
+            {isFrontend && (
+                <>
+                    <CharacterComment
+                        comment={[
+                            <p key="commentContent">
+                                {"If you like this article, please share!"}
+                            </p>,
+                            <FBShareBtn
+                                key="fbShareButton"
+                                urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                                style={fbButtonStyle}
+                            />,
+                            <TwitterShareBtn
+                                key="twitterShareButton"
+                                urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                                textToShare={title}
+                                style={twitterButtonStyle}
+                            />,
+                        ]}
+                        imgNumber={(imgNumber - 1 || 3) - 1 || 3}
+                        screenWidth={width}
+                    />
+                    <hr />
+                    <Author
+                        style={css({ marginTop: 45 })}
+                        screenWidth={width}
+                    />
+                    <hr />
+                    <section>
+                        <h2 css={h2Style}>More Articles</h2>
+                        <ArticlesList
+                            titleH={"h3"}
+                            articles={otherArticles}
+                            screenWidth={width}
+                        />
+                    </section>
+                    <hr />
+                    <FB style={centerStyle} screenWidth={width} />
+                </>
+            )}
         </main>
     );
 }
