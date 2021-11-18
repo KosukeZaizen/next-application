@@ -21,6 +21,7 @@ export const YouTubeAd = ({
             alt="Lingual Ninja YouTube Channel"
             css={{
                 margin: "7px auto",
+                height: "auto",
                 width: width || "100%",
             }}
         />
@@ -30,6 +31,5 @@ export const YouTubeAd = ({
 const cs = getClasses({
     width500: {
         maxWidth: 500,
-        width: "100%",
     },
 });
