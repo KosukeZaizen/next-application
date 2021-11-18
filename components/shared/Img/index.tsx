@@ -3,9 +3,12 @@ import NextImage, { ImageProps } from "next/image";
 import React from "react";
 import { Css } from "../../../lib/css";
 
-interface AutoHeightProps extends ImageProps {
+interface AutoHeightProps extends Omit<ImageProps, "loading" | "src" | "alt"> {
     maxHeight?: number;
     containerStyle?: SerializedStyles | Css;
+    loading?: ImageProps["loading"] | "noTime";
+    src: string;
+    alt: string;
 }
 
 export const Img = NextImage;
@@ -28,8 +31,14 @@ export function AutoHeightImg({
     maxHeight,
     width,
     containerStyle,
+    loading,
+    alt,
     ...rest
 }: AutoHeightProps) {
+    if (loading === "noTime") {
+        return <img alt={alt} {...rest} />;
+    }
+
     return (
         <div
             css={[
@@ -48,7 +57,8 @@ export function AutoHeightImg({
             <NextImage
                 layout="fill"
                 objectFit="contain"
-                loading="eager"
+                loading={loading || "eager"}
+                alt={alt}
                 {...rest}
                 css={autoHeightImgStyle}
             />
