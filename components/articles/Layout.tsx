@@ -9,12 +9,10 @@ import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
 
-const maxZIndex = 2147483647;
 const styles = {
     appBar: {
         backgroundColor: "rgb(34, 34, 34)",
         marginBottom: 20,
-        zIndex: maxZIndex,
     },
 } as const;
 
@@ -41,7 +39,6 @@ export function Layout({
 
     return (
         <>
-            <LoadingAnimation isFrontend={isFrontend} />
             <Helmet {...helmetProps} />
             <AppBar position="static" style={styles.appBar}>
                 <Toolbar>
@@ -80,6 +77,7 @@ export function Layout({
                 screenHeight={screenHeight}
             />
             <PopupAd />
+            <LoadingAnimation isFrontend={isFrontend} />
         </>
     );
 }
@@ -116,7 +114,7 @@ const loadingStyle = css`
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: ${maxZIndex - 1};
+    z-index: 2147483647;
     background-color: white;
     transition-property: "opacity";
     transition-duration: ${millisecondsToFadeOut}ms;
