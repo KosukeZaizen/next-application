@@ -19,7 +19,7 @@ import {
 } from "../../components/articles/SnsShareButton";
 import CharacterComment from "../../components/shared/CharacterComment";
 import FB from "../../components/shared/FaceBook";
-import { Helmet, HelmetProps } from "../../components/shared/Helmet";
+import { HelmetProps } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
@@ -60,8 +60,11 @@ const Articles = ({
 }: Props) => {
     const { screenWidth, screenHeight } = useScreenSize();
     return (
-        <Layout screenWidth={screenWidth} screenHeight={screenHeight}>
-            <Helmet {...helmetProps} />
+        <Layout
+            screenWidth={screenWidth}
+            screenHeight={screenHeight}
+            helmetProps={helmetProps}
+        >
             <ArticleContent
                 title={title}
                 description={description}

@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { useIsFrontend } from "../../lib/hooks/useIsFrontend";
+import { Helmet, HelmetProps } from "../shared/Helmet";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
@@ -20,9 +21,15 @@ interface Props {
     children: React.ReactNode;
     screenWidth: number;
     screenHeight: number;
+    helmetProps: HelmetProps;
 }
 
-export function Layout({ children, screenWidth, screenHeight }: Props) {
+export function Layout({
+    children,
+    screenWidth,
+    screenHeight,
+    helmetProps,
+}: Props) {
     useEffect(() => {
         const { style } = window.document.body;
         style.overflowY = "auto";
@@ -31,6 +38,7 @@ export function Layout({ children, screenWidth, screenHeight }: Props) {
 
     return (
         <>
+            <Helmet {...helmetProps} />
             <AppBar position="static" style={styles.appBar}>
                 <Toolbar>
                     {/* <IconButton

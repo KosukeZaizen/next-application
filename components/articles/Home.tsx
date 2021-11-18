@@ -7,7 +7,7 @@ import FB from "../shared/FaceBook";
 import { ArticlesList } from "./ArticlesList";
 import { Author } from "./Author";
 import { Layout, getImgNumber, whiteShadowStyle } from "./Layout";
-import { Helmet, HelmetProps } from "../shared/Helmet";
+import { HelmetProps } from "../shared/Helmet";
 import { fetchZApps } from "../../lib/fetch";
 
 export const siteName = "Articles about Japan";
@@ -27,8 +27,11 @@ export default function Home({ pages, helmetProps }: ArticlesHomeProps) {
     const { screenWidth, screenHeight } = useScreenSize();
 
     return (
-        <Layout screenWidth={screenWidth} screenHeight={screenHeight}>
-            <Helmet {...helmetProps} />
+        <Layout
+            screenWidth={screenWidth}
+            screenHeight={screenHeight}
+            helmetProps={helmetProps}
+        >
             <main css={c.main}>
                 <h1 css={c.h1}>{siteName}</h1>
                 <CharacterComment
