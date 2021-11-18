@@ -48,7 +48,7 @@ export default function Home({ pages, helmetProps }: ArticlesHomeProps) {
                         <p key={i}>{d + (i < arr.length - 1 ? "! " : "")}</p>
                     ))}
                     commentStyle={c.comment}
-                    loading="eager"
+                    loading="noTime"
                 />
                 <div css={c.container}>
                     <ArticlesList

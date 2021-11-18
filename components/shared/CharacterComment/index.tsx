@@ -14,7 +14,7 @@ type TProps = {
     commentStyle?: SerializedStyles;
     imgStyle?: SerializedStyles;
     containerRef?: React.RefObject<HTMLDivElement>;
-    loading?: "eager" | "lazy";
+    loading?: "eager" | "lazy" | "noTime";
 };
 export default function CharacterComment(props: TProps) {
     const {
@@ -30,20 +30,11 @@ export default function CharacterComment(props: TProps) {
     return (
         <div css={[classes.container, pCss]} ref={containerRef}>
             <div css={classes.flex1}>
-                <AutoHeightImg
-                    src={`${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`}
-                    alt="Japanese ninja"
-                    containerStyle={css([
-                        {
-                            width: (screenWidth * 2) / 10,
-                            maxWidth: 120,
-                            height: "auto",
-                            verticalAlign: "top",
-                        },
-                        imgStyle,
-                        animationStyle,
-                    ])}
+                <CharacterImage
                     loading={loading}
+                    imgNumber={imgNumber}
+                    screenWidth={screenWidth}
+                    imgStyle={imgStyle}
                 />
             </div>
             <div className={styles.chatting} css={classes.chatting}>
@@ -62,6 +53,39 @@ export default function CharacterComment(props: TProps) {
                 </div>
             </div>
         </div>
+    );
+}
+
+function CharacterImage({
+    loading,
+    imgNumber,
+    screenWidth,
+    imgStyle,
+}: Pick<TProps, "loading" | "imgNumber" | "imgStyle" | "screenWidth">) {
+    const src = `${BLOB_URL}/vocabulary-quiz/img/ninja${imgNumber}.png`;
+    const alt = "Japanese ninja";
+    const style = [
+        {
+            width: (screenWidth * 2) / 10,
+            maxWidth: 120,
+            height: "auto",
+            verticalAlign: "top",
+        },
+        imgStyle,
+        animationStyle,
+    ];
+
+    if (loading === "noTime") {
+        return <img src={src} alt={alt} title={alt} css={style} />;
+    }
+    return (
+        <AutoHeightImg
+            src={src}
+            alt={alt}
+            title={alt}
+            containerStyle={css(style)}
+            loading={loading}
+        />
     );
 }
 

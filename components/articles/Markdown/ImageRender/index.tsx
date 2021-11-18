@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { css } from "../../../../lib/css";
+import { AutoHeightImg } from "../../../shared/Img";
 import { YouTubeVideo } from "../../../shared/YouTubeVideo";
 import { Speaker } from "./Speaker";
 import { VocabList } from "./VocabList";
@@ -49,7 +50,15 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
     } else if (src === "vocab") {
         return <VocabList genreName={alt} />;
     }
-    return <img src={src} alt={alt} title={alt} css={imgInArticleStyle} />;
+    return (
+        <AutoHeightImg
+            src={src}
+            alt={alt}
+            title={alt}
+            containerStyle={imgInArticleStyle}
+            maxHeight={450}
+        />
+    );
 };
 
 export const imgInArticleStyle = css({

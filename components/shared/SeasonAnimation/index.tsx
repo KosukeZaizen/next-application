@@ -123,14 +123,12 @@ export const SeasonAnimation = ({
                         z-index: -110;
                     `}
                 >
-                    <Img
+                    <img
                         alt="japanese festival"
                         title="japanese festival"
                         src={festivalImgPath}
                         loading="eager"
-                        layout="fixed"
-                        width={festivalWidth}
-                        height={festivalHeight}
+                        css={{ width: festivalWidth, height: festivalHeight }}
                     />
                 </div>
             )}

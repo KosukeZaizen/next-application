@@ -21,6 +21,7 @@ export const FBShareBtn = ({ style, urlToShare }: TFBProps) => {
                     layout="intrinsic"
                     width={200}
                     height={32}
+                    loading="eager"
                 />
             </div>
         </ATargetBlank>
@@ -47,6 +48,7 @@ export const TwitterShareBtn = (props: TTWProps) => {
                     layout="intrinsic"
                     width={200}
                     height={32}
+                    loading="eager"
                 />
             </div>
         </ATargetBlank>
