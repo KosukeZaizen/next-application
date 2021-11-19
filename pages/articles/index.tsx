@@ -1,9 +1,8 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "./[pageName]";
 import { fetchZApps } from "../../lib/fetch";
-import { useIsCompleteFirstRender } from "../../lib/hooks/useIsFrontend";
 import {
     getImgNumber,
     Layout,
@@ -30,12 +29,6 @@ export interface Props {
 
 export default function Home({ pages, helmetProps }: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
-    const { isCompleteFirstRender } = useIsCompleteFirstRender();
-
-    const pagesToShow = useMemo(
-        () => (isCompleteFirstRender ? pages.slice(0, 3) : pages),
-        [pages, isCompleteFirstRender]
-    );
 
     return (
         <Layout
@@ -57,17 +50,13 @@ export default function Home({ pages, helmetProps }: Props) {
                 <div css={c.container}>
                     <ArticlesList
                         titleH={"h2"}
-                        articles={pagesToShow}
+                        articles={pages}
                         screenWidth={screenWidth}
                         imgLoading="noTime"
                     />
-                    {isCompleteFirstRender && (
-                        <Author style={c.author} screenWidth={screenWidth} />
-                    )}
+                    <Author style={c.author} screenWidth={screenWidth} />
                 </div>
-                {isCompleteFirstRender && (
-                    <FB style={c.fb} screenWidth={screenWidth} />
-                )}
+                <FB style={c.fb} screenWidth={screenWidth} />
             </main>
         </Layout>
     );

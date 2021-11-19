@@ -21,11 +21,9 @@ import CharacterComment from "../../components/shared/CharacterComment";
 import FB from "../../components/shared/FaceBook";
 import { HelmetProps } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
-import ShurikenProgress from "../../components/shared/ShurikenProgress";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
 import { fetchZApps } from "../../lib/fetch";
-import { useIsCompleteFirstRender } from "../../lib/hooks/useIsFrontend";
 import { useScreenSize } from "../../lib/screenSize";
 
 export interface Page {
@@ -112,8 +110,6 @@ export function ArticleContent({
     imgNumber,
     pageName,
 }: ArticleContentProps) {
-    const { isCompleteFirstRender } = useIsCompleteFirstRender();
-
     const isWide = width > 991;
 
     return (
@@ -122,66 +118,55 @@ export function ArticleContent({
             <article css={articleCss}>
                 <h1 css={h1TitleCss}>{title}</h1>
 
-                {isCompleteFirstRender ? (
-                    <CharacterComment
-                        imgNumber={imgNumber}
-                        screenWidth={width}
-                        comment={description}
-                        css={characterCommentCss}
-                        commentStyle={commentCss}
-                        loading="noTime"
-                    />
-                ) : (
-                    <ShurikenProgress size="20%" />
-                )}
+                <CharacterComment
+                    imgNumber={imgNumber}
+                    screenWidth={width}
+                    comment={description}
+                    css={characterCommentCss}
+                    commentStyle={commentCss}
+                    loading="noTime"
+                />
 
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
 
-                {isCompleteFirstRender ? (
-                    <Markdown source={content} style={markdownStyle} />
-                ) : (
-                    <ShurikenProgress size="30%" />
-                )}
+                <Markdown source={content} style={markdownStyle} />
             </article>
-            {isCompleteFirstRender && (
-                <>
-                    <CharacterComment
-                        comment={[
-                            <p key="commentContent">
-                                {"If you like this article, please share!"}
-                            </p>,
-                            <FBShareBtn
-                                key="fbShareButton"
-                                urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
-                                style={fbButtonStyle}
-                            />,
-                            <TwitterShareBtn
-                                key="twitterShareButton"
-                                urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
-                                textToShare={title}
-                                style={twitterButtonStyle}
-                            />,
-                        ]}
-                        imgNumber={(imgNumber - 1 || 3) - 1 || 3}
-                        screenWidth={width}
-                        loading="noTime"
-                    />
-                    <hr />
-                    <Author style={AuthorStyle} screenWidth={width} />
-                    <hr />
-                    <section>
-                        <h2 css={h2Style}>More Articles</h2>
-                        <ArticlesList
-                            titleH={"h3"}
-                            articles={otherArticles}
-                            screenWidth={width}
-                            imgLoading="noTime"
-                        />
-                    </section>
-                    <hr />
-                    <FB style={centerStyle} screenWidth={width} />
-                </>
-            )}
+
+            <CharacterComment
+                comment={[
+                    <p key="commentContent">
+                        {"If you like this article, please share!"}
+                    </p>,
+                    <FBShareBtn
+                        key="fbShareButton"
+                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                        style={fbButtonStyle}
+                    />,
+                    <TwitterShareBtn
+                        key="twitterShareButton"
+                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                        textToShare={title}
+                        style={twitterButtonStyle}
+                    />,
+                ]}
+                imgNumber={(imgNumber - 1 || 3) - 1 || 3}
+                screenWidth={width}
+                loading="noTime"
+            />
+            <hr />
+            <Author style={AuthorStyle} screenWidth={width} />
+            <hr />
+            <section>
+                <h2 css={h2Style}>More Articles</h2>
+                <ArticlesList
+                    titleH={"h3"}
+                    articles={otherArticles}
+                    screenWidth={width}
+                    imgLoading="noTime"
+                />
+            </section>
+            <hr />
+            <FB style={centerStyle} screenWidth={width} />
         </main>
     );
 }

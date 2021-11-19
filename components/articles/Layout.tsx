@@ -3,8 +3,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useIsFrontend } from "../../lib/hooks/useIsFrontend";
+import React, { useEffect } from "react";
+import { useIsFirstRender } from "../../lib/hooks/useIsFrontend";
 import { Helmet, HelmetProps } from "../shared/Helmet";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";
@@ -35,6 +35,8 @@ export function Layout({
         style.overflowY = "auto";
         style.overflowX = "hidden";
     }, []);
+
+    const { isFirstRender } = useIsFirstRender();
 
     return (
         <>
@@ -69,56 +71,39 @@ export function Layout({
                     </Link>
                 </Toolbar>
             </AppBar>
-            <div css={mainContainerStyle}>{children}</div>
-            <SeasonAnimation
-                frequencySec={2}
-                screenWidth={screenWidth}
-                screenHeight={screenHeight}
-            />
-            <PopupAd />
-            <LoadingAnimation />
+            {isFirstRender ? (
+                <div css={shurikenContainerStyle}>
+                    <ShurikenProgress size="100%" style={shurikenStyle} />
+                </div>
+            ) : (
+                <>
+                    <div css={mainContainerStyle}>{children}</div>
+                    <SeasonAnimation
+                        frequencySec={2}
+                        screenWidth={screenWidth}
+                        screenHeight={screenHeight}
+                    />
+                    <PopupAd />
+                </>
+            )}
         </>
     );
 }
 
-const millisecondsToFadeOut = 450;
+const shurikenStyle = css({
+    maxWidth: 200,
+    width: "20%",
+});
 
-function LoadingAnimation() {
-    const { isFrontend } = useIsFrontend();
-    const [isAnimationShown, setIsAnimationShown] = useState(true);
-
-    useEffect(() => {
-        if (isFrontend) {
-            setTimeout(() => {
-                setIsAnimationShown(false);
-            }, millisecondsToFadeOut + 50);
-        }
-    }, [isFrontend]);
-
-    if (isAnimationShown) {
-        return (
-            <div css={[loadingStyle, { opacity: isFrontend ? 0 : 1 }]}>
-                <ShurikenProgress size="30%" />
-            </div>
-        );
-    }
-    return null;
-}
-
-const loadingStyle = css`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2147483647;
-    background-color: white;
-    transition-property: "opacity";
-    transition-duration: ${millisecondsToFadeOut}ms;
-`;
+const shurikenContainerStyle = css({
+    marginTop: 50,
+    zIndex: 0,
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+});
 
 export const whiteShadowStyle = css({
     textShadow: `0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white,
