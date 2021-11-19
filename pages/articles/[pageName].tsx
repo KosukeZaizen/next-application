@@ -121,15 +121,22 @@ export function ArticleContent({
             <BreadCrumbs title={title} />
             <article css={articleCss}>
                 <h1 css={h1TitleCss}>{title}</h1>
-                <CharacterComment
-                    imgNumber={imgNumber}
-                    screenWidth={width}
-                    comment={description}
-                    css={characterCommentCss}
-                    commentStyle={commentCss}
-                    loading="noTime"
-                />
+
+                {isCompleteFirstRender ? (
+                    <CharacterComment
+                        imgNumber={imgNumber}
+                        screenWidth={width}
+                        comment={description}
+                        css={characterCommentCss}
+                        commentStyle={commentCss}
+                        loading="noTime"
+                    />
+                ) : (
+                    <ShurikenProgress size="20%" />
+                )}
+
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
+
                 {isCompleteFirstRender ? (
                     <Markdown source={content} style={markdownStyle} />
                 ) : (
@@ -211,7 +218,7 @@ function BreadCrumbs({ title }: { title: string }) {
                 itemScope
                 itemType="http://schema.org/ListItem"
             >
-                <Link href="/">
+                <Link href="/articles">
                     <a itemProp="item" css={breadCrumbsCss}>
                         <span itemProp="name">{"Home"}</span>
                     </a>

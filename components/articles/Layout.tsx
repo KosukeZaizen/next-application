@@ -49,7 +49,7 @@ export function Layout({
                     >
                         <MenuIcon />
                     </IconButton> */}
-                    <Link href="/">
+                    <Link href="/articles">
                         <a>
                             <Typography
                                 variant="h4"

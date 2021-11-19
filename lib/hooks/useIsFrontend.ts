@@ -16,7 +16,9 @@ export function useIsCompleteFirstRender() {
     const [isCompleteFirstRender, setIsCompleteFirstRender] = useState(false);
 
     useEffect(() => {
-        setIsCompleteFirstRender(true);
+        setTimeout(() => {
+            setIsCompleteFirstRender(true);
+        }, 300);
     }, []);
 
     return { isCompleteFirstRender };
