@@ -1,15 +1,20 @@
 import React, { useMemo } from "react";
 import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
-import { Page } from "../../pages/articles/[pageName]";
-import CharacterComment from "../shared/CharacterComment";
-import FB from "../shared/FaceBook";
-import { ArticlesList } from "./ArticlesList";
-import { Author } from "./Author";
-import { Layout, getImgNumber, whiteShadowStyle } from "./Layout";
-import { HelmetProps } from "../shared/Helmet";
+import { Page } from "./[pageName]";
 import { fetchZApps } from "../../lib/fetch";
 import { useIsCompleteFirstRender } from "../../lib/hooks/useIsFrontend";
+import {
+    getImgNumber,
+    Layout,
+    whiteShadowStyle,
+} from "../../components/articles/Layout";
+import { HelmetProps } from "../../components/shared/Helmet";
+import CharacterComment from "../../components/shared/CharacterComment";
+import { ArticlesList } from "../../components/articles/ArticlesList";
+import { Author } from "../../components/articles/Author";
+import FB from "../../components/shared/FaceBook";
+import { GetStaticProps } from "next";
 
 export const siteName = "Articles about Japan";
 const desc =
@@ -18,13 +23,12 @@ export const domain = "articles.lingual-ninja.com";
 
 const imgNumber = getImgNumber();
 
-export interface ArticlesHomeProps {
-    type: "articles";
+export interface Props {
     pages: Page[];
     helmetProps: HelmetProps;
 }
 
-export default function Home({ pages, helmetProps }: ArticlesHomeProps) {
+export default function Home({ pages, helmetProps }: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
     const { isCompleteFirstRender } = useIsCompleteFirstRender();
 
@@ -89,17 +93,25 @@ const c = getClasses({
     fb: { marginTop: 20, width: "100%", textAlign: "center" },
 });
 
-export async function getArticleHomeProps(): Promise<ArticlesHomeProps> {
-    const response: Response = await fetchZApps("api/Articles/GetAllArticles");
-    const pages: Page[] = await response.json();
-    return {
-        type: "articles",
-        pages,
-        helmetProps: {
-            title: siteName,
-            desc,
-            domain,
-            siteName,
-        },
-    };
-}
+export const getStaticProps: GetStaticProps<Props> = async () => {
+    try {
+        const response: Response = await fetchZApps(
+            "api/Articles/GetAllArticles"
+        );
+        const pages: Page[] = await response.json();
+        return {
+            props: {
+                pages,
+                helmetProps: {
+                    title: siteName,
+                    desc,
+                    domain,
+                    siteName,
+                },
+            },
+            revalidate: 10,
+        };
+    } catch {
+        return { notFound: true, revalidate: 10 };
+    }
+};

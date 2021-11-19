@@ -1,24 +1,12 @@
 import { GetServerSideProps } from "next";
 import React from "react";
-import Articles, {
-    ArticlesHomeProps,
-    getArticleHomeProps,
-} from "../components/articles/Home";
+import ShurikenProgress from "../components/shared/ShurikenProgress";
 
-type Props = ArticlesHomeProps;
-
-export default function Home(props: Props) {
-    switch (props.type) {
-        case "articles": {
-            return <Articles {...props} />;
-        }
-        default: {
-            const _exhaustiveCheck: never = props.type;
-        }
-    }
+export default function Home() {
+    return <ShurikenProgress size="30%" />;
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({
+export const getServerSideProps: GetServerSideProps = async ({
     req: {
         headers: { host },
     },
@@ -26,7 +14,5 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     console.log("host", host);
 
     // Articles
-    const props = await getArticleHomeProps();
-
-    return { props };
+    return { redirect: { permanent: true, destination: "/articles" } };
 };

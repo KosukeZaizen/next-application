@@ -2,9 +2,9 @@ import { css } from "@emotion/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import React from "react";
+import { domain, siteName } from ".";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Author } from "../../components/articles/Author";
-import { domain, siteName } from "../../components/articles/Home";
 import {
     centerStyle,
     getImgNumber,
