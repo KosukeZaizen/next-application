@@ -4,7 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { useIsFirstRender } from "../../lib/hooks/useIsFrontend";
+import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { Helmet, HelmetProps } from "../shared/Helmet";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";

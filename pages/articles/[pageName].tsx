@@ -24,6 +24,8 @@ import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
 import { fetchZApps } from "../../lib/fetch";
+import { useHashScroll } from "../../lib/hooks/useHashScroll";
+import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { useScreenSize } from "../../lib/screenSize";
 
 export interface Page {
@@ -111,6 +113,9 @@ export function ArticleContent({
     pageName,
 }: ArticleContentProps) {
     const isWide = width > 991;
+
+    const { isFirstRender } = useIsFirstRender();
+    useHashScroll(isFirstRender);
 
     return (
         <main css={mainCss}>
