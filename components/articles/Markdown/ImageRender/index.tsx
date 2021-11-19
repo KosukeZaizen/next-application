@@ -57,6 +57,7 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
             title={alt}
             containerStyle={imgInArticleStyle}
             maxHeight={450}
+            loading="noTime"
         />
     );
 };

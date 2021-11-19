@@ -52,6 +52,7 @@ export const Author = ({ style, screenWidth, isLink }: AuthorProps) => {
                             alt="Kosuke Zaizen"
                             title="Kosuke Zaizen"
                             containerStyle={c.img}
+                            loading="noTime"
                         />
                     </div>
                     <div
@@ -106,6 +107,7 @@ export function PersonComment(props: CommentProps) {
                     alt="Kosuke Zaizen"
                     title="Kosuke Zaizen"
                     containerStyle={c.pcImg}
+                    loading="noTime"
                 />
             </div>
             <div css={c.chatting}>

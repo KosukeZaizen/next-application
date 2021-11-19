@@ -68,6 +68,7 @@ export function FolktaleExample({
                 title={folktaleTitle}
                 maxHeight={450}
                 containerStyle={imgInArticleStyle}
+                loading="noTime"
             />
             <div css={c.explanation}>
                 {"Below is a sentence from the folktale "}

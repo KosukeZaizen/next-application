@@ -157,12 +157,10 @@ export function ArticleContent({
                         ]}
                         imgNumber={(imgNumber - 1 || 3) - 1 || 3}
                         screenWidth={width}
+                        loading="noTime"
                     />
                     <hr />
-                    <Author
-                        style={css({ marginTop: 45 })}
-                        screenWidth={width}
-                    />
+                    <Author style={AuthorStyle} screenWidth={width} />
                     <hr />
                     <section>
                         <h2 css={h2Style}>More Articles</h2>
@@ -170,7 +168,7 @@ export function ArticleContent({
                             titleH={"h3"}
                             articles={otherArticles}
                             screenWidth={width}
-                            imgLoading="eager"
+                            imgLoading="noTime"
                         />
                     </section>
                     <hr />
@@ -180,6 +178,8 @@ export function ArticleContent({
         </main>
     );
 }
+
+const AuthorStyle = css({ marginTop: 45 });
 
 const fbButtonStyle = css({
     width: 200,
