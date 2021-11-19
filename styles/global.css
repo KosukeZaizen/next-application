@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: auto !important;
+}
+
 /* Remove underline for abbr in Folktale */
 abbr[title] {
     text-decoration: none;
