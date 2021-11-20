@@ -5,6 +5,9 @@ import { Page } from "./[pageName]";
 
 const topUrl = apps.articles.url;
 
+const SitemapPage = () => null;
+export default SitemapPage;
+
 export const getServerSideProps = async ({
     res,
 }: GetServerSidePropsContext) => {
@@ -19,9 +22,6 @@ export const getServerSideProps = async ({
         props: {},
     };
 };
-
-const SitemapPage = () => null;
-export default SitemapPage;
 
 async function generateSitemapXml(): Promise<string> {
     let xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
