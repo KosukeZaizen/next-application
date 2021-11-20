@@ -1,9 +1,10 @@
+import { Z_APPS_TOP_URL } from "../const/public";
 import { ServerResponse } from "../types/fetch";
 import { getErrorMessage } from "./error";
 
 export function fetchZApps(url: string) {
     console.log("fetch Z-Apps:", url);
-    return fetch(`https://articles.lingual-ninja.com/${url}`);
+    return fetch(`${Z_APPS_TOP_URL}/${url}`);
 }
 
 export type Apis = {
