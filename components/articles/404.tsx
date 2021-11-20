@@ -19,9 +19,7 @@ export default function NotFoundPage() {
                 siteName,
             }}
         >
-            <h1 css={[h1TitleCss, { fontWeight: "bold", marginBottom: 0 }]}>
-                Page not found!
-            </h1>
+            <h1 css={[h1TitleCss, { fontWeight: "bold" }]}>Page not found!</h1>
             <img
                 src={
                     "https://lingualninja.blob.core.windows.net/lingual-storage/appsPublic/img/404.png"
@@ -29,7 +27,7 @@ export default function NotFoundPage() {
                 width="50%"
                 alt="404 error"
                 title="404 error"
-                css={{ margin: "20px 0" }}
+                css={{ marginBottom: 20 }}
             />
             <h2>
                 No match for <code>{router.asPath}</code>
