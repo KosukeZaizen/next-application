@@ -102,12 +102,11 @@ export function PersonComment(props: CommentProps) {
             }}
         >
             <div css={c.personContainer}>
-                <AutoHeightImg
+                <img
                     src={image}
                     alt="Kosuke Zaizen"
                     title="Kosuke Zaizen"
-                    containerStyle={c.pcImg}
-                    loading="noTime"
+                    css={c.pcImg}
                 />
             </div>
             <div css={c.chatting}>
@@ -142,12 +141,13 @@ const c = getClasses({
     personContainer: { flex: 1, marginTop: 6, marginRight: 10 },
     img: {
         width: "100%",
-        maxWidth: 300,
+        // maxWidth: 300,
         objectFit: "contain",
         margin: "auto",
     },
     pcImg: {
-        maxWidth: 300,
+        width: "100%",
+        // maxWidth: 350,
         verticalAlign: "top",
     },
     imgContainer: { margin: "0 auto 20px" },
