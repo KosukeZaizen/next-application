@@ -75,9 +75,8 @@ export function ArticlesList({
                                             <h3
                                                 css={{
                                                     fontSize: isWide
-                                                        ? "xx-large"
+                                                        ? "27px"
                                                         : "x-large",
-                                                    width: "100%",
                                                 }}
                                             >
                                                 {page.title}
@@ -86,7 +85,7 @@ export function ArticlesList({
                                             <h2
                                                 css={{
                                                     fontSize: isWide
-                                                        ? "xx-large"
+                                                        ? "27px"
                                                         : "x-large",
                                                 }}
                                             >
@@ -102,7 +101,10 @@ export function ArticlesList({
                                             margin: 0,
                                         }}
                                     >
-                                        {page.description}
+                                        {page.description.length > 200
+                                            ? page.description.slice(0, 200) +
+                                              "..."
+                                            : page.description}
                                     </p>
                                 </div>
                             </div>
@@ -129,5 +131,7 @@ const c = getClasses({
     articleLink: {
         display: "block",
         flex: 1,
+        maxHeight: 250,
+        overflow: "hidden",
     },
 });
