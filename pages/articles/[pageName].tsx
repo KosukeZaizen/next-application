@@ -37,7 +37,7 @@ export interface Page {
     isAboutFolktale?: boolean;
 }
 
-type IndexInfo = {
+export type IndexInfo = {
     linkText: string;
     encodedUrl: string;
 }[];
@@ -73,7 +73,7 @@ const Articles = ({
                 description={description}
                 width={screenWidth}
                 content={articleContent}
-                adsense={true}
+                // adsense={true}
                 otherArticles={otherArticles}
                 indexInfo={indexInfo}
                 imgNumber={imgNumber}
@@ -97,7 +97,7 @@ interface ArticleContentProps {
     width: number;
     indexInfo: IndexInfo;
     content: string;
-    adsense: boolean;
+    // adsense: boolean;
     otherArticles: Page[];
     imgNumber: number;
     pageName: string;
@@ -161,15 +161,17 @@ export function ArticleContent({
             <hr />
             <Author style={AuthorStyle} screenWidth={width} />
             <hr />
-            <section>
-                <h2 css={h2Style}>More Articles</h2>
-                <ArticlesList
-                    titleH={"h3"}
-                    articles={otherArticles}
-                    screenWidth={width}
-                    imgLoading="noTime"
-                />
-            </section>
+            {otherArticles.length > 0 && (
+                <section>
+                    <h2 css={h2Style}>More Articles</h2>
+                    <ArticlesList
+                        titleH={"h3"}
+                        articles={otherArticles}
+                        screenWidth={width}
+                        imgLoading="noTime"
+                    />
+                </section>
+            )}
             <hr />
             <FB style={centerStyle} screenWidth={width} />
         </main>
@@ -401,6 +403,8 @@ const indexOlCss = css`
 const indexTitleCss = css`
     font-weight: bold;
     font-size: large;
+    margin-left: auto;
+    margin-right: auto;
 `;
 
 const breadCrumbsContainerCss = css`

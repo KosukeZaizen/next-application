@@ -22,6 +22,7 @@ interface Props {
     screenWidth: number;
     screenHeight: number;
     helmetProps: HelmetProps;
+    noSeasonAnimation?: boolean;
 }
 
 export function Layout({
@@ -29,6 +30,7 @@ export function Layout({
     screenWidth,
     screenHeight,
     helmetProps,
+    noSeasonAnimation,
 }: Props) {
     useEffect(() => {
         const { style } = window.document.body;
@@ -78,11 +80,13 @@ export function Layout({
             ) : (
                 <>
                     <div css={mainContainerStyle}>{children}</div>
-                    <SeasonAnimation
-                        frequencySec={2}
-                        screenWidth={screenWidth}
-                        screenHeight={screenHeight}
-                    />
+                    {!noSeasonAnimation && (
+                        <SeasonAnimation
+                            frequencySec={2}
+                            screenWidth={screenWidth}
+                            screenHeight={screenHeight}
+                        />
+                    )}
                     <PopupAd />
                 </>
             )}
