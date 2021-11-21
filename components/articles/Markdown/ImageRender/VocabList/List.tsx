@@ -21,7 +21,6 @@ const tableElementStyle: React.CSSProperties = {
 type TVListProps = {
     g: vocabGenre;
     vocabList: vocab[];
-    noLazyLoad?: boolean;
     style?: React.CSSProperties;
     vocabIncorrectIds?: number[];
     kanjiIncorrectIds?: number[];
@@ -29,7 +28,6 @@ type TVListProps = {
 export function VList({
     g,
     vocabList,
-    noLazyLoad,
     style,
     vocabIncorrectIds,
     kanjiIncorrectIds,
@@ -87,13 +85,9 @@ export function VList({
                             {v.english}
                         </TableCell>
                         <TableCell style={tableElementStyle} align="center">
-                            {noLazyLoad ? (
+                            <LazyLoad>
                                 <Speaker v={v} g={g} />
-                            ) : (
-                                <LazyLoad>
-                                    <Speaker v={v} g={g} />
-                                </LazyLoad>
-                            )}
+                            </LazyLoad>
                         </TableCell>
                     </TableRow>
                 ))}

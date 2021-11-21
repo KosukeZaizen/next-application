@@ -7,6 +7,12 @@
     background: antiquewhite;
 }
 
+.says > * {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .says:after {
     content: "";
     display: inline-block;

@@ -47,7 +47,7 @@ export default function CharacterComment(props: TProps) {
                     loading={loading}
                 />
             </div>
-            <div className={styles.chatting} css={classes.chatting}>
+            <div css={classes.chatting}>
                 <div
                     className={styles.says}
                     css={{

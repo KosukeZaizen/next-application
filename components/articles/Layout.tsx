@@ -132,9 +132,8 @@ export const whiteShadowStyle = css({
         -3px -3px 10px white`,
 });
 
-export const centerStyle = css`
-    text-align: center;
-    & * {
+const centerStyle = css`
+    & > * {
         margin-right: auto;
         margin-left: auto;
     }
@@ -148,7 +147,10 @@ export const h1TitleCss = css`
 `;
 
 const mainContainerStyle = css(
-    { marginRight: 15, marginLeft: 15 },
+    {
+        marginRight: 15,
+        marginLeft: 15,
+    },
     centerStyle
 );
 

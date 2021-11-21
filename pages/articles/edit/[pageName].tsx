@@ -1,3 +1,4 @@
+import { debounce } from "@material-ui/core";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import * as React from "react";
@@ -9,6 +10,10 @@ import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
 import { fetchZApps } from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/screenSize";
 import { ArticleContent, IndexInfo } from "../[pageName]";
+
+const fireWindowScroll = debounce(() => {
+    window.dispatchEvent(new CustomEvent("scroll"));
+}, 100);
 
 export interface Page {
     url?: string;
@@ -27,7 +32,7 @@ interface Props extends Page {
     released?: boolean;
 }
 
-const Articles = ({
+export default function Articles({
     title: pTitle,
     description: pDescription,
     articleContent: pArticleContent,
@@ -37,7 +42,7 @@ const Articles = ({
     indexInfo,
     imgNumber,
     helmetProps,
-}: Props) => {
+}: Props) {
     const [title, setTitle] = useState<Page["title"]>(pTitle);
     const [description, setDescription] =
         useState<Page["description"]>(pDescription);
@@ -106,6 +111,7 @@ const Articles = ({
                         overflowY: "scroll",
                         marginRight: 15,
                     }}
+                    onScroll={fireWindowScroll} // to fire lazy-loading
                 >
                     <ArticleContent
                         pageName={pageName}
@@ -286,8 +292,7 @@ const Articles = ({
             </div>
         </>
     );
-};
-export default Articles;
+}
 
 export const getServerSideProps: GetServerSideProps<
     Props,

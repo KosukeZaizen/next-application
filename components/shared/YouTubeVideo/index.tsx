@@ -15,23 +15,29 @@ export function YouTubeVideo({
     const isWide = screenWidth > 600;
     return (
         <div
-            style={{
+            css={{
                 backgroundColor: isWide ? "rgb(231, 233, 231)" : undefined,
                 padding: "5px 0",
                 border: 0,
                 ...style,
             }}
         >
-            <div style={{ maxWidth: 600 }}>
+            <div
+                css={{
+                    maxWidth: 600,
+                    marginRight: "auto",
+                    marginLeft: "auto",
+                }}
+            >
                 <div
-                    style={{
+                    css={{
                         position: "relative",
                         width: "100%",
                         paddingTop: "56.25%",
                     }}
                 >
                     <iframe
-                        style={{
+                        css={{
                             position: "absolute",
                             top: 0,
                             right: 0,

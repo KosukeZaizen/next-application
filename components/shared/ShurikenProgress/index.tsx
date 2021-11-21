@@ -26,6 +26,8 @@ const c = getClasses({
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-right: auto;
+        margin-left: auto;
     `,
     shuriken: css`
         object-fit: "contain";

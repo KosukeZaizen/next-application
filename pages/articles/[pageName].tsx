@@ -6,7 +6,6 @@ import { domain, siteName } from ".";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Author } from "../../components/articles/Author";
 import {
-    centerStyle,
     getImgNumber,
     h1TitleCss,
     Layout,
@@ -50,7 +49,7 @@ interface Props extends Page {
     helmetProps: HelmetProps;
 }
 
-const Articles = ({
+export default function Articles({
     title,
     description,
     articleContent,
@@ -59,7 +58,7 @@ const Articles = ({
     imgNumber,
     pageName,
     helmetProps,
-}: Props) => {
+}: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
 
     return (
@@ -81,7 +80,7 @@ const Articles = ({
             />
         </Layout>
     );
-};
+}
 
 // export const excludedArticleTitles = ["Kamikaze"];
 export const excludedArticleTitles = [];
@@ -138,22 +137,22 @@ export function ArticleContent({
             </article>
 
             <CharacterComment
-                comment={[
-                    <p key="commentContent">
-                        {"If you like this article, please share!"}
-                    </p>,
-                    <FBShareBtn
-                        key="fbShareButton"
-                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
-                        style={fbButtonStyle}
-                    />,
-                    <TwitterShareBtn
-                        key="twitterShareButton"
-                        urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
-                        textToShare={title}
-                        style={twitterButtonStyle}
-                    />,
-                ]}
+                comment={
+                    <>
+                        <p>{"If you like this article, please share!"}</p>
+                        <FBShareBtn
+                            urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                            imgStyle={fbButtonStyle}
+                            containerStyle={snsButtonContainerStyle}
+                        />
+                        <TwitterShareBtn
+                            urlToShare={`${Z_APPS_TOP_URL}/articles/${pageName}`}
+                            textToShare={title}
+                            imgStyle={twitterButtonStyle}
+                            containerStyle={snsButtonContainerStyle}
+                        />
+                    </>
+                }
                 imgNumber={(imgNumber - 1 || 3) - 1 || 3}
                 screenWidth={width}
                 loading="noTime"
@@ -173,10 +172,12 @@ export function ArticleContent({
                 </section>
             )}
             <hr />
-            <FB style={centerStyle} screenWidth={width} />
+            <FB style={fbStyle} screenWidth={width} />
         </main>
     );
 }
+
+const fbStyle = css({ textAlign: "center" });
 
 const AuthorStyle = css({ marginTop: 45 });
 
@@ -188,6 +189,12 @@ const fbButtonStyle = css({
 const twitterButtonStyle = css({
     width: 200,
     marginTop: 5,
+});
+
+const snsButtonContainerStyle = css({
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
 });
 
 const h2Style = css`
@@ -282,8 +289,6 @@ const adStyle = {
     display: "flex",
     alignItems: "center",
 };
-
-export default Articles;
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const response: Response = await fetchZApps("api/Articles/GetAllArticles");

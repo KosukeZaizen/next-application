@@ -23,7 +23,7 @@ export interface Props {
     helmetProps: HelmetProps;
 }
 
-const ArticlesTop = ({ pages, helmetProps }: Props) => {
+export default function ArticlesTop({ pages, helmetProps }: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
     const [newUrl, setNewUrl] = useState<string>("");
     const [token, setToken] = useState<string>("");
@@ -208,8 +208,7 @@ const ArticlesTop = ({ pages, helmetProps }: Props) => {
             </div>
         </Layout>
     );
-};
-export default ArticlesTop;
+}
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
     const response: Response = await fetchZApps(

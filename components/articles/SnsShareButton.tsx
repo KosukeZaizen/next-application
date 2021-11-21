@@ -4,43 +4,52 @@ import { BLOB_URL } from "../../const/public";
 import { ATargetBlank } from "../shared/Link/ATargetBlank";
 
 type TFBProps = {
-    style: SerializedStyles;
     urlToShare: string;
+    imgStyle?: SerializedStyles;
+    containerStyle?: SerializedStyles;
 };
-export const FBShareBtn = (props: TFBProps) => {
-    const { style, urlToShare } = props;
-
+export const FBShareBtn = ({
+    urlToShare,
+    imgStyle,
+    containerStyle,
+}: TFBProps) => {
     return (
         <ATargetBlank
             href={`https://www.facebook.com/share.php?u=${urlToShare}`}
             nofollow
+            pCss={containerStyle}
         >
             <img
                 src={BLOB_URL + "/vocabulary-quiz/img/shareOnFacebook.png"}
                 alt="Share on Facebook"
-                css={style}
+                css={imgStyle}
             />
         </ATargetBlank>
     );
 };
 
 type TTWProps = {
-    style: SerializedStyles;
     urlToShare: string;
     textToShare: string;
+    imgStyle?: SerializedStyles;
+    containerStyle?: SerializedStyles;
 };
-export const TwitterShareBtn = (props: TTWProps) => {
-    const { style, urlToShare, textToShare } = props;
-
+export const TwitterShareBtn = ({
+    urlToShare,
+    textToShare,
+    imgStyle,
+    containerStyle,
+}: TTWProps) => {
     return (
         <ATargetBlank
             href={`https://twitter.com/share?url=${urlToShare}&text=${textToShare}&hashtags=nihongo,Japanese,LingualNinja`}
             nofollow
+            pCss={containerStyle}
         >
             <img
                 src={BLOB_URL + "/vocabulary-quiz/img/shareOnTwitter.png"}
                 alt="Share on Twitter"
-                css={style}
+                css={imgStyle}
             />
         </ATargetBlank>
     );

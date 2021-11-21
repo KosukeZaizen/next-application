@@ -1,8 +1,8 @@
+import { css } from "@emotion/react";
 import { Collapse } from "@material-ui/core";
 import React from "react";
 import { getClasses } from "../../../../../lib/css";
 import { sentence, word } from "../../../../../types/stories";
-import { centerStyle } from "../../../Layout";
 import markdownStyles from "../../index.module.css";
 
 interface WordListProps {
@@ -56,7 +56,7 @@ export class WordList extends React.Component<
                     )
                 ) : null}
                 <Collapse in={this.state.showWordList} timeout={1000}>
-                    <div css={[cs.listContainer, centerStyle]}>
+                    <div css={[cs.listContainer]}>
                         <table
                             className={`${markdownStyles.exclude} ${markdownStyles.normalFont}`}
                         >
@@ -103,12 +103,13 @@ const cs = getClasses({
         paddingTop: 0,
         color: "white",
     },
-    listContainer: {
-        backgroundColor: "#f8f7f8",
-        maxWidth: 700,
-        marginLeft: 0,
-        marginRight: "auto",
-    },
+    listContainer: css`
+        background-color: #f8f7f8;
+        max-width: 700px;
+        margin-left: 0;
+        margin-right: auto;
+        text-align: center;
+    `,
     japaneseTd: {
         minWidth: 100,
         border: "1px solid",
