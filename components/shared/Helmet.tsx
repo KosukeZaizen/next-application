@@ -43,8 +43,10 @@ export const Helmet = ({
             <meta property="fb:app_id" content="217853132566874" />
             <meta property="fb:page_id" content="491712431290062" />
             <title>{title}</title>
+            <meta property="og:title" content={title} />
             <meta property="og:image:alt" content={title} />
             <meta name="description" content={desc} />
+            <meta property="og:description" content={desc} />
             {noindex && <meta name="robots" content="noindex" />}
             <link
                 rel="icon"
