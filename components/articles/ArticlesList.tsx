@@ -1,7 +1,6 @@
 import * as React from "react";
 import { getClasses } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
-import { AutoHeightImg } from "../shared/Img";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
 import ShurikenProgress from "../shared/ShurikenProgress";
@@ -11,14 +10,12 @@ interface ArticlesListProps {
     screenWidth: number;
     titleH: "h2" | "h3";
     isTargetBlank?: boolean;
-    imgLoading: "eager" | "noTime";
 }
 export function ArticlesList({
     articles,
     screenWidth,
     titleH,
     isTargetBlank,
-    imgLoading,
 }: ArticlesListProps) {
     const isWide = screenWidth > 767;
 
@@ -26,10 +23,12 @@ export function ArticlesList({
         ? "https://articles.lingual-ninja.com/articles"
         : "/articles";
 
-    const imgSize = {
-        width: isWide ? "100%" : screenWidth - 155,
-        maxHeight: isWide ? 150 : undefined,
-    };
+    const imgSize = isWide
+        ? {
+              width: "100%",
+              height: "100%",
+          }
+        : { width: screenWidth - 155 };
 
     return (
         <>
@@ -37,37 +36,10 @@ export function ArticlesList({
                 articles.map(page => (
                     <article key={page.title} css={c.article}>
                         <ScrollBox>
-                            <LinkOrA href={`${url}/${page.url}`}>
-                                {titleH === "h3" ? (
-                                    <h3
-                                        css={{
-                                            fontSize: isWide
-                                                ? "xx-large"
-                                                : "x-large",
-                                            textAlign: "center",
-                                            width: "100%",
-                                        }}
-                                    >
-                                        {page.title}
-                                    </h3>
-                                ) : (
-                                    <h2
-                                        css={{
-                                            fontSize: isWide
-                                                ? "xx-large"
-                                                : "x-large",
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {page.title}
-                                    </h2>
-                                )}
-                            </LinkOrA>
                             <div
                                 css={{
                                     display: "flex",
                                     flexDirection: isWide ? "row" : "column",
-                                    marginTop: 25,
                                 }}
                             >
                                 {page.imgPath && (
@@ -75,24 +47,59 @@ export function ArticlesList({
                                         href={`${url}/${page.url}`}
                                         pCss={c.articleLink}
                                     >
-                                        <AutoHeightImg
+                                        <img
                                             alt={page.title}
                                             src={page.imgPath}
-                                            css={c.imgContainer}
-                                            loading={imgLoading}
-                                            {...imgSize}
+                                            css={[
+                                                {
+                                                    objectFit: "cover",
+                                                    margin: 0,
+                                                },
+                                                imgSize,
+                                            ]}
                                         />
                                     </LinkOrA>
                                 )}
-                                <div css={c.articleDesc}>
-                                    <p
-                                        css={{
+                                <div
+                                    css={[
+                                        c.articleDesc,
+                                        {
                                             margin: isWide
                                                 ? "0 20px 10px 20px"
                                                 : "10px 0 0",
+                                        },
+                                    ]}
+                                >
+                                    <LinkOrA href={`${url}/${page.url}`}>
+                                        {titleH === "h3" ? (
+                                            <h3
+                                                css={{
+                                                    fontSize: isWide
+                                                        ? "xx-large"
+                                                        : "x-large",
+                                                    width: "100%",
+                                                }}
+                                            >
+                                                {page.title}
+                                            </h3>
+                                        ) : (
+                                            <h2
+                                                css={{
+                                                    fontSize: isWide
+                                                        ? "xx-large"
+                                                        : "x-large",
+                                                }}
+                                            >
+                                                {page.title}
+                                            </h2>
+                                        )}
+                                    </LinkOrA>
+                                    <p
+                                        css={{
                                             fontSize: isWide
                                                 ? undefined
                                                 : "medium",
+                                            margin: 0,
                                         }}
                                     >
                                         {page.description}
@@ -117,13 +124,7 @@ const c = getClasses({
     },
     articleDesc: {
         margin: 0,
-        display: "flex",
-        alignItems: "center",
-        flex: 2,
-    },
-    imgContainer: {
-        objectFit: "cover",
-        margin: 0,
+        flex: 1,
     },
     articleLink: {
         display: "block",

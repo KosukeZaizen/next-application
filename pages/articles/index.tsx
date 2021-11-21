@@ -52,7 +52,6 @@ export default function Home({ pages, helmetProps }: Props) {
                         titleH={"h2"}
                         articles={pages}
                         screenWidth={screenWidth}
-                        imgLoading="noTime"
                     />
                     <Author style={c.author} screenWidth={screenWidth} />
                 </div>
