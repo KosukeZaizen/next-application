@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { domain, siteName } from "..";
 import { getImgNumber } from "../../../components/articles/Layout";
 import { checkImgExtension } from "../../../components/articles/Markdown/ImageRender";
-import { HelmetProps } from "../../../components/shared/Helmet";
+import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
 import { fetchZApps } from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/screenSize";
 import { ArticleContent, IndexInfo } from "../[pageName]";
@@ -89,6 +89,7 @@ const Articles = ({
 
     return (
         <>
+            <Helmet {...helmetProps} />
             <div
                 style={{
                     width: "100%",
