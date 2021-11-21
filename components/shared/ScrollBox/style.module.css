@@ -2,8 +2,6 @@
     position: relative;
     margin: 2em auto 2.5em;
     padding: 1.5em;
-    border: 12px solid transparent;
-    border-left-width: 48px;
     background: linear-gradient(#fff, #fff), linear-gradient(#a3caae, #acd1b9);
     background-clip: padding-box, border-box;
     background-origin: border-box;
@@ -14,17 +12,45 @@
     position: absolute;
     content: "";
 }
-.style-scroll:before {
-    left: -36px;
-    top: -32px;
-    width: 24px;
-    height: calc(100% + 64px);
-    background: #4d4d4d;
+
+@media screen and (min-width: 600px) {
+    .style-scroll {
+        border: 12px solid transparent;
+        border-left-width: 48px;
+    }
+    .style-scroll:before {
+        left: -36px;
+        top: -32px;
+        width: 24px;
+        height: calc(100% + 64px);
+        background: #4d4d4d;
+    }
+    .style-scroll:after {
+        left: -48px;
+        top: -20px;
+        width: 48px;
+        height: calc(100% + 40px);
+        background: linear-gradient(#035c1d, #047c28);
+    }
 }
-.style-scroll:after {
-    left: -48px;
-    top: -20px;
-    width: 48px;
-    height: calc(100% + 40px);
-    background: linear-gradient(#035c1d, #047c28);
+
+@media screen and (max-width: 600px) {
+    .style-scroll {
+        border: 10px solid transparent;
+        border-left-width: 42px;
+    }
+    .style-scroll:before {
+        left: -31px;
+        top: -30px;
+        width: 20px;
+        height: calc(100% + 60px);
+        background: #4d4d4d;
+    }
+    .style-scroll:after {
+        left: -42px;
+        top: -20px;
+        width: 42px;
+        height: calc(100% + 40px);
+        background: linear-gradient(#035c1d, #047c28);
+    }
 }

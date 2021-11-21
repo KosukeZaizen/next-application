@@ -148,8 +148,8 @@ export const h1TitleCss = css`
 
 const mainContainerStyle = css(
     {
-        marginRight: 15,
-        marginLeft: 15,
+        marginRight: 10,
+        marginLeft: 10,
     },
     centerStyle
 );

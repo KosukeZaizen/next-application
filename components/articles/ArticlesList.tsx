@@ -1,5 +1,5 @@
 import * as React from "react";
-import { getClasses } from "../../lib/css";
+import { css, getClasses } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
@@ -28,14 +28,20 @@ export function ArticlesList({
               width: "100%",
               height: "100%",
           }
-        : { width: screenWidth - 155 };
+        : { width: "100%" };
 
     return (
         <>
             {articles.length > 0 ? (
                 articles.map(page => (
                     <article key={page.title} css={c.article}>
-                        <ScrollBox>
+                        <ScrollBox
+                            pCss={
+                                isWide
+                                    ? css({ padding: 15 })
+                                    : css({ padding: 10 })
+                            }
+                        >
                             <div
                                 css={{
                                     display: "flex",
@@ -66,7 +72,7 @@ export function ArticlesList({
                                         {
                                             margin: isWide
                                                 ? "0 20px 10px 20px"
-                                                : "10px 0 0",
+                                                : 10,
                                         },
                                     ]}
                                 >
