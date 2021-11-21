@@ -203,6 +203,7 @@ const h2Style = css`
     color: white;
     background: linear-gradient(to top, #035c1d, #047c28);
     border-radius: 5px;
+    text-align: center;
 `;
 
 function BreadCrumbs({ title }: { title: string }) {
