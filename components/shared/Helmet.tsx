@@ -1,6 +1,6 @@
 import { useRouter } from "next/dist/client/router";
 import React from "react";
-import { Helmet as ReactHelmet } from "react-helmet";
+import Head from "next/head";
 
 export interface HelmetProps {
     noindex?: boolean;
@@ -27,7 +27,7 @@ export const Helmet = ({
     const subDomain = domain.split(".")[0];
 
     return (
-        <ReactHelmet>
+        <Head>
             <meta
                 name="twitter:card"
                 content={isHome ? "summary" : "summary_large_image"}
@@ -52,6 +52,6 @@ export const Helmet = ({
                 href={`/${subDomain}Favicon.ico`}
                 sizes="16x16"
             />
-        </ReactHelmet>
+        </Head>
     );
 };
