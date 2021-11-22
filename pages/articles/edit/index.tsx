@@ -172,6 +172,7 @@ export default function ArticlesTop({ pages, helmetProps }: Props) {
                                     style={{ marginBottom: 45 }}
                                 >
                                     <ScrollBox>
+                                        {page.url}
                                         <Link
                                             href={`/articles/edit/${page.url}`}
                                         >

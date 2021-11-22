@@ -2,7 +2,7 @@ import { debounce } from "@material-ui/core";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { domain, siteName } from "..";
 import { getImgNumber } from "../../../components/articles/Layout";
 import { checkImgExtension } from "../../../components/articles/Markdown/ImageRender";
@@ -12,7 +12,7 @@ import {
     fetchZAppsFromServerSide,
 } from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/screenSize";
-import { ArticleContent, IndexInfo } from "../[pageName]";
+import { ArticleContent } from "../[pageName]";
 
 const fireWindowScroll = debounce(() => {
     window.dispatchEvent(new CustomEvent("scroll"));
@@ -28,7 +28,6 @@ export interface Page {
 }
 
 interface Props extends Page {
-    indexInfo: IndexInfo;
     imgNumber: number;
     pageName: string;
     helmetProps: HelmetProps;
@@ -42,7 +41,6 @@ export default function Articles({
     isAboutFolktale: pIsAboutFolktale,
     pageName,
     released,
-    indexInfo,
     imgNumber,
     helmetProps,
 }: Props) {
@@ -53,6 +51,8 @@ export default function Articles({
         useState<Page["articleContent"]>(pArticleContent);
     const [isAboutFolktale, setIsAboutFolktale] =
         useState<Page["isAboutFolktale"]>(pIsAboutFolktale);
+
+    const indexInfo = useMemo(() => makeIndexInfo(content), [content]);
 
     const { screenWidth, screenHeight } = useScreenSize();
     const [token, setToken] = useState("");
@@ -348,16 +348,7 @@ export const getServerSideProps: GetServerSideProps<
         released,
     }: Page = await response.json();
 
-    const indexInfo = articleContent
-        ? articleContent
-              .split("\n")
-              .filter(c => c.includes("##") && !c.includes("###"))
-              .map(c => {
-                  const linkText = c.split("#").join("").trim();
-                  const encodedUrl = encodeURIComponent(linkText);
-                  return { linkText, encodedUrl };
-              })
-        : [];
+    const indexInfo = makeIndexInfo(articleContent);
 
     return {
         props: {
@@ -380,3 +371,16 @@ export const getServerSideProps: GetServerSideProps<
         },
     };
 };
+
+function makeIndexInfo(articleContent: string | undefined) {
+    return articleContent
+        ? articleContent
+              .split("\n")
+              .filter(c => c.includes("##") && !c.includes("###"))
+              .map(c => {
+                  const linkText = c.split("#").join("").trim();
+                  const encodedUrl = encodeURIComponent(linkText);
+                  return { linkText, encodedUrl };
+              })
+        : [];
+}
