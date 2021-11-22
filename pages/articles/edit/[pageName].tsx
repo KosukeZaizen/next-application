@@ -328,13 +328,15 @@ export const getServerSideProps: GetServerSideProps<
     }: Page = await response.json();
 
     const indexInfo = articleContent
-        .split("\n")
-        .filter(c => c.includes("##") && !c.includes("###"))
-        .map(c => {
-            const linkText = c.split("#").join("").trim();
-            const encodedUrl = encodeURIComponent(linkText);
-            return { linkText, encodedUrl };
-        });
+        ? articleContent
+              .split("\n")
+              .filter(c => c.includes("##") && !c.includes("###"))
+              .map(c => {
+                  const linkText = c.split("#").join("").trim();
+                  const encodedUrl = encodeURIComponent(linkText);
+                  return { linkText, encodedUrl };
+              })
+        : [];
 
     return {
         props: {
@@ -356,22 +358,4 @@ export const getServerSideProps: GetServerSideProps<
             released,
         },
     };
-
-    // const response: Response = await fetch(
-    //     `api/Articles/GetArticleForEdit?p=${context.params?.pageName}`
-    // );
-    // const page: Page = await response.json();
-
-    // return {
-    //     props: {
-    //         ...page,
-    //         helmetProps: {
-    //             title: page.title,
-    //             desc: page.description,
-    //             siteName,
-    //             domain,
-    //             noindex: true,
-    //         },
-    //     }, // will be passed to the page component as props
-    // };
 };
