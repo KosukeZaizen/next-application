@@ -44,7 +44,6 @@ export const apiPost =
         res: NextApiResponse<ServerResponse<T["response"]>>
     ): Promise<void> => {
         try {
-            console.log("req", req);
             if (req.method !== "POST") {
                 console.log("Fetch method is not POST");
             }

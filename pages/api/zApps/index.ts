@@ -31,7 +31,7 @@ const handler = async ({
 
         const response = await fetchZAppsFromServerSide(url, {
             method: "POST",
-            body: formData as any,
+            body: formData as unknown as BodyInit,
         });
         return await response.json();
     }

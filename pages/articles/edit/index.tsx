@@ -128,17 +128,10 @@ export default function ArticlesTop({ pages, helmetProps }: Props) {
                                     const response =
                                         await fetchZAppsFromFrontEnd<{
                                             result: string;
-                                        }>(
-                                            "/api/Articles/AddNewUrl",
-                                            {
-                                                method: "POST",
-                                                body: JSON.stringify({
-                                                    url: newUrl,
-                                                    token,
-                                                }),
-                                            },
-                                            true
-                                        );
+                                        }>("/api/Articles/AddNewUrl", {
+                                            method: "POST",
+                                            body: formData,
+                                        });
                                     if (
                                         response.responseType === "system_error"
                                     ) {

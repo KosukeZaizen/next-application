@@ -7,15 +7,20 @@ export function fetchZAppsFromServerSide(url: string, init?: RequestInit) {
     return fetch(`${Z_APPS_TOP_URL}/${url}`, init);
 }
 
-export function fetchZAppsFromFrontEnd<T>(
-    url: string,
-    init?: RequestInit,
-    convertIntoFormData?: boolean
-) {
+export function fetchZAppsFromFrontEnd<T>(url: string, init?: RequestInit) {
+    if (init && init.body instanceof FormData) {
+        const bodyObj = Object.fromEntries(init.body.entries());
+        const _init = { ...init, body: JSON.stringify(bodyObj) };
+        return fetchPost<ZAppsFetch<T>>(`/api/zApps`, {
+            url,
+            init: _init,
+            convertIntoFormData: true,
+        });
+    }
+
     return fetchPost<ZAppsFetch<T>>(`/api/zApps`, {
         url,
         init,
-        convertIntoFormData,
     });
 }
 
