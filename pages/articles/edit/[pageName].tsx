@@ -7,7 +7,10 @@ import { domain, siteName } from "..";
 import { getImgNumber } from "../../../components/articles/Layout";
 import { checkImgExtension } from "../../../components/articles/Markdown/ImageRender";
 import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
-import { fetchZAppsFromServerSide } from "../../../lib/fetch";
+import {
+    fetchZAppsFromFrontEnd,
+    fetchZAppsFromServerSide,
+} from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/screenSize";
 import { ArticleContent, IndexInfo } from "../[pageName]";
 
@@ -81,12 +84,17 @@ export default function Articles({
             );
             formData.append("token", token);
 
-            const response = await fetch("/api/Articles/UpdateContents", {
+            const response = await fetchZAppsFromFrontEnd<{
+                result: string;
+            }>("/api/Articles/UpdateContents", {
                 method: "POST",
                 body: formData,
             });
-            const result: string = await response.text();
-            return result;
+
+            if (response.responseType === "system_error") {
+                return response.message;
+            }
+            return response.result;
         } catch (e) {
             return "Failed to save...";
         }
@@ -120,7 +128,6 @@ export default function Articles({
                         imgNumber={imgNumber}
                         width={screenWidth / 3}
                         content={content}
-                        // adsense={false}
                         otherArticles={[]}
                         indexInfo={indexInfo}
                     />
@@ -229,18 +236,25 @@ export default function Articles({
                         formData.append("url", pageName);
                         formData.append("token", token);
 
-                        fetch("/api/Articles/Register", {
-                            method: "POST",
-                            body: formData,
-                        })
-                            .then(async response => {
-                                const result: string = await response.text();
-                                alert(result);
-                            })
-                            .catch(() => {
-                                alert("Failed to release...");
+                        (async () => {
+                            const response = await fetchZAppsFromFrontEnd<{
+                                result: string;
+                            }>("/api/Articles/Register", {
+                                method: "POST",
+                                body: formData,
                             });
+                            if (response.responseType === "system_error") {
+                                alert(response.message);
+                                return;
+                            }
+                            alert(response.result);
+
+                            if (response.result === "success") {
+                                location.reload();
+                            }
+                        })();
                     }}
+                    disabled={released}
                 >
                     Release
                 </button>
@@ -264,18 +278,25 @@ export default function Articles({
                         formData.append("url", pageName);
                         formData.append("token", token);
 
-                        fetch("/api/Articles/Hide", {
-                            method: "POST",
-                            body: formData,
-                        })
-                            .then(async response => {
-                                const result: string = await response.text();
-                                alert(result);
-                            })
-                            .catch(() => {
-                                alert("Failed to hide...");
+                        (async () => {
+                            const response = await fetchZAppsFromFrontEnd<{
+                                result: string;
+                            }>("/api/Articles/Hide", {
+                                method: "POST",
+                                body: formData,
                             });
+                            if (response.responseType === "system_error") {
+                                alert(response.message);
+                                return;
+                            }
+                            alert(response.result);
+
+                            if (response.result === "success") {
+                                location.reload();
+                            }
+                        })();
                     }}
+                    disabled={!released}
                 >
                     Hide
                 </button>
