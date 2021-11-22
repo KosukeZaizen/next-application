@@ -41,9 +41,15 @@ export default function Home({ pages, helmetProps }: Props) {
                 <CharacterComment
                     imgNumber={imgNumber}
                     screenWidth={screenWidth}
-                    comment={desc.split("! ").map((d, i, arr) => (
-                        <p key={i}>{d + (i < arr.length - 1 ? "! " : "")}</p>
-                    ))}
+                    comment={
+                        <div css={{ textAlign: "left" }}>
+                            {desc.split("! ").map((d, i, arr) => (
+                                <p key={i}>
+                                    {d + (i < arr.length - 1 ? "! " : "")}
+                                </p>
+                            ))}
+                        </div>
+                    }
                     commentStyle={c.comment}
                     loading="noTime"
                 />
