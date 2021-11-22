@@ -1,5 +1,5 @@
 import { GenreAndVocab } from "../../../../components/articles/Markdown/ImageRender/VocabList";
-import { fetchZApps } from "../../../../lib/fetch";
+import { fetchZAppsFromServerSide } from "../../../../lib/fetch";
 import { apiGet } from "../../../../lib/nextApi";
 import { GetParams } from "../../../../types/next";
 
@@ -13,7 +13,7 @@ type Response = GenreAndVocab;
 
 const handler = async ({ genreName }: GetParams<Params>): Promise<Response> => {
     const url = `api/VocabQuiz/GetQuizDataWithoutCache/${genreName}`;
-    const response = await fetchZApps(url);
+    const response = await fetchZAppsFromServerSide(url);
 
     return await response.json();
 };

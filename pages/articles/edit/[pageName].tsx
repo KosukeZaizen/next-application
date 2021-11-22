@@ -7,7 +7,7 @@ import { domain, siteName } from "..";
 import { getImgNumber } from "../../../components/articles/Layout";
 import { checkImgExtension } from "../../../components/articles/Markdown/ImageRender";
 import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
-import { fetchZApps } from "../../../lib/fetch";
+import { fetchZAppsFromServerSide } from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/screenSize";
 import { ArticleContent, IndexInfo } from "../[pageName]";
 
@@ -315,7 +315,7 @@ export const getServerSideProps: GetServerSideProps<
     }
 
     // Article
-    const response: Response = await fetchZApps(
+    const response: Response = await fetchZAppsFromServerSide(
         `api/Articles/GetArticleForEdit?p=${pageName}`
     );
     const {

@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import { apps } from "../../const/public";
-import { fetchZApps } from "../../lib/fetch";
+import { fetchZAppsFromServerSide } from "../../lib/fetch";
 import { Page } from "./[pageName]";
 
 const topUrl = apps.articles.url;
@@ -27,8 +27,12 @@ async function generateSitemapXml(): Promise<string> {
     let xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
 
     const response: Response[] = await Promise.all([
-        fetchZApps("api/Articles/GetAllArticles?isAboutFolktale=false"),
-        fetchZApps("api/Articles/GetAllArticles?isAboutFolktale=true"),
+        fetchZAppsFromServerSide(
+            "api/Articles/GetAllArticles?isAboutFolktale=false"
+        ),
+        fetchZAppsFromServerSide(
+            "api/Articles/GetAllArticles?isAboutFolktale=true"
+        ),
     ]);
     const pages: Page[] = (
         await Promise.all(response.map(r => r.json()))

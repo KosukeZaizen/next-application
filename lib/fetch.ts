@@ -1,10 +1,22 @@
 import { Z_APPS_TOP_URL } from "../const/public";
+import { ZAppsFetch } from "../pages/api/zApps";
 import { ServerResponse } from "../types/fetch";
 import { getErrorMessage } from "./error";
 
-export function fetchZApps(url: string) {
-    console.log("fetch Z-Apps:", url);
-    return fetch(`${Z_APPS_TOP_URL}/${url}`);
+export function fetchZAppsFromServerSide(url: string, init?: RequestInit) {
+    return fetch(`${Z_APPS_TOP_URL}/${url}`, init);
+}
+
+export function fetchZAppsFromFrontEnd<T>(
+    url: string,
+    init?: RequestInit,
+    convertIntoFormData?: boolean
+) {
+    return fetchPost<ZAppsFetch<T>>(`/api/zApps`, {
+        url,
+        init,
+        convertIntoFormData,
+    });
 }
 
 export type Apis = {
@@ -33,17 +45,17 @@ export async function fetchGet<T extends Apis>(
     }
 }
 
-export async function fetchPost<T, U extends ServerResponse<unknown>>(
-    url: string,
-    params: T
-) {
+export async function fetchPost<T extends Apis>(
+    url: T["url"],
+    params: T["params"]
+): Promise<ServerResponse<T["response"]>> {
     try {
         const response = await fetch(url, {
             method: "POST",
             body: JSON.stringify(params),
             headers: { "Content-Type": "application/json" },
         });
-        const result: U = await response.json();
+        const result: ServerResponse<T["response"]> = await response.json();
         return result;
     } catch (e) {
         return {

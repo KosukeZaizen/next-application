@@ -22,7 +22,7 @@ import { HelmetProps } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
-import { fetchZApps } from "../../lib/fetch";
+import { fetchZAppsFromServerSide } from "../../lib/fetch";
 import { useHashScroll } from "../../lib/hooks/useHashScroll";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { useScreenSize } from "../../lib/screenSize";
@@ -291,7 +291,9 @@ const adStyle = {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const response: Response = await fetchZApps("api/Articles/GetAllArticles");
+    const response: Response = await fetchZAppsFromServerSide(
+        "api/Articles/GetAllArticles"
+    );
     const pages: Page[] = await response.json();
     return {
         paths: pages
@@ -322,7 +324,7 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
             }
 
             // Article
-            const response: Response = await fetchZApps(
+            const response: Response = await fetchZAppsFromServerSide(
                 `api/Articles/GetArticle?p=${pageName}`
             );
             const {
@@ -338,7 +340,7 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
             const param = `?num=10&${
                 isAboutFolktale ? "&isAboutFolktale=true" : ""
             }`;
-            const responseOther: Response = await fetchZApps(
+            const responseOther: Response = await fetchZAppsFromServerSide(
                 "api/Articles/GetRandomArticles" + param
             );
             const articles: Page[] = await responseOther.json();

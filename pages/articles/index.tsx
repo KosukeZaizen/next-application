@@ -2,7 +2,7 @@ import React from "react";
 import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "./[pageName]";
-import { fetchZApps } from "../../lib/fetch";
+import { fetchZAppsFromServerSide } from "../../lib/fetch";
 import {
     getImgNumber,
     Layout,
@@ -83,7 +83,7 @@ const c = getClasses({
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
     try {
-        const response: Response = await fetchZApps(
+        const response: Response = await fetchZAppsFromServerSide(
             "api/Articles/GetAllArticles"
         );
         const pages: Page[] = await response.json();

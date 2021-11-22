@@ -12,7 +12,10 @@ import CharacterComment from "../../../components/shared/CharacterComment";
 import { HelmetProps } from "../../../components/shared/Helmet";
 import { ScrollBox } from "../../../components/shared/ScrollBox";
 import ShurikenProgress from "../../../components/shared/ShurikenProgress";
-import { fetchZApps } from "../../../lib/fetch";
+import {
+    fetchZAppsFromFrontEnd,
+    fetchZAppsFromServerSide,
+} from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/screenSize";
 import { Page } from "./[pageName]";
 
@@ -76,7 +79,7 @@ export default function ArticlesTop({ pages, helmetProps }: Props) {
                     />
                     {pages.some(page => page.url === newUrl) && (
                         <p style={{ color: "red" }}>
-                            The url has already been registerd!
+                            The url has already been registered!
                         </p>
                     )}
                     <div
@@ -121,19 +124,33 @@ export default function ArticlesTop({ pages, helmetProps }: Props) {
                                 formData.append("url", newUrl);
                                 formData.append("token", token);
 
-                                fetch("/api/Articles/AddNewUrl", {
-                                    method: "POST",
-                                    body: formData,
-                                })
-                                    .then(async response => {
-                                        const result: string =
-                                            await response.text();
-                                        alert(result);
+                                (async () => {
+                                    const response =
+                                        await fetchZAppsFromFrontEnd<{
+                                            result: string;
+                                        }>(
+                                            "/api/Articles/AddNewUrl",
+                                            {
+                                                method: "POST",
+                                                body: JSON.stringify({
+                                                    url: newUrl,
+                                                    token,
+                                                }),
+                                            },
+                                            true
+                                        );
+                                    if (
+                                        response.responseType === "system_error"
+                                    ) {
+                                        alert(response.message);
+                                        return;
+                                    }
+                                    alert(response.result);
+
+                                    if (response.result === "success") {
                                         location.reload();
-                                    })
-                                    .catch(() => {
-                                        alert("Failed to add...");
-                                    });
+                                    }
+                                })();
                             }}
                         >
                             Add
@@ -211,7 +228,7 @@ export default function ArticlesTop({ pages, helmetProps }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-    const response: Response = await fetchZApps(
+    const response: Response = await fetchZAppsFromServerSide(
         "api/Articles/GetAllArticlesForEdit"
     );
     const pages: Page[] = await response.json();
