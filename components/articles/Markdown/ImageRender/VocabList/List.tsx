@@ -3,7 +3,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
+import React, { useEffect } from "react";
 import LazyLoad from "react-lazyload";
 import { BLOB_URL } from "../../../../../const/public";
 import { getClasses } from "../../../../../lib/css";
@@ -85,9 +85,7 @@ export function VList({
                             {v.english}
                         </TableCell>
                         <TableCell style={tableElementStyle} align="center">
-                            <LazyLoad>
-                                <Speaker v={v} g={g} />
-                            </LazyLoad>
+                            <Speaker v={v} g={g} />
                         </TableCell>
                     </TableRow>
                 ))}
@@ -121,10 +119,6 @@ class Speaker extends React.Component<
         this.didUnmount = false;
     }
 
-    componentDidMount = () => {
-        this.loadSound();
-    };
-
     loadSound = () => {
         const { v, g } = this.props;
 
@@ -156,9 +150,22 @@ class Speaker extends React.Component<
                 }}
             />
         ) : (
-            <ShurikenProgress size="100%" style={c.shuriken} />
+            <>
+                <ShurikenProgress size="100%" style={c.shuriken} />
+                <LazyLoad>
+                    <SoundLoader load={this.loadSound} />
+                </LazyLoad>
+            </>
         );
     }
+}
+
+function SoundLoader({ load }: { load: () => void }) {
+    useEffect(() => {
+        load();
+    }, [load]);
+
+    return null;
 }
 
 const c = getClasses({

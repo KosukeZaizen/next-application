@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import LazyLoad from "react-lazyload";
 import { BLOB_URL } from "../../../../const/public";
 import { getClasses } from "../../../../lib/css";
 import ShurikenProgress from "../../../shared/ShurikenProgress";
@@ -23,10 +24,6 @@ export class Speaker extends React.Component<
         };
         this.didUnmount = false;
     }
-
-    componentDidMount = () => {
-        this.loadSound();
-    };
 
     loadSound = () => {
         const { src } = this.props;
@@ -78,8 +75,23 @@ export class Speaker extends React.Component<
                 </button>
             );
         }
-        return <ShurikenProgress key="circle" size={40} style={c.shuriken} />;
+        return (
+            <>
+                <ShurikenProgress key="circle" size={40} style={c.shuriken} />
+                <LazyLoad>
+                    <SoundLoader load={this.loadSound} />
+                </LazyLoad>
+            </>
+        );
     }
+}
+
+function SoundLoader({ load }: { load: () => void }) {
+    useEffect(() => {
+        load();
+    }, [load]);
+
+    return null;
 }
 
 const c = getClasses({
