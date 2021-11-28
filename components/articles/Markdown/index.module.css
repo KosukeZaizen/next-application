@@ -13,6 +13,15 @@
     text-shadow: initial;
 }
 
+.markdownArea blockquote {
+    font-size: 15px;
+    color: #6a737d;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 5px 10px;
+    border-left: 10px solid #eee;
+}
+
 @media screen and (max-width: 599px) {
     .markdownArea h2 {
         margin: 55px 0 25px;
