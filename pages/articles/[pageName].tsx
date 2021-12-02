@@ -384,6 +384,7 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
 
 const mainCss = css`
     max-width: 900px;
+    overflow-x: hidden;
 `;
 
 const articleCss = css`

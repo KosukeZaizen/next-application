@@ -9,6 +9,7 @@ import styles from "./index.module.css";
 import { InlineCodeRender } from "./InlineCodeRender";
 import { LinkRender, LinkWithoutShadowRender } from "./LinkBlockRender";
 import { TableCellRender } from "./Table/TableCellRender";
+import { TableRender } from "./Table/TableRender";
 
 interface MarkdownProps {
     source: string;
@@ -32,6 +33,7 @@ export function Markdown({
                 code: CodeRender,
                 inlineCode: InlineCodeRender,
                 paragraph: ParagraphRender,
+                table: TableRender,
                 tableCell: TableCellRender,
             }}
             plugins={[gfm]}
