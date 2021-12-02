@@ -1,7 +1,8 @@
 import React, { DetailedHTMLProps, TableHTMLAttributes } from "react";
 
 export const TableRender = ({
-    columnAlignment: _columnAlignment,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    columnAlignment,
     ...rest
 }: DetailedHTMLProps<
     TableHTMLAttributes<HTMLTableElement>,
