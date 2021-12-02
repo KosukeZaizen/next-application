@@ -4,9 +4,7 @@ import { getImgNumber } from "../../../components/articles/Layout";
 import { fetchZAppsFromServerSide } from "../../../lib/fetch";
 import Articles, { Page, Props } from "../[pageName]";
 
-const PreviewArticles = Articles;
-
-export default PreviewArticles;
+export default Articles;
 
 export const getServerSideProps: GetServerSideProps<
     Props,
