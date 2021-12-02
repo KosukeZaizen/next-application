@@ -1,4 +1,4 @@
-import { GetServerSidePropsContext } from "next";
+import { GetServerSideProps } from "next";
 import { apps } from "../../const/public";
 import { fetchZAppsFromServerSide } from "../../lib/fetch";
 import { Page } from "./[pageName]";
@@ -8,9 +8,7 @@ const topUrl = apps.articles.url;
 const SitemapPage = () => null;
 export default SitemapPage;
 
-export const getServerSideProps = async ({
-    res,
-}: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     const xml = await generateSitemapXml();
 
     res.statusCode = 200;

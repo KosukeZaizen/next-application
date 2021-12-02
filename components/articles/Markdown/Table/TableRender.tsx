@@ -31,4 +31,6 @@ const tableInnerContainerStyle = css({
     transform: "scale(1, -1)",
 });
 
-const tableStyle = css({ transform: "scale(1, -1)" });
+const tableStyle = css({
+    transform: "scale(1, -1)",
+});

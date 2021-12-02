@@ -41,7 +41,7 @@ export type IndexInfo = {
     encodedUrl: string;
 }[];
 
-interface Props extends Page {
+export interface Props extends Page {
     indexInfo: IndexInfo;
     otherArticles: Page[];
     imgNumber: number;
