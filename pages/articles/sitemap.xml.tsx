@@ -12,7 +12,6 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     const xml = await generateSitemapXml();
 
     res.statusCode = 200;
-    // res.setHeader("Cache-Control", "s-maxage=86400, stale-while-revalidate"); // Cache for 24 hours
     res.setHeader("Content-Type", "text/xml");
     res.end(xml);
 
