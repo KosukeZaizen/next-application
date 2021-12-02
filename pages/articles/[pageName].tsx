@@ -309,7 +309,7 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
         try {
             const pageName = params?.pageName;
             if (!pageName) {
-                return { notFound: true, revalidate: 10 };
+                return { notFound: true, revalidate: 1 };
             }
 
             // Redirect to lower case
@@ -375,10 +375,10 @@ export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
                         siteName,
                     },
                 },
-                revalidate: 10,
+                revalidate: 1,
             };
         } catch {
-            return { notFound: true, revalidate: 10 };
+            return { notFound: true, revalidate: 1 };
         }
     };
 
