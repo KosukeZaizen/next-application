@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps<
     try {
         const pageName = query.pageName;
         if (!pageName || typeof pageName !== "string") {
-            return { notFound: true, revalidate: 1 };
+            return { notFound: true };
         }
 
         // Redirect to lower case
@@ -82,6 +82,6 @@ export const getServerSideProps: GetServerSideProps<
             },
         };
     } catch {
-        return { notFound: true, revalidate: 1 };
+        return { notFound: true };
     }
 };

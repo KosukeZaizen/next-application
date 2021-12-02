@@ -1,5 +1,9 @@
 import { css } from "@emotion/react";
-import { GetStaticPaths, GetStaticProps } from "next";
+import {
+    GetStaticPaths,
+    GetStaticPropsContext,
+    GetStaticPropsResult,
+} from "next";
 import Link from "next/link";
 import React from "react";
 import { domain, siteName } from ".";
@@ -291,96 +295,100 @@ const adStyle = {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const response: Response = await fetchZAppsFromServerSide(
-        "api/Articles/GetAllArticles"
-    );
-    const pages: Page[] = await response.json();
+    // const response: Response = await fetchZAppsFromServerSide(
+    //     "api/Articles/GetAllArticles"
+    // );
+    // const pages: Page[] = await response.json();
+    // const paths: string[] = pages
+    //     .map(p => p.url?.toLowerCase())
+    //     .filter(u => u)
+    //     .map(u => `/articles/${u}`);
     return {
-        paths: pages
-            .map(p => p.url?.toLowerCase())
-            .filter(u => u)
-            .map(u => `/articles/${u}`),
+        paths: [],
         fallback: "blocking",
     };
 };
 
-export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
-    async ({ params }) => {
-        try {
-            const pageName = params?.pageName;
-            if (!pageName) {
-                return { notFound: true, revalidate: 1 };
-            }
+export const getStaticProps = async ({
+    params,
+}: GetStaticPropsContext<{ pageName: string }>): Promise<
+    GetStaticPropsResult<Props>
+> => {
+    try {
+        const pageName = params?.pageName;
+        if (!pageName) {
+            return { notFound: true, revalidate: 5 };
+        }
 
-            // Redirect to lower case
-            const lowerPageName = pageName.toLowerCase();
-            if (pageName !== lowerPageName) {
-                return {
-                    redirect: {
-                        permanent: true,
-                        destination: lowerPageName,
-                    },
-                };
-            }
+        // Redirect to lower case
+        const lowerPageName = pageName.toLowerCase();
+        if (pageName !== lowerPageName) {
+            return {
+                redirect: {
+                    permanent: true,
+                    destination: lowerPageName,
+                },
+            };
+        }
 
-            // Article
-            const response: Response = await fetchZAppsFromServerSide(
-                `api/Articles/GetArticle?p=${pageName}`
-            );
-            const {
+        // Article
+        const response: Response = await fetchZAppsFromServerSide(
+            `api/Articles/GetArticle?p=${pageName}`
+        );
+        const {
+            url,
+            description,
+            title,
+            isAboutFolktale,
+            articleContent,
+            imgPath,
+        }: Page = await response.json();
+
+        // Other articles
+        const param = `?num=10&${
+            isAboutFolktale ? "&isAboutFolktale=true" : ""
+        }`;
+        const responseOther: Response = await fetchZAppsFromServerSide(
+            "api/Articles/GetRandomArticles" + param
+        );
+        const articles: Page[] = await responseOther.json();
+        const otherArticles = articles.filter(a => a.title !== title);
+
+        const indexInfo = articleContent
+            .split("\n")
+            .filter(c => c.includes("##") && !c.includes("###"))
+            .map(c => {
+                const linkText = c.split("#").join("").trim();
+                const encodedUrl = encodeURIComponent(linkText);
+                return { linkText, encodedUrl };
+            });
+
+        return {
+            props: {
+                pageName,
                 url,
                 description,
                 title,
                 isAboutFolktale,
                 articleContent,
                 imgPath,
-            }: Page = await response.json();
-
-            // Other articles
-            const param = `?num=10&${
-                isAboutFolktale ? "&isAboutFolktale=true" : ""
-            }`;
-            const responseOther: Response = await fetchZAppsFromServerSide(
-                "api/Articles/GetRandomArticles" + param
-            );
-            const articles: Page[] = await responseOther.json();
-            const otherArticles = articles.filter(a => a.title !== title);
-
-            const indexInfo = articleContent
-                .split("\n")
-                .filter(c => c.includes("##") && !c.includes("###"))
-                .map(c => {
-                    const linkText = c.split("#").join("").trim();
-                    const encodedUrl = encodeURIComponent(linkText);
-                    return { linkText, encodedUrl };
-                });
-
-            return {
-                props: {
-                    pageName,
-                    url,
-                    description,
+                indexInfo,
+                otherArticles,
+                imgNumber: getImgNumber(pageName.length),
+                helmetProps: {
                     title,
-                    isAboutFolktale,
-                    articleContent,
-                    imgPath,
-                    indexInfo,
-                    otherArticles,
-                    imgNumber: getImgNumber(pageName.length),
-                    helmetProps: {
-                        title,
-                        desc: description,
-                        domain,
-                        ogImg: imgPath,
-                        siteName,
-                    },
+                    desc: description,
+                    domain,
+                    ogImg: imgPath,
+                    siteName,
                 },
-                revalidate: 1,
-            };
-        } catch {
-            return { notFound: true, revalidate: 1 };
-        }
-    };
+            },
+            revalidate: 5,
+        };
+    } catch {
+        return { notFound: true, revalidate: 5 };
+    }
+};
 
 const mainCss = css`
     max-width: 900px;

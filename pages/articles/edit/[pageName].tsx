@@ -316,7 +316,7 @@ export const getServerSideProps: GetServerSideProps<
 > = async ({ params }) => {
     const pageName = params?.pageName;
     if (!pageName) {
-        return { notFound: true, revalidate: 1 };
+        return { notFound: true };
     }
 
     // Redirect to lower case
