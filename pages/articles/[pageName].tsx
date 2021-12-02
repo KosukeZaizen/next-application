@@ -5,12 +5,10 @@ import {
     GetStaticPropsResult,
 } from "next";
 import Link from "next/link";
-import React from "react";
-import { domain, siteName } from ".";
+import React, { useEffect, useState } from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Author } from "../../components/articles/Author";
 import {
-    getImgNumber,
     h1TitleCss,
     Layout,
     whiteShadowStyle,
@@ -26,10 +24,15 @@ import { HelmetProps } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
-import { fetchZAppsFromServerSide } from "../../lib/fetch";
+import { fetchGet, fetchZAppsFromServerSide } from "../../lib/fetch";
 import { useHashScroll } from "../../lib/hooks/useHashScroll";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { useScreenSize } from "../../lib/screenSize";
+import { sleepAsync } from "../../lib/sleep";
+import {
+    getArticleProps,
+    GetArticleProps,
+} from "../api/articles/getArticleProps";
 
 export interface Page {
     url?: string;
@@ -53,17 +56,20 @@ export interface Props extends Page {
     helmetProps: HelmetProps;
 }
 
-export default function Articles({
-    title,
-    description,
-    articleContent,
-    indexInfo,
-    otherArticles,
-    imgNumber,
-    pageName,
-    helmetProps,
-}: Props) {
+export default function Articles(props: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
+    const _props = useRevisedProps(props);
+
+    const {
+        title,
+        description,
+        articleContent,
+        indexInfo,
+        otherArticles,
+        imgNumber,
+        pageName,
+        helmetProps,
+    } = _props;
 
     return (
         <Layout
@@ -84,6 +90,27 @@ export default function Articles({
             />
         </Layout>
     );
+}
+
+function useRevisedProps(props: Props) {
+    const [_props, setProps] = useState<Props>(props);
+
+    useEffect(() => {
+        (async () => {
+            await sleepAsync(200);
+            const result = await fetchGet<GetArticleProps>(
+                "/api/articles/getArticleProps",
+                {
+                    pageName: props.pageName,
+                }
+            );
+            if (result.responseType === "success") {
+                setProps(result);
+            }
+        })();
+    }, [props.pageName]);
+
+    return _props;
 }
 
 // export const excludedArticleTitles = ["Kamikaze"];
@@ -295,16 +322,16 @@ const adStyle = {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    // const response: Response = await fetchZAppsFromServerSide(
-    //     "api/Articles/GetAllArticles"
-    // );
-    // const pages: Page[] = await response.json();
-    // const paths: string[] = pages
-    //     .map(p => p.url?.toLowerCase())
-    //     .filter(u => u)
-    //     .map(u => `/articles/${u}`);
+    const response: Response = await fetchZAppsFromServerSide(
+        "api/Articles/GetAllArticles"
+    );
+    const pages: Page[] = await response.json();
+    const paths: string[] = pages
+        .map(p => p.url?.toLowerCase())
+        .filter(u => u)
+        .map(u => `/articles/${u}`);
     return {
-        paths: [],
+        paths,
         fallback: "blocking",
     };
 };
@@ -331,58 +358,14 @@ export const getStaticProps = async ({
             };
         }
 
-        // Article
-        const response: Response = await fetchZAppsFromServerSide(
-            `api/Articles/GetArticle?p=${pageName}`
-        );
-        const {
-            url,
-            description,
-            title,
-            isAboutFolktale,
-            articleContent,
-            imgPath,
-        }: Page = await response.json();
-
-        // Other articles
-        const param = `?num=10&${
-            isAboutFolktale ? "&isAboutFolktale=true" : ""
-        }`;
-        const responseOther: Response = await fetchZAppsFromServerSide(
-            "api/Articles/GetRandomArticles" + param
-        );
-        const articles: Page[] = await responseOther.json();
-        const otherArticles = articles.filter(a => a.title !== title);
-
-        const indexInfo = articleContent
-            .split("\n")
-            .filter(c => c.includes("##") && !c.includes("###"))
-            .map(c => {
-                const linkText = c.split("#").join("").trim();
-                const encodedUrl = encodeURIComponent(linkText);
-                return { linkText, encodedUrl };
-            });
+        // generate props
+        const props = await getArticleProps(pageName);
+        if (!props) {
+            return { notFound: true, revalidate: 5 };
+        }
 
         return {
-            props: {
-                pageName,
-                url,
-                description,
-                title,
-                isAboutFolktale,
-                articleContent,
-                imgPath,
-                indexInfo,
-                otherArticles,
-                imgNumber: getImgNumber(pageName.length),
-                helmetProps: {
-                    title,
-                    desc: description,
-                    domain,
-                    ogImg: imgPath,
-                    siteName,
-                },
-            },
+            props,
             revalidate: 5,
         };
     } catch {
