@@ -2,7 +2,7 @@ import { SerializedStyles } from "@emotion/utils";
 import Link from "next/link";
 import * as React from "react";
 import { CSSProperties } from "react";
-import { appsPublicImg } from "../../const/public";
+import { APPS_PUBLIC_IMG_URL } from "../../const/public";
 import { css } from "../../lib/css";
 import { AutoHeightImg } from "../shared/Img";
 import { ScrollBox } from "../shared/ScrollBox";
@@ -10,7 +10,7 @@ import { Markdown } from "./Markdown";
 import { getClasses } from "../../lib/css";
 import classes from "../shared/CharacterComment/CharacterComment.module.css";
 
-const image = appsPublicImg + "KosukeZaizen.jpg";
+const image = APPS_PUBLIC_IMG_URL + "KosukeZaizen.jpg";
 
 type AuthorProps = {
     screenWidth: number;

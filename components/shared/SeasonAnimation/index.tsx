@@ -1,13 +1,13 @@
 import { css } from "@emotion/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { appsPublicImg } from "../../../const/public";
+import { APPS_PUBLIC_IMG_URL } from "../../../const/public";
 import { fetchGet } from "../../../lib/fetch";
 import { GetFallingImages } from "../../../pages/api/zApps/fallingImage/getFallingImages";
 import { Img } from "../Img";
 import { FallingImage } from "./type";
 
-const festivalImgPath = appsPublicImg + "japanese-festival.png";
+const festivalImgPath = APPS_PUBLIC_IMG_URL + "japanese-festival.png";
 
 let count = 0;
 let ls: Leaf[] = [];
@@ -202,7 +202,7 @@ function FallingImg({
             className="fallingImg"
         >
             <Img
-                src={appsPublicImg + seasonItem.fileName}
+                src={APPS_PUBLIC_IMG_URL + seasonItem.fileName}
                 alt={`${seasonItem.alt} ${l.id}`}
                 title={`${seasonItem.alt} ${l.id}`}
                 layout="fixed"
