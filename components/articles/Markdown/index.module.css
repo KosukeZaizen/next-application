@@ -78,11 +78,11 @@
 }
 
 .markdownArea table:not(.exclude) th:first-child {
-    border-top-left-radius: 5px;
+    border-top-left-radius: 10px;
 }
 
 .markdownArea table:not(.exclude) th:last-child {
-    border-top-right-radius: 5px;
+    border-top-right-radius: 10px;
     border-right: 1px solid #035c1d;
 }
 
@@ -113,11 +113,11 @@
 }
 
 .markdownArea table:not(.exclude) tr:last-child td:first-child {
-    border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 10px;
 }
 
 .markdownArea table:not(.exclude) tr:last-child td:last-child {
-    border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 10px;
 }
 
 .markdownArea hr {
