@@ -58,7 +58,6 @@ export interface Props extends Page {
 
 export default function Articles(props: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
-    const _props = useRevisedProps(props);
 
     const {
         title,
@@ -69,7 +68,7 @@ export default function Articles(props: Props) {
         imgNumber,
         pageName,
         helmetProps,
-    } = _props;
+    } = useRevisedProps(props);
 
     return (
         <Layout

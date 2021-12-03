@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "./[pageName]";
-import { fetchZAppsFromServerSide } from "../../lib/fetch";
 import {
     getImgNumber,
     Layout,
@@ -14,9 +13,15 @@ import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Author } from "../../components/articles/Author";
 import FB from "../../components/shared/FaceBook";
 import { GetStaticProps } from "next";
+import {
+    GetArticleTopProps,
+    getArticleTopProps,
+} from "../api/articles/getArticleTopProps";
+import { sleepAsync } from "../../lib/sleep";
+import { fetchGet } from "../../lib/fetch";
 
 export const siteName = "Articles about Japan";
-const desc =
+export const desc =
     "Articles about studying Japanese language and culture! I hope these articles help you to learn about Japan!";
 export const domain = "articles.lingual-ninja.com";
 
@@ -27,8 +32,9 @@ export interface Props {
     helmetProps: HelmetProps;
 }
 
-export default function Home({ pages, helmetProps }: Props) {
+export default function Home(props: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
+    const { pages, helmetProps } = useRevisedProps(props);
 
     return (
         <Layout
@@ -67,6 +73,25 @@ export default function Home({ pages, helmetProps }: Props) {
     );
 }
 
+function useRevisedProps(props: Props) {
+    const [_props, setProps] = useState<Props>(props);
+
+    useEffect(() => {
+        (async () => {
+            await sleepAsync(200);
+            const result = await fetchGet<GetArticleTopProps>(
+                "/api/articles/getArticleTopProps",
+                {}
+            );
+            if (result.responseType === "success") {
+                setProps(result);
+            }
+        })();
+    }, []);
+
+    return _props;
+}
+
 const c = getClasses({
     main: { maxWidth: 900, textAlign: "left" },
     h1: [
@@ -89,20 +114,9 @@ const c = getClasses({
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
     try {
-        const response: Response = await fetchZAppsFromServerSide(
-            "api/Articles/GetAllArticles"
-        );
-        const pages: Page[] = await response.json();
+        const props = await getArticleTopProps();
         return {
-            props: {
-                pages,
-                helmetProps: {
-                    title: siteName,
-                    desc,
-                    domain,
-                    siteName,
-                },
-            },
+            props,
             revalidate: 5,
         };
     } catch {
