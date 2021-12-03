@@ -45,14 +45,7 @@ export async function getArticleProps(pageName: string): Promise<Props> {
 
     const otherArticles = articles.filter(a => a.title !== title);
 
-    const indexInfo = articleContent
-        .split("\n")
-        .filter(c => c.includes("##") && !c.includes("###"))
-        .map(c => {
-            const linkText = c.split("#").join("").trim();
-            const encodedUrl = encodeURIComponent(linkText);
-            return { linkText, encodedUrl };
-        });
+    const indexInfo = makeIndexInfo(articleContent);
 
     return {
         pageName,
@@ -73,4 +66,17 @@ export async function getArticleProps(pageName: string): Promise<Props> {
             siteName,
         },
     };
+}
+
+export function makeIndexInfo(articleContent?: string) {
+    return articleContent
+        ? articleContent
+              .split("\n")
+              .filter(c => c.includes("##") && !c.includes("###"))
+              .map(c => {
+                  const linkText = c.split("#").join("").trim();
+                  const encodedUrl = encodeURIComponent(linkText);
+                  return { linkText, encodedUrl };
+              })
+        : [];
 }
