@@ -3,14 +3,9 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
-import { domain, siteName } from "..";
-import { getImgNumber } from "../../../components/articles/Layout";
 import { checkImgExtension } from "../../../components/articles/Markdown/ImageRender";
 import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
-import {
-    fetchZAppsFromFrontEnd,
-    fetchZAppsFromServerSide,
-} from "../../../lib/fetch";
+import { fetchZAppsFromFrontEnd } from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/screenSize";
 import { ArticleContent } from "../[pageName]";
 
@@ -321,7 +316,7 @@ export const getServerSideProps: GetServerSideProps<
 > = async ({ params }) => {
     const pageName = params?.pageName;
     if (!pageName) {
-        return { notFound: true, revalidate: 10 };
+        return { notFound: true };
     }
 
     // Redirect to lower case
@@ -335,41 +330,48 @@ export const getServerSideProps: GetServerSideProps<
         };
     }
 
-    // Article
-    const response: Response = await fetchZAppsFromServerSide(
-        `api/Articles/GetArticleForEdit?p=${pageName}`
-    );
-    const {
-        url,
-        description,
-        title,
-        isAboutFolktale,
-        articleContent,
-        released,
-    }: Page = await response.json();
-
-    const indexInfo = makeIndexInfo(articleContent);
-
     return {
-        props: {
-            pageName,
-            url,
-            description,
-            title,
-            isAboutFolktale,
-            articleContent,
-            indexInfo,
-            imgNumber: getImgNumber(pageName.length),
-            helmetProps: {
-                title,
-                desc: description,
-                domain,
-                siteName,
-                noindex: true,
-            },
-            released,
+        redirect: {
+            permanent: true,
+            destination: `https://articles-edit.lingual-ninja.com/articlesEdit/${pageName}`,
         },
     };
+
+    // // Article
+    // const response: Response = await fetchZAppsFromServerSide(
+    //     `api/Articles/GetArticleForEdit?p=${pageName}`
+    // );
+    // const {
+    //     url,
+    //     description,
+    //     title,
+    //     isAboutFolktale,
+    //     articleContent,
+    //     released,
+    // }: Page = await response.json();
+
+    // const indexInfo = makeIndexInfo(articleContent);
+
+    // return {
+    //     props: {
+    //         pageName,
+    //         url,
+    //         description,
+    //         title,
+    //         isAboutFolktale,
+    //         articleContent,
+    //         indexInfo,
+    //         imgNumber: getImgNumber(pageName.length),
+    //         helmetProps: {
+    //             title,
+    //             desc: description,
+    //             domain,
+    //             siteName,
+    //             noindex: true,
+    //         },
+    //         released,
+    //     },
+    // };
 };
 
 function makeIndexInfo(articleContent: string | undefined) {

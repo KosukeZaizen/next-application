@@ -1,9 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppProps } from "next/dist/shared/lib/router/router";
 import React, { useEffect } from "react";
+import { apps, AZURE_HOST } from "../const/public";
 import "../styles/global.css";
-
-const commonPaths = ["/", "/sitemap.xml"];
 
 export default function App({ Component, pageProps }: AppProps) {
     useSubDomain();
@@ -17,15 +16,23 @@ export function getSubDomain() {
 
 function useSubDomain() {
     useEffect(() => {
-        if (commonPaths.includes(location.pathname)) {
-            // home page or sitemap
+        if (location.href.includes(AZURE_HOST)) {
+            // redirect from Azure original url to articles
+            location.href = location.href.replace(
+                AZURE_HOST,
+                apps.articles.host
+            );
+        }
+
+        if (location.pathname === "/") {
+            // home page
             return;
         }
 
         const subDomain = getSubDomain();
         const firstPath = location.pathname.split("/")[1];
 
-        if (!["localhost", "next-application", firstPath].includes(subDomain)) {
+        if (!["localhost", firstPath].includes(subDomain)) {
             // subDomain and firstPath don't match
             const arrHost = location.hostname.split(".");
             arrHost[0] = firstPath;

@@ -222,6 +222,13 @@ export default function ArticlesTop({ pages, helmetProps }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
+    return {
+        redirect: {
+            permanent: true,
+            destination: `https://articles-edit.lingual-ninja.com/articlesEdit`,
+        },
+    };
+
     const response: Response = await fetchZAppsFromServerSide(
         "api/Articles/GetAllArticlesForEdit"
     );

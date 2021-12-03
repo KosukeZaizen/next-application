@@ -1,12 +1,14 @@
 import { css } from "@emotion/react";
-import { GetStaticPaths, GetStaticProps } from "next";
+import {
+    GetStaticPaths,
+    GetStaticPropsContext,
+    GetStaticPropsResult,
+} from "next";
 import Link from "next/link";
-import React from "react";
-import { domain, siteName } from ".";
+import React, { useEffect, useState } from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Author } from "../../components/articles/Author";
 import {
-    getImgNumber,
     h1TitleCss,
     Layout,
     whiteShadowStyle,
@@ -22,10 +24,15 @@ import { HelmetProps } from "../../components/shared/Helmet";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
-import { fetchZAppsFromServerSide } from "../../lib/fetch";
+import { fetchGet, fetchZAppsFromServerSide } from "../../lib/fetch";
 import { useHashScroll } from "../../lib/hooks/useHashScroll";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { useScreenSize } from "../../lib/screenSize";
+import { sleepAsync } from "../../lib/sleep";
+import {
+    getArticleProps,
+    GetArticleProps,
+} from "../api/articles/getArticleProps";
 
 export interface Page {
     url?: string;
@@ -41,7 +48,7 @@ export type IndexInfo = {
     encodedUrl: string;
 }[];
 
-interface Props extends Page {
+export interface Props extends Page {
     indexInfo: IndexInfo;
     otherArticles: Page[];
     imgNumber: number;
@@ -49,17 +56,20 @@ interface Props extends Page {
     helmetProps: HelmetProps;
 }
 
-export default function Articles({
-    title,
-    description,
-    articleContent,
-    indexInfo,
-    otherArticles,
-    imgNumber,
-    pageName,
-    helmetProps,
-}: Props) {
+export default function Articles(props: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
+    const _props = useRevisedProps(props);
+
+    const {
+        title,
+        description,
+        articleContent,
+        indexInfo,
+        otherArticles,
+        imgNumber,
+        pageName,
+        helmetProps,
+    } = _props;
 
     return (
         <Layout
@@ -80,6 +90,27 @@ export default function Articles({
             />
         </Layout>
     );
+}
+
+function useRevisedProps(props: Props) {
+    const [_props, setProps] = useState<Props>(props);
+
+    useEffect(() => {
+        (async () => {
+            await sleepAsync(200);
+            const result = await fetchGet<GetArticleProps>(
+                "/api/articles/getArticleProps",
+                {
+                    pageName: props.pageName,
+                }
+            );
+            if (result.responseType === "success") {
+                setProps(result);
+            }
+        })();
+    }, [props.pageName]);
+
+    return _props;
 }
 
 // export const excludedArticleTitles = ["Kamikaze"];
@@ -295,95 +326,56 @@ export const getStaticPaths: GetStaticPaths = async () => {
         "api/Articles/GetAllArticles"
     );
     const pages: Page[] = await response.json();
+    const paths: string[] = pages
+        .map(p => p.url?.toLowerCase())
+        .filter(u => u)
+        .map(u => `/articles/${u}`);
     return {
-        paths: pages
-            .map(p => p.url?.toLowerCase())
-            .filter(u => u)
-            .map(u => `/articles/${u}`),
+        paths,
         fallback: "blocking",
     };
 };
 
-export const getStaticProps: GetStaticProps<Props, { pageName: string }> =
-    async ({ params }) => {
-        try {
-            const pageName = params?.pageName;
-            if (!pageName) {
-                return { notFound: true, revalidate: 10 };
-            }
-
-            // Redirect to lower case
-            const lowerPageName = pageName.toLowerCase();
-            if (pageName !== lowerPageName) {
-                return {
-                    redirect: {
-                        permanent: true,
-                        destination: lowerPageName,
-                    },
-                };
-            }
-
-            // Article
-            const response: Response = await fetchZAppsFromServerSide(
-                `api/Articles/GetArticle?p=${pageName}`
-            );
-            const {
-                url,
-                description,
-                title,
-                isAboutFolktale,
-                articleContent,
-                imgPath,
-            }: Page = await response.json();
-
-            // Other articles
-            const param = `?num=10&${
-                isAboutFolktale ? "&isAboutFolktale=true" : ""
-            }`;
-            const responseOther: Response = await fetchZAppsFromServerSide(
-                "api/Articles/GetRandomArticles" + param
-            );
-            const articles: Page[] = await responseOther.json();
-            const otherArticles = articles.filter(a => a.title !== title);
-
-            const indexInfo = articleContent
-                .split("\n")
-                .filter(c => c.includes("##") && !c.includes("###"))
-                .map(c => {
-                    const linkText = c.split("#").join("").trim();
-                    const encodedUrl = encodeURIComponent(linkText);
-                    return { linkText, encodedUrl };
-                });
-
-            return {
-                props: {
-                    pageName,
-                    url,
-                    description,
-                    title,
-                    isAboutFolktale,
-                    articleContent,
-                    imgPath,
-                    indexInfo,
-                    otherArticles,
-                    imgNumber: getImgNumber(pageName.length),
-                    helmetProps: {
-                        title,
-                        desc: description,
-                        domain,
-                        ogImg: imgPath,
-                        siteName,
-                    },
-                },
-                revalidate: 10,
-            };
-        } catch {
-            return { notFound: true, revalidate: 10 };
+export const getStaticProps = async ({
+    params,
+}: GetStaticPropsContext<{ pageName: string }>): Promise<
+    GetStaticPropsResult<Props>
+> => {
+    try {
+        const pageName = params?.pageName;
+        if (!pageName) {
+            return { notFound: true, revalidate: 5 };
         }
-    };
+
+        // Redirect to lower case
+        const lowerPageName = pageName.toLowerCase();
+        if (pageName !== lowerPageName) {
+            return {
+                redirect: {
+                    permanent: true,
+                    destination: lowerPageName,
+                },
+            };
+        }
+
+        // generate props
+        const props = await getArticleProps(pageName);
+        if (!props) {
+            return { notFound: true, revalidate: 5 };
+        }
+
+        return {
+            props,
+            revalidate: 5,
+        };
+    } catch {
+        return { notFound: true, revalidate: 5 };
+    }
+};
 
 const mainCss = css`
     max-width: 900px;
+    overflow-x: hidden;
 `;
 
 const articleCss = css`

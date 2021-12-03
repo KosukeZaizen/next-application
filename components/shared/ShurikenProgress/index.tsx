@@ -1,9 +1,9 @@
 import { css, SerializedStyles } from "@emotion/react";
 import * as React from "react";
-import { appsPublicImg } from "../../../const/public";
+import { APPS_PUBLIC_IMG_URL } from "../../../const/public";
 import { getClasses } from "../../../lib/css";
 
-const shuriken = appsPublicImg + "shuriken.png";
+const shuriken = APPS_PUBLIC_IMG_URL + "shuriken.png";
 
 interface Props {
     size?: string | number;

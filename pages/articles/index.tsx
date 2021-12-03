@@ -103,9 +103,9 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
                     siteName,
                 },
             },
-            revalidate: 10,
+            revalidate: 5,
         };
     } catch {
-        return { notFound: true, revalidate: 10 };
+        return { notFound: true, revalidate: 5 };
     }
 };
