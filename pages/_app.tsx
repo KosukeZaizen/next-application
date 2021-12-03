@@ -22,6 +22,7 @@ function useSubDomain() {
                 AZURE_HOST,
                 apps.articles.host
             );
+            return;
         }
 
         if (location.pathname === "/") {
@@ -37,6 +38,7 @@ function useSubDomain() {
             const arrHost = location.hostname.split(".");
             arrHost[0] = firstPath;
             location.href = `https://${arrHost.join(".")}${location.pathname}`;
+            return;
         }
     }, []);
 }
