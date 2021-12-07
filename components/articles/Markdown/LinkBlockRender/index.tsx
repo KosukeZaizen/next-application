@@ -31,6 +31,13 @@ const LinkRenderBase = ({
             </ATargetBlank>
         );
     }
+    if (href.includes("#")) {
+        return (
+            <a href={href} css={style}>
+                {children}
+            </a>
+        );
+    }
     return (
         <Link href={href}>
             <a css={style}>{children}</a>
