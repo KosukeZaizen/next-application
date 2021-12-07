@@ -19,7 +19,7 @@ export function ExampleSentence({
     s: sentence;
     boldInfo: string;
     words: word[];
-    audioPath: string;
+    audioPath?: string;
 }) {
     const [bold, setBold] = useState<BoldInfo>({});
 

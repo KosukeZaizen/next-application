@@ -80,7 +80,11 @@ export function FolktaleExample({
                 s={s}
                 boldInfo={boldInfo}
                 words={words}
-                audioPath={`${BLOB_URL}/folktalesAudio/${audioFolder}/folktale-audio${s.lineNumber}.m4a`}
+                audioPath={
+                    s.lineNumber
+                        ? `${BLOB_URL}/folktalesAudio/${audioFolder}/folktale-audio${s.lineNumber}.m4a`
+                        : undefined
+                }
             />
         </div>
     );
