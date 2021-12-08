@@ -35,7 +35,14 @@ export async function getArticleProps(pageName: string): Promise<Props> {
         isAboutFolktale,
         articleContent,
         imgPath,
+        authorId,
     } = page;
+
+    const authorPromise = fetchZAppsFromServerSide(
+        `api/Articles/GetAuthorInfo?authorId=${authorId}`
+    );
+
+    const indexInfo = makeIndexInfo(articleContent);
 
     // Other articles
     const param = `?num=10&${isAboutFolktale ? "&isAboutFolktale=true" : ""}`;
@@ -44,8 +51,6 @@ export async function getArticleProps(pageName: string): Promise<Props> {
     ).json();
 
     const otherArticles = articles.filter(a => a.title !== title);
-
-    const indexInfo = makeIndexInfo(articleContent);
 
     return {
         pageName,
@@ -58,6 +63,8 @@ export async function getArticleProps(pageName: string): Promise<Props> {
         indexInfo,
         otherArticles,
         imgNumber: getImgNumber(pageName.length),
+        authorId,
+        author: await (await authorPromise).json(),
         helmetProps: {
             title,
             desc: description,

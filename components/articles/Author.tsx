@@ -1,45 +1,62 @@
 import { SerializedStyles } from "@emotion/utils";
-import Link from "next/link";
 import * as React from "react";
 import { CSSProperties } from "react";
-import { APPS_PUBLIC_IMG_URL } from "../../const/public";
 import { css } from "../../lib/css";
 import { AutoHeightImg } from "../shared/Img";
 import { ScrollBox } from "../shared/ScrollBox";
 import { Markdown } from "./Markdown";
 import { getClasses } from "../../lib/css";
 import classes from "../shared/CharacterComment/CharacterComment.module.css";
+import { ARTICLES_BLOB } from "../../const/public";
 
-const image = APPS_PUBLIC_IMG_URL + "KosukeZaizen.jpg";
+export interface Author {
+    authorId: number;
+    authorName: string;
+    initialGreeting: string;
+    selfIntroduction: string;
+    isAdmin: boolean;
+    imgExtension: string;
+}
 
-type AuthorProps = {
+type AuthorAreaProps = {
     screenWidth: number;
     style?: SerializedStyles;
-    isLink?: boolean;
+    author?: Author;
 };
-export const Author = ({ style, screenWidth, isLink }: AuthorProps) => {
+export const AuthorArea = ({ style, screenWidth, author }: AuthorAreaProps) => {
+    if (!author) {
+        return null;
+    }
+
     const isCommentUsed = screenWidth > 767;
     const isVeryNarrow = screenWidth < 500;
-    const author = isLink ? (
-        <Link href="/developer">
-            <a>Author</a>
-        </Link>
-    ) : (
-        "Author"
-    );
+
+    const {
+        authorName,
+        initialGreeting,
+        selfIntroduction,
+        authorId,
+        imgExtension,
+    } = author;
+
+    const imagePath = `${ARTICLES_BLOB}/_authors/${authorId}${imgExtension}`;
 
     return (
         <ScrollBox pCss={css([c.scroll, style])}>
-            <h2 css={c.commentH2}>{author}</h2>
+            <h2 css={c.commentH2}>{"Author"}</h2>
             {isCommentUsed ? (
                 <PersonComment
+                    imagePath={imagePath}
+                    authorName={authorName}
                     comment={
                         <div>
                             <div css={c.commentContainer}>
-                                {"I'm Kosuke Zaizen!"}
+                                {initialGreeting}
                             </div>
                             <div css={c.margin10}>
-                                <CommentMarkDown />
+                                <CommentMarkDown
+                                    selfIntroduction={selfIntroduction}
+                                />
                             </div>
                         </div>
                     }
@@ -48,9 +65,9 @@ export const Author = ({ style, screenWidth, isLink }: AuthorProps) => {
                 <div>
                     <div css={c.imgContainer}>
                         <AutoHeightImg
-                            src={image}
-                            alt="Kosuke Zaizen"
-                            title="Kosuke Zaizen"
+                            src={imagePath}
+                            alt={authorName}
+                            title={authorName}
                             containerStyle={c.img}
                             loading="noTime"
                         />
@@ -72,13 +89,14 @@ export const Author = ({ style, screenWidth, isLink }: AuthorProps) => {
                                     : "0 5px 25px",
                             }}
                         >
-                            {"I'm Kosuke Zaizen!"}
+                            {initialGreeting}
                         </div>
                         <CommentMarkDown
                             style={{
                                 margin: isVeryNarrow ? "5px 0" : 5,
                                 fontSize: isVeryNarrow ? "medium" : undefined,
                             }}
+                            selfIntroduction={selfIntroduction}
                         />
                     </div>
                 </div>
@@ -91,9 +109,16 @@ type CommentProps = {
     comment: string | React.ReactNode;
     style?: React.CSSProperties;
     commentStyle?: SerializedStyles;
+    imagePath: string;
+    authorName: string;
 };
-export function PersonComment(props: CommentProps) {
-    const { comment, style, commentStyle } = props;
+export function PersonComment({
+    comment,
+    style,
+    commentStyle,
+    imagePath,
+    authorName,
+}: CommentProps) {
     return (
         <div
             css={{
@@ -103,9 +128,9 @@ export function PersonComment(props: CommentProps) {
         >
             <div css={c.personContainer}>
                 <img
-                    src={image}
-                    alt="Kosuke Zaizen"
-                    title="Kosuke Zaizen"
+                    src={imagePath}
+                    alt={authorName}
+                    title={authorName}
                     css={c.pcImg}
                 />
             </div>
@@ -118,21 +143,16 @@ export function PersonComment(props: CommentProps) {
     );
 }
 
-const CommentMarkDown = ({ style }: { style?: CSSProperties }) => (
+const CommentMarkDown = ({
+    style,
+    selfIntroduction,
+}: {
+    style?: CSSProperties;
+    selfIntroduction: string;
+}) => (
     <Markdown
         style={{ margin: 5, textAlign: "left", fontSize: "large", ...style }}
-        source={`
-Thank you for visiting my website!
-
-I am a Japanese programmer named Kosuke Zaizen.
-I like to make free web applications for Japanese learners.
-I know that learning Japanese can be difficult.
-I think the most important thing in learning a new language 
-is to **have fun** and to **continue**.
-I would like you to enjoy studying Japanese by using my web application.
-
-I hope this website helps you to study Japanese!
-`}
+        source={selfIntroduction}
     />
 );
 
@@ -141,13 +161,11 @@ const c = getClasses({
     personContainer: { flex: 1, marginTop: 6, marginRight: 10 },
     img: {
         width: "100%",
-        // maxWidth: 300,
         objectFit: "contain",
         margin: "auto",
     },
     pcImg: {
         width: "100%",
-        // maxWidth: 350,
         verticalAlign: "top",
     },
     imgContainer: { margin: "0 auto 20px" },

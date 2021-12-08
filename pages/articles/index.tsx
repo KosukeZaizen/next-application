@@ -10,7 +10,7 @@ import {
 import { HelmetProps } from "../../components/shared/Helmet";
 import CharacterComment from "../../components/shared/CharacterComment";
 import { ArticlesList } from "../../components/articles/ArticlesList";
-import { Author } from "../../components/articles/Author";
+import { Author, AuthorArea } from "../../components/articles/Author";
 import FB from "../../components/shared/FaceBook";
 import { GetStaticProps } from "next";
 import {
@@ -29,12 +29,13 @@ const imgNumber = getImgNumber();
 
 export interface Props {
     pages: Page[];
+    author: Author;
     helmetProps: HelmetProps;
 }
 
 export default function Home(props: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
-    const { pages, helmetProps } = useRevisedProps(props);
+    const { pages, author, helmetProps } = useRevisedProps(props);
 
     return (
         <Layout
@@ -65,7 +66,11 @@ export default function Home(props: Props) {
                         articles={pages}
                         screenWidth={screenWidth}
                     />
-                    <Author style={c.author} screenWidth={screenWidth} />
+                    <AuthorArea
+                        style={c.author}
+                        screenWidth={screenWidth}
+                        author={author}
+                    />
                 </div>
                 <FB style={c.fb} screenWidth={screenWidth} />
             </main>

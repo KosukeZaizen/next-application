@@ -38,7 +38,14 @@ export const getServerSideProps: GetServerSideProps<
             title,
             isAboutFolktale,
             articleContent,
+            authorId,
         }: Page = await response.json();
+
+        const authorPromise = fetchZAppsFromServerSide(
+            `api/Articles/GetAuthorInfo?authorId=${authorId}`
+        );
+
+        const indexInfo = makeIndexInfo(articleContent);
 
         // Other articles
         const param = `?num=10&${
@@ -52,8 +59,6 @@ export const getServerSideProps: GetServerSideProps<
 
         const otherArticles = articles.filter(a => a.title !== title);
 
-        const indexInfo = makeIndexInfo(articleContent);
-
         return {
             props: {
                 pageName,
@@ -65,6 +70,8 @@ export const getServerSideProps: GetServerSideProps<
                 indexInfo,
                 imgNumber: getImgNumber(pageName.length),
                 otherArticles,
+                authorId,
+                author: await (await authorPromise).json(),
                 helmetProps: {
                     title,
                     desc: description,

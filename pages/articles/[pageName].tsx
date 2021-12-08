@@ -8,7 +8,7 @@ import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
-import { Author } from "../../components/articles/Author";
+import { Author, AuthorArea } from "../../components/articles/Author";
 import {
     FullScreenShuriken,
     h1TitleCss,
@@ -43,6 +43,7 @@ export interface Page {
     articleContent: string;
     imgPath?: string;
     isAboutFolktale?: boolean;
+    authorId: number;
 }
 
 export type IndexInfo = {
@@ -56,6 +57,7 @@ export interface Props extends Page {
     imgNumber: number;
     pageName: string;
     helmetProps: HelmetProps;
+    author: Author;
 }
 
 export default function Articles(props: Props) {
@@ -70,6 +72,7 @@ export default function Articles(props: Props) {
         imgNumber,
         pageName,
         helmetProps,
+        author,
     } = useRevisedProps(props);
 
     return (
@@ -88,6 +91,7 @@ export default function Articles(props: Props) {
                 indexInfo={indexInfo}
                 imgNumber={imgNumber}
                 pageName={pageName}
+                author={author}
             />
         </Layout>
     );
@@ -132,6 +136,7 @@ interface ArticleContentProps {
     otherArticles: Page[];
     imgNumber: number;
     pageName: string;
+    author: Author;
 }
 export function ArticleContent({
     title,
@@ -142,6 +147,7 @@ export function ArticleContent({
     otherArticles,
     imgNumber,
     pageName,
+    author,
 }: ArticleContentProps) {
     const isWide = width > 991;
 
@@ -196,7 +202,11 @@ export function ArticleContent({
                 loading="noTime"
             />
             <hr />
-            <Author style={AuthorStyle} screenWidth={width} />
+            <AuthorArea
+                style={AuthorStyle}
+                screenWidth={width}
+                author={author}
+            />
             <hr />
             {otherArticles.length > 0 && (
                 <section>

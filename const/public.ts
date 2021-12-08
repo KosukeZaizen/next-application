@@ -25,6 +25,8 @@ export const Z_APPS_TOP_URL = `https://${Z_APPS_HOST}`;
 export const BLOB_URL =
     "https://lingualninja.blob.core.windows.net/lingual-storage";
 
+export const ARTICLES_BLOB = `${BLOB_URL}/articles`;
+
 export const APPS_PUBLIC_IMG_URL =
     "https://lingualninja.blob.core.windows.net/lingual-storage/appsPublic/img/";
 
