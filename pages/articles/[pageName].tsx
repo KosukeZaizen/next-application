@@ -4,11 +4,13 @@ import {
     GetStaticPropsContext,
     GetStaticPropsResult,
 } from "next";
+import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import { Author } from "../../components/articles/Author";
 import {
+    FullScreenShuriken,
     h1TitleCss,
     Layout,
     whiteShadowStyle,
@@ -145,6 +147,12 @@ export function ArticleContent({
 
     const { isFirstRender } = useIsFirstRender();
     useHashScroll(isFirstRender);
+
+    const router = useRouter();
+    if (router.query.pageName !== pageName) {
+        // During the transition from another article
+        return <FullScreenShuriken />;
+    }
 
     return (
         <main css={mainCss}>

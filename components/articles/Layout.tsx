@@ -74,9 +74,7 @@ export function Layout({
                 </Toolbar>
             </AppBar>
             {isFirstRender ? (
-                <div css={shurikenContainerStyle}>
-                    <ShurikenProgress size="100%" style={shurikenStyle} />
-                </div>
+                <FullScreenShuriken />
             ) : (
                 <>
                     <div css={mainContainerStyle}>{children}</div>
@@ -91,6 +89,14 @@ export function Layout({
                 </>
             )}
         </>
+    );
+}
+
+export function FullScreenShuriken() {
+    return (
+        <div css={shurikenContainerStyle}>
+            <ShurikenProgress size="100%" style={shurikenStyle} />
+        </div>
     );
 }
 
