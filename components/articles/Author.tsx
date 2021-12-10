@@ -27,9 +27,11 @@ function getAuthorImgPath({ authorId, imgExtension }: Author) {
 export function AuthorCard({
     author,
     screenWidth,
+    style,
 }: {
     author?: Author;
     screenWidth: number;
+    style?: CSSProperties;
 }) {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
 
@@ -48,7 +50,7 @@ export function AuthorCard({
                     padding: 5,
                     cursor: "pointer",
                 }}
-                style={{ borderRadius: 0 }}
+                style={{ borderRadius: 0, ...style }}
                 onClick={() => {
                     setIsPanelOpen(true);
                 }}

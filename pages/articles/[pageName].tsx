@@ -8,7 +8,11 @@ import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
-import { Author, AuthorArea } from "../../components/articles/Author";
+import {
+    Author,
+    AuthorArea,
+    AuthorCard,
+} from "../../components/articles/Author";
 import {
     FullScreenShuriken,
     h1TitleCss,
@@ -85,7 +89,7 @@ export default function Articles(props: Props) {
             <ArticleContent
                 title={title}
                 description={description}
-                width={screenWidth}
+                screenWidth={screenWidth}
                 content={articleContent}
                 // adsense={true}
                 otherArticles={otherArticles}
@@ -131,7 +135,7 @@ const textShadow = Array.from(Array(50).keys())
 interface ArticleContentProps {
     title: string;
     description: string;
-    width: number;
+    screenWidth: number;
     indexInfo: IndexInfo;
     content: string;
     // adsense: boolean;
@@ -144,7 +148,7 @@ interface ArticleContentProps {
 export function ArticleContent({
     title,
     description,
-    width,
+    screenWidth,
     indexInfo,
     content,
     otherArticles,
@@ -153,7 +157,7 @@ export function ArticleContent({
     authorId,
     allAuthors,
 }: ArticleContentProps) {
-    const isWide = width > 991;
+    const isWide = screenWidth > 991;
 
     const { isFirstRender } = useIsFirstRender();
     useHashScroll(isFirstRender);
@@ -172,8 +176,31 @@ export function ArticleContent({
 
                 <CharacterComment
                     imgNumber={imgNumber}
-                    screenWidth={width}
-                    comment={description}
+                    screenWidth={screenWidth}
+                    comment={
+                        <div css={{ textAlign: "left" }}>
+                            {description}
+                            <div
+                                css={{
+                                    display: "flex",
+                                    justifyContent: isWide
+                                        ? "flex-end"
+                                        : undefined,
+                                    position: "relative",
+                                    top: isWide ? 5 : 5,
+                                    left: isWide ? 10 : 0,
+                                }}
+                            >
+                                <AuthorCard
+                                    author={allAuthors.find(
+                                        a => a.authorId === authorId
+                                    )}
+                                    screenWidth={screenWidth}
+                                    style={{ borderRadius: undefined }}
+                                />
+                            </div>
+                        </div>
+                    }
                     css={characterCommentCss}
                     commentStyle={commentCss}
                     loading="noTime"
@@ -202,13 +229,13 @@ export function ArticleContent({
                     </>
                 }
                 imgNumber={(imgNumber - 1 || 3) - 1 || 3}
-                screenWidth={width}
+                screenWidth={screenWidth}
                 loading="noTime"
             />
             <hr />
             <AuthorArea
                 style={AuthorStyle}
-                screenWidth={width}
+                screenWidth={screenWidth}
                 author={allAuthors.find(a => a.authorId === authorId)}
             />
             <hr />
@@ -218,13 +245,13 @@ export function ArticleContent({
                     <ArticlesList
                         titleH={"h3"}
                         articles={otherArticles}
-                        screenWidth={width}
+                        screenWidth={screenWidth}
                         allAuthors={allAuthors}
                     />
                 </section>
             )}
             <hr />
-            <FB style={fbStyle} screenWidth={width} />
+            <FB style={fbStyle} screenWidth={screenWidth} />
         </main>
     );
 }

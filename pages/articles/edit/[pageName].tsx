@@ -27,7 +27,7 @@ export interface Page {
 interface Props extends Page {
     imgNumber: number;
     pageName: string;
-    author: Author;
+    allAuthors: Author[];
     helmetProps: HelmetProps;
     released?: boolean;
 }
@@ -40,7 +40,8 @@ export default function Articles({
     pageName,
     released,
     imgNumber,
-    author,
+    authorId,
+    allAuthors,
     helmetProps,
 }: Props) {
     const [title, setTitle] = useState<Page["title"]>(pTitle);
@@ -125,11 +126,12 @@ export default function Articles({
                         title={title}
                         description={description}
                         imgNumber={imgNumber}
-                        width={screenWidth / 3}
+                        screenWidth={screenWidth / 3}
                         content={content}
                         otherArticles={[]}
                         indexInfo={indexInfo}
-                        author={author}
+                        authorId={authorId}
+                        allAuthors={allAuthors}
                     />
                 </div>
                 <div
