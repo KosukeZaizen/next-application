@@ -67,6 +67,7 @@ export function RightPanel({
                     transitionProperty: "right",
                     zIndex: 10001,
                     overflow: "hidden",
+                    opacity: isContentShown ? 1 : 0,
                     ...style,
                     width: Math.min(screenWidth, panelWidth),
                 }}
