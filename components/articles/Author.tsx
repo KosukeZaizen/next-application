@@ -64,8 +64,10 @@ export function AuthorCard({
                     />
                 </Avatar>
                 <div css={{ marginLeft: 5, marginRight: 5 }}>
-                    {"by "}
-                    <a>{author.authorName}</a>
+                    <span css={{ color: "#0d6efd" }}>
+                        {"by "}
+                        {author.authorName}
+                    </span>
                 </div>
             </Card>
             <RightPanel
