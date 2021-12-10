@@ -8,14 +8,16 @@ export function RightPanel({
     onClose,
     children,
     style,
-    width = 800,
+    screenWidth,
+    panelWidth,
     transitionMilliseconds = 1000,
 }: {
     open: boolean;
     onClose: () => void;
     children: ReactNode;
     style?: CSSProperties;
-    width?: number;
+    screenWidth: number;
+    panelWidth: number;
     transitionMilliseconds?: number;
 }) {
     const [isContentShown, setIsContentShown] = useState(false);
@@ -58,7 +60,7 @@ export function RightPanel({
                     height: "calc(100% - 30px)",
                     position: "fixed",
                     bottom: 0,
-                    right: open ? 0 : -(width + 20),
+                    right: open ? 0 : -(screenWidth + 20),
                     borderRadius: "20px 0 0 0",
                     padding: "38px 0 5px 5px",
                     transitionDuration,
@@ -66,7 +68,7 @@ export function RightPanel({
                     zIndex: 10001,
                     overflow: "hidden",
                     ...style,
-                    width,
+                    width: Math.min(screenWidth, panelWidth),
                 }}
             >
                 <button
@@ -82,7 +84,6 @@ export function RightPanel({
                         top: 5,
                         left: 5,
                     }}
-                    // style={{ backgroundColor: "#212529" }}
                     onClick={onClose}
                 >
                     <CloseIcon style={{ width: 20, height: 20 }} />

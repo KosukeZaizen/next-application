@@ -75,6 +75,8 @@ export function AuthorCard({
                 onClose={() => {
                     setIsPanelOpen(false);
                 }}
+                screenWidth={screenWidth}
+                panelWidth={1000}
             >
                 <AuthorArea author={author} screenWidth={panelWidth} />
             </RightPanel>
