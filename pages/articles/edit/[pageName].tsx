@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
+import { Author } from "../../../components/articles/Author";
 import { checkImgExtension } from "../../../components/articles/Markdown/ImageRender";
 import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
 import { fetchZAppsFromFrontEnd } from "../../../lib/fetch";
@@ -20,11 +21,13 @@ export interface Page {
     articleContent: string;
     released?: boolean;
     isAboutFolktale?: boolean;
+    authorId: number;
 }
 
 interface Props extends Page {
     imgNumber: number;
     pageName: string;
+    author: Author;
     helmetProps: HelmetProps;
     released?: boolean;
 }
@@ -37,6 +40,7 @@ export default function Articles({
     pageName,
     released,
     imgNumber,
+    author,
     helmetProps,
 }: Props) {
     const [title, setTitle] = useState<Page["title"]>(pTitle);
@@ -125,6 +129,7 @@ export default function Articles({
                         content={content}
                         otherArticles={[]}
                         indexInfo={indexInfo}
+                        author={author}
                     />
                 </div>
                 <div

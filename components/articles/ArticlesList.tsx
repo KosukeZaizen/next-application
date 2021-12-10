@@ -4,18 +4,21 @@ import { Page } from "../../pages/articles/[pageName]";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
 import ShurikenProgress from "../shared/ShurikenProgress";
+import { Author, AuthorCard } from "./Author";
 
 interface ArticlesListProps {
     articles: Page[];
     screenWidth: number;
     titleH: "h2" | "h3";
     isTargetBlank?: boolean;
+    allAuthors: Author[];
 }
 export function ArticlesList({
     articles,
     screenWidth,
     titleH,
     isTargetBlank,
+    allAuthors,
 }: ArticlesListProps) {
     const isWide = screenWidth > 767;
 
@@ -73,45 +76,67 @@ export function ArticlesList({
                                             margin: isWide
                                                 ? "0 20px 10px 20px"
                                                 : 10,
+                                            alignItems: isWide
+                                                ? "flex-end"
+                                                : "flex-start",
                                         },
                                     ]}
                                 >
-                                    <LinkOrA href={`${url}/${page.url}`}>
-                                        {titleH === "h3" ? (
-                                            <h3
-                                                css={{
-                                                    fontSize: isWide
-                                                        ? "27px"
-                                                        : "x-large",
-                                                }}
-                                            >
-                                                {page.title}
-                                            </h3>
-                                        ) : (
-                                            <h2
-                                                css={{
-                                                    fontSize: isWide
-                                                        ? "27px"
-                                                        : "x-large",
-                                                }}
-                                            >
-                                                {page.title}
-                                            </h2>
-                                        )}
-                                    </LinkOrA>
-                                    <p
+                                    <div>
+                                        <LinkOrA href={`${url}/${page.url}`}>
+                                            {titleH === "h3" ? (
+                                                <h3
+                                                    css={{
+                                                        fontSize: isWide
+                                                            ? "27px"
+                                                            : "x-large",
+                                                    }}
+                                                >
+                                                    {page.title}
+                                                </h3>
+                                            ) : (
+                                                <h2
+                                                    css={{
+                                                        fontSize: isWide
+                                                            ? "27px"
+                                                            : "x-large",
+                                                    }}
+                                                >
+                                                    {page.title}
+                                                </h2>
+                                            )}
+                                        </LinkOrA>
+                                        <p
+                                            css={{
+                                                fontSize: isWide
+                                                    ? undefined
+                                                    : "medium",
+                                                margin: 0,
+                                            }}
+                                        >
+                                            {page.description.length > 200
+                                                ? page.description.slice(
+                                                      0,
+                                                      200
+                                                  ) + "..."
+                                                : page.description}
+                                        </p>
+                                    </div>
+                                    <div
                                         css={{
-                                            fontSize: isWide
-                                                ? undefined
-                                                : "medium",
-                                            margin: 0,
+                                            position: "relative",
+                                            top: 10,
+                                            left: isWide ? 20 : 0,
                                         }}
                                     >
-                                        {page.description.length > 200
-                                            ? page.description.slice(0, 200) +
-                                              "..."
-                                            : page.description}
-                                    </p>
+                                        <AuthorCard
+                                            author={allAuthors.find(
+                                                a =>
+                                                    a.authorId === page.authorId
+                                            )}
+                                            screenWidth={screenWidth}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </ScrollBox>
@@ -133,6 +158,9 @@ const c = getClasses({
     articleDesc: {
         margin: 0,
         flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
     },
     articleLink: {
         display: "block",

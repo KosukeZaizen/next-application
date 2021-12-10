@@ -1,13 +1,15 @@
 import { SerializedStyles } from "@emotion/utils";
 import * as React from "react";
-import { CSSProperties } from "react";
+import { CSSProperties, useState } from "react";
 import { css } from "../../lib/css";
-import { AutoHeightImg } from "../shared/Img";
+import { AutoHeightImg, Img } from "../shared/Img";
 import { ScrollBox } from "../shared/ScrollBox";
 import { Markdown } from "./Markdown";
 import { getClasses } from "../../lib/css";
 import classes from "../shared/CharacterComment/CharacterComment.module.css";
 import { ARTICLES_BLOB } from "../../const/public";
+import { Avatar, Card } from "@material-ui/core";
+import { RightPanel } from "../shared/RightPanel";
 
 export interface Author {
     authorId: number;
@@ -16,6 +18,66 @@ export interface Author {
     selfIntroduction: string;
     isAdmin: boolean;
     imgExtension: string;
+}
+
+function getAuthorImgPath({ authorId, imgExtension }: Author) {
+    return `${ARTICLES_BLOB}/_authors/${authorId}${imgExtension}`;
+}
+
+export function AuthorCard({
+    author,
+    screenWidth,
+}: {
+    author?: Author;
+    screenWidth: number;
+}) {
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+    if (!author) {
+        return null;
+    }
+
+    const panelWidth = screenWidth > 1000 ? 1000 : screenWidth;
+
+    return (
+        <>
+            <Card
+                css={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: 5,
+                    cursor: "pointer",
+                }}
+                style={{ borderRadius: 0 }}
+                onClick={() => {
+                    setIsPanelOpen(true);
+                }}
+            >
+                <Avatar>
+                    <Img
+                        src={getAuthorImgPath(author)}
+                        width={40}
+                        height={40}
+                        objectFit="cover"
+                        objectPosition="50% 50%"
+                        alt={author.authorName}
+                    />
+                </Avatar>
+                <div css={{ marginLeft: 5, marginRight: 5 }}>
+                    {"by "}
+                    <a>{author.authorName}</a>
+                </div>
+            </Card>
+            <RightPanel
+                open={isPanelOpen}
+                onClose={() => {
+                    setIsPanelOpen(false);
+                }}
+            >
+                <AuthorArea author={author} screenWidth={panelWidth} />
+            </RightPanel>
+        </>
+    );
 }
 
 type AuthorAreaProps = {
@@ -31,15 +93,9 @@ export const AuthorArea = ({ style, screenWidth, author }: AuthorAreaProps) => {
     const isCommentUsed = screenWidth > 767;
     const isVeryNarrow = screenWidth < 500;
 
-    const {
-        authorName,
-        initialGreeting,
-        selfIntroduction,
-        authorId,
-        imgExtension,
-    } = author;
+    const { authorName, initialGreeting, selfIntroduction } = author;
 
-    const imagePath = `${ARTICLES_BLOB}/_authors/${authorId}${imgExtension}`;
+    const imagePath = getAuthorImgPath(author);
 
     return (
         <ScrollBox pCss={css([c.scroll, style])}>

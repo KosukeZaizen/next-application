@@ -1,14 +1,15 @@
 import { SerializedStyles } from "@emotion/react";
 import React, { AnchorHTMLAttributes } from "react";
 
-export function ATargetBlank(
-    props: AnchorHTMLAttributes<HTMLAnchorElement> & {
-        nofollow?: boolean;
-        pCss?: SerializedStyles;
-    }
-) {
-    const { nofollow, children, pCss, ...rest } = props;
-
+export function ATargetBlank({
+    nofollow,
+    children,
+    pCss,
+    ...rest
+}: AnchorHTMLAttributes<HTMLAnchorElement> & {
+    nofollow?: boolean;
+    pCss?: SerializedStyles;
+}) {
     const rel = nofollow
         ? "nofollow noopener noreferrer"
         : "noopener noreferrer";

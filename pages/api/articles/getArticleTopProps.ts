@@ -22,12 +22,12 @@ export async function getArticleTopProps(): Promise<Response> {
         "api/Articles/GetAllArticles"
     );
     const authorPromise = fetchZAppsFromServerSide(
-        `api/Articles/GetAuthorInfo?authorId=1`
+        "api/Articles/GetAllAuthors"
     );
 
     return {
         pages: await (await pagesPromise).json(),
-        author: await (await authorPromise).json(),
+        allAuthors: await (await authorPromise).json(),
         helmetProps: {
             title: siteName,
             desc,

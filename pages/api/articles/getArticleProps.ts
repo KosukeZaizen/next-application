@@ -39,7 +39,7 @@ export async function getArticleProps(pageName: string): Promise<Props> {
     } = page;
 
     const authorPromise = fetchZAppsFromServerSide(
-        `api/Articles/GetAuthorInfo?authorId=${authorId}`
+        "api/Articles/GetAllAuthors"
     );
 
     const indexInfo = makeIndexInfo(articleContent);
@@ -64,7 +64,7 @@ export async function getArticleProps(pageName: string): Promise<Props> {
         otherArticles,
         imgNumber: getImgNumber(pageName.length),
         authorId,
-        author: await (await authorPromise).json(),
+        allAuthors: await (await authorPromise).json(),
         helmetProps: {
             title,
             desc: description,

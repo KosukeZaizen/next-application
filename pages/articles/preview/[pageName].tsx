@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps<
         }: Page = await response.json();
 
         const authorPromise = fetchZAppsFromServerSide(
-            `api/Articles/GetAuthorInfo?authorId=${authorId}`
+            "api/Articles/GetAllAuthors"
         );
 
         const indexInfo = makeIndexInfo(articleContent);
@@ -71,7 +71,7 @@ export const getServerSideProps: GetServerSideProps<
                 imgNumber: getImgNumber(pageName.length),
                 otherArticles,
                 authorId,
-                author: await (await authorPromise).json(),
+                allAuthors: await (await authorPromise).json(),
                 helmetProps: {
                     title,
                     desc: description,

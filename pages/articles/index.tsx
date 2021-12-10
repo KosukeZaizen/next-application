@@ -29,13 +29,13 @@ const imgNumber = getImgNumber();
 
 export interface Props {
     pages: Page[];
-    author: Author;
+    allAuthors: Author[];
     helmetProps: HelmetProps;
 }
 
 export default function Home(props: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
-    const { pages, author, helmetProps } = useRevisedProps(props);
+    const { pages, allAuthors, helmetProps } = useRevisedProps(props);
 
     return (
         <Layout
@@ -65,11 +65,12 @@ export default function Home(props: Props) {
                         titleH={"h2"}
                         articles={pages}
                         screenWidth={screenWidth}
+                        allAuthors={allAuthors}
                     />
                     <AuthorArea
                         style={c.author}
                         screenWidth={screenWidth}
-                        author={author}
+                        author={allAuthors.find(a => a.authorId === 1)}
                     />
                 </div>
                 <FB style={c.fb} screenWidth={screenWidth} />

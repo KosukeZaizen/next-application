@@ -57,7 +57,7 @@ export interface Props extends Page {
     imgNumber: number;
     pageName: string;
     helmetProps: HelmetProps;
-    author: Author;
+    allAuthors: Author[];
 }
 
 export default function Articles(props: Props) {
@@ -72,7 +72,8 @@ export default function Articles(props: Props) {
         imgNumber,
         pageName,
         helmetProps,
-        author,
+        allAuthors,
+        authorId,
     } = useRevisedProps(props);
 
     return (
@@ -91,7 +92,8 @@ export default function Articles(props: Props) {
                 indexInfo={indexInfo}
                 imgNumber={imgNumber}
                 pageName={pageName}
-                author={author}
+                authorId={authorId}
+                allAuthors={allAuthors}
             />
         </Layout>
     );
@@ -136,7 +138,8 @@ interface ArticleContentProps {
     otherArticles: Page[];
     imgNumber: number;
     pageName: string;
-    author: Author;
+    authorId: number;
+    allAuthors: Author[];
 }
 export function ArticleContent({
     title,
@@ -147,7 +150,8 @@ export function ArticleContent({
     otherArticles,
     imgNumber,
     pageName,
-    author,
+    authorId,
+    allAuthors,
 }: ArticleContentProps) {
     const isWide = width > 991;
 
@@ -205,7 +209,7 @@ export function ArticleContent({
             <AuthorArea
                 style={AuthorStyle}
                 screenWidth={width}
-                author={author}
+                author={allAuthors.find(a => a.authorId === authorId)}
             />
             <hr />
             {otherArticles.length > 0 && (
@@ -215,6 +219,7 @@ export function ArticleContent({
                         titleH={"h3"}
                         articles={otherArticles}
                         screenWidth={width}
+                        allAuthors={allAuthors}
                     />
                 </section>
             )}
