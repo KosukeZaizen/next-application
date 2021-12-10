@@ -135,6 +135,7 @@ export function ArticlesList({
                                             )}
                                             screenWidth={screenWidth}
                                             style={{ borderRadius: 0 }}
+                                            iconLazy
                                         />
                                     </div>
                                 </div>

@@ -28,10 +28,12 @@ export function AuthorCard({
     author,
     screenWidth,
     style,
+    iconLazy,
 }: {
     author?: Author;
     screenWidth: number;
     style?: CSSProperties;
+    iconLazy?: boolean;
 }) {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
 
@@ -56,14 +58,29 @@ export function AuthorCard({
                 }}
             >
                 <Avatar>
-                    <Img
-                        src={getAuthorImgPath(author)}
-                        width={40}
-                        height={40}
-                        objectFit="cover"
-                        objectPosition="50% 50%"
-                        alt={author.authorName}
-                    />
+                    {iconLazy ? (
+                        <Img
+                            src={getAuthorImgPath(author)}
+                            width={40}
+                            height={40}
+                            objectFit="cover"
+                            objectPosition="50% 50%"
+                            alt={author.authorName}
+                            title={author.authorName}
+                        />
+                    ) : (
+                        <img
+                            src={getAuthorImgPath(author)}
+                            css={{
+                                width: 40,
+                                height: 40,
+                                objectFit: "cover",
+                                objectPosition: "50% 50%",
+                            }}
+                            alt={author.authorName}
+                            title={author.authorName}
+                        />
+                    )}
                 </Avatar>
                 <div css={{ marginLeft: 5, marginRight: 5 }}>
                     <span css={{ color: "#0d6efd" }}>
