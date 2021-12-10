@@ -44,13 +44,13 @@ export function AuthorCard({
     return (
         <>
             <Card
-                css={{
-                    display: "flex",
+                style={{
+                    display: "inline-flex",
                     alignItems: "center",
                     padding: 5,
                     cursor: "pointer",
+                    ...style,
                 }}
-                style={{ borderRadius: 0, ...style }}
                 onClick={() => {
                     setIsPanelOpen(true);
                 }}

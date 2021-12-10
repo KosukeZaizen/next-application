@@ -74,7 +74,7 @@ export function ArticlesList({
                                         c.articleDesc,
                                         {
                                             margin: isWide
-                                                ? "0 20px 10px 20px"
+                                                ? "0 0 10px 20px"
                                                 : 10,
                                             alignItems: isWide
                                                 ? "flex-end"
@@ -126,7 +126,6 @@ export function ArticlesList({
                                         css={{
                                             position: "relative",
                                             top: 10,
-                                            left: isWide ? 20 : 0,
                                         }}
                                     >
                                         <AuthorCard
@@ -135,6 +134,7 @@ export function ArticlesList({
                                                     a.authorId === page.authorId
                                             )}
                                             screenWidth={screenWidth}
+                                            style={{ borderRadius: 0 }}
                                         />
                                     </div>
                                 </div>

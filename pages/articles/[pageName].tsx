@@ -177,36 +177,19 @@ export function ArticleContent({
                 <CharacterComment
                     imgNumber={imgNumber}
                     screenWidth={screenWidth}
-                    comment={
-                        <div css={{ textAlign: "left" }}>
-                            {description}
-                            <div
-                                css={{
-                                    display: "flex",
-                                    justifyContent: isWide
-                                        ? "flex-end"
-                                        : undefined,
-                                    position: "relative",
-                                    top: isWide ? 5 : 5,
-                                    left: isWide ? 10 : 0,
-                                }}
-                            >
-                                <AuthorCard
-                                    author={allAuthors.find(
-                                        a => a.authorId === authorId
-                                    )}
-                                    screenWidth={screenWidth}
-                                    style={{ borderRadius: undefined }}
-                                />
-                            </div>
-                        </div>
-                    }
+                    comment={description}
                     css={characterCommentCss}
                     commentStyle={commentCss}
                     loading="noTime"
                 />
 
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
+
+                <AuthorCard
+                    author={allAuthors.find(a => a.authorId === authorId)}
+                    screenWidth={screenWidth}
+                    style={{ marginTop: 30 }}
+                />
 
                 <Markdown source={content} style={markdownStyle} />
             </article>
