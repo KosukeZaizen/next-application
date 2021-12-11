@@ -75,7 +75,7 @@ export function ArticlesList({
                                         {
                                             margin: isWide
                                                 ? "0 0 10px 20px"
-                                                : 10,
+                                                : "10px 5px",
                                             alignItems: isWide
                                                 ? "flex-end"
                                                 : "flex-start",
@@ -126,7 +126,7 @@ export function ArticlesList({
                                         css={{
                                             position: "relative",
                                             top: 10,
-                                            left: isWide ? 0 : -10,
+                                            left: isWide ? 0 : -5,
                                         }}
                                     >
                                         <AuthorCard
