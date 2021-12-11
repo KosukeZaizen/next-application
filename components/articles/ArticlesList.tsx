@@ -126,6 +126,7 @@ export function ArticlesList({
                                         css={{
                                             position: "relative",
                                             top: 10,
+                                            left: isWide ? 0 : -10,
                                         }}
                                     >
                                         <AuthorCard
@@ -157,7 +158,6 @@ const c = getClasses({
         maxWidth: 900,
     },
     articleDesc: {
-        margin: 0,
         flex: 1,
         display: "flex",
         flexDirection: "column",
