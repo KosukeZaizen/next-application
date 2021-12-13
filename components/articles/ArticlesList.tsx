@@ -57,7 +57,7 @@ export function ArticlesList({
                                         href={`${url}/${page.url}`}
                                         pCss={c.articleLink}
                                     >
-                                        {i < 10 ? (
+                                        {i < 15 && titleH === "h2" ? (
                                             <img
                                                 alt={page.title}
                                                 src={page.imgPath}
@@ -151,7 +151,7 @@ export function ArticlesList({
                                             )}
                                             screenWidth={screenWidth}
                                             style={{ borderRadius: 0 }}
-                                            iconLazy
+                                            iconLazy={titleH === "h3"}
                                         />
                                     </div>
                                 </div>
