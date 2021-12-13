@@ -116,10 +116,11 @@ function useRevisedProps(props: Props) {
                 }
             );
             if (result.responseType === "success") {
-                setProps(result);
+                // Don't replace otherArticles
+                setProps({ ...result, otherArticles: props.otherArticles });
             }
         })();
-    }, [props.pageName]);
+    }, [props.pageName, props.otherArticles]);
 
     return _props;
 }
