@@ -52,6 +52,8 @@ export function ArticlesList({
                             ]}
                         />
                     );
+                    const isImageLazy = i > 10 || titleH === "h3";
+
                     return (
                         <article key={page.title} css={c.article}>
                             <ScrollBox
@@ -83,10 +85,10 @@ export function ArticlesList({
                                                     width: "100%",
                                                 }}
                                             >
-                                                {i < 15 && titleH === "h2" ? (
-                                                    image
-                                                ) : (
+                                                {isImageLazy ? (
                                                     <LazyLoad>{image}</LazyLoad>
+                                                ) : (
+                                                    image
                                                 )}
                                             </div>
                                         </LinkOrA>
@@ -161,7 +163,7 @@ export function ArticlesList({
                                                 )}
                                                 screenWidth={screenWidth}
                                                 style={{ borderRadius: 0 }}
-                                                iconLazy={titleH === "h3"}
+                                                iconLazy={isImageLazy}
                                             />
                                         </div>
                                     </div>

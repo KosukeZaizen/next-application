@@ -2,7 +2,7 @@ import { SerializedStyles } from "@emotion/utils";
 import * as React from "react";
 import { CSSProperties, useState } from "react";
 import { css } from "../../lib/css";
-import { AutoHeightImg, Img } from "../shared/Img";
+import { AutoHeightImg } from "../shared/Img";
 import { ScrollBox } from "../shared/ScrollBox";
 import { Markdown } from "./Markdown";
 import { getClasses } from "../../lib/css";
@@ -10,6 +10,7 @@ import classes from "../shared/CharacterComment/CharacterComment.module.css";
 import { ARTICLES_BLOB } from "../../const/public";
 import { Avatar, Card } from "@material-ui/core";
 import { RightPanel } from "../shared/RightPanel";
+import LazyLoad from "react-lazyload";
 
 export interface Author {
     authorId: number;
@@ -43,6 +44,20 @@ export function AuthorCard({
 
     const panelWidth = screenWidth > 1000 ? 1000 : screenWidth;
 
+    const image = (
+        <img
+            src={getAuthorImgPath(author)}
+            css={{
+                width: 40,
+                height: 40,
+                objectFit: "cover",
+                objectPosition: "50% 50%",
+            }}
+            alt={author.authorName}
+            title={author.authorName}
+        />
+    );
+
     return (
         <>
             <Card
@@ -58,29 +73,7 @@ export function AuthorCard({
                 }}
             >
                 <Avatar>
-                    {iconLazy ? (
-                        <Img
-                            src={getAuthorImgPath(author)}
-                            width={40}
-                            height={40}
-                            objectFit="cover"
-                            objectPosition="50% 50%"
-                            alt={author.authorName}
-                            title={author.authorName}
-                        />
-                    ) : (
-                        <img
-                            src={getAuthorImgPath(author)}
-                            css={{
-                                width: 40,
-                                height: 40,
-                                objectFit: "cover",
-                                objectPosition: "50% 50%",
-                            }}
-                            alt={author.authorName}
-                            title={author.authorName}
-                        />
-                    )}
+                    {iconLazy ? <LazyLoad>{image}</LazyLoad> : image}
                 </Avatar>
                 <div css={{ marginLeft: 5, marginRight: 5 }}>
                     <span css={{ color: "#0d6efd" }}>
