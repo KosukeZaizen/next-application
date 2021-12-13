@@ -1,6 +1,7 @@
 import * as React from "react";
 import { css, getClasses } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
+import { AutoHeightImg } from "../shared/Img";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
 import ShurikenProgress from "../shared/ShurikenProgress";
@@ -36,7 +37,7 @@ export function ArticlesList({
     return (
         <>
             {articles.length > 0 ? (
-                articles.map(page => (
+                articles.map((page, i) => (
                     <article key={page.title} css={c.article}>
                         <ScrollBox
                             pCss={
@@ -56,17 +57,31 @@ export function ArticlesList({
                                         href={`${url}/${page.url}`}
                                         pCss={c.articleLink}
                                     >
-                                        <img
-                                            alt={page.title}
-                                            src={page.imgPath}
-                                            css={[
-                                                {
-                                                    objectFit: "cover",
-                                                    margin: 0,
-                                                },
-                                                imgSize,
-                                            ]}
-                                        />
+                                        {i < 10 ? (
+                                            <img
+                                                alt={page.title}
+                                                src={page.imgPath}
+                                                css={[
+                                                    {
+                                                        objectFit: "cover",
+                                                        margin: 0,
+                                                    },
+                                                    imgSize,
+                                                ]}
+                                            />
+                                        ) : (
+                                            <AutoHeightImg
+                                                alt={page.title}
+                                                src={page.imgPath}
+                                                containerStyle={css([
+                                                    {
+                                                        margin: 0,
+                                                    },
+                                                    imgSize,
+                                                ])}
+                                                objectFit="cover"
+                                            />
+                                        )}
                                     </LinkOrA>
                                 )}
                                 <div
