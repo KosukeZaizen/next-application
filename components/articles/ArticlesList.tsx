@@ -1,7 +1,7 @@
 import * as React from "react";
+import LazyLoad from "react-lazyload";
 import { css, getClasses } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
-import { AutoHeightImg } from "../shared/Img";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
 import ShurikenProgress from "../shared/ShurikenProgress";
@@ -37,128 +37,139 @@ export function ArticlesList({
     return (
         <>
             {articles.length > 0 ? (
-                articles.map((page, i) => (
-                    <article key={page.title} css={c.article}>
-                        <ScrollBox
-                            pCss={
-                                isWide
-                                    ? css({ padding: 15 })
-                                    : css({ padding: 10 })
-                            }
-                        >
-                            <div
-                                css={{
-                                    display: "flex",
-                                    flexDirection: isWide ? "row" : "column",
-                                }}
+                articles.map((page, i) => {
+                    const image = (
+                        <img
+                            alt={page.title}
+                            src={page.imgPath}
+                            css={[
+                                {
+                                    objectFit: "cover",
+                                    objectPosition: "50% 50%",
+                                    margin: 0,
+                                },
+                                imgSize,
+                            ]}
+                        />
+                    );
+                    return (
+                        <article key={page.title} css={c.article}>
+                            <ScrollBox
+                                pCss={
+                                    isWide
+                                        ? css({ padding: 15 })
+                                        : css({ padding: 10 })
+                                }
                             >
-                                {page.imgPath && (
-                                    <LinkOrA
-                                        href={`${url}/${page.url}`}
-                                        pCss={c.articleLink}
-                                    >
-                                        {i < 15 && titleH === "h2" ? (
-                                            <img
-                                                alt={page.title}
-                                                src={page.imgPath}
-                                                css={[
-                                                    {
-                                                        objectFit: "cover",
-                                                        margin: 0,
-                                                    },
-                                                    imgSize,
-                                                ]}
-                                            />
-                                        ) : (
-                                            <AutoHeightImg
-                                                alt={page.title}
-                                                src={page.imgPath}
-                                                containerStyle={css([
-                                                    {
-                                                        margin: 0,
-                                                    },
-                                                    imgSize,
-                                                ])}
-                                                objectFit="cover"
-                                            />
-                                        )}
-                                    </LinkOrA>
-                                )}
                                 <div
-                                    css={[
-                                        c.articleDesc,
-                                        {
-                                            margin: isWide
-                                                ? "0 0 10px 20px"
-                                                : "10px 5px",
-                                            alignItems: isWide
-                                                ? "flex-end"
-                                                : "flex-start",
-                                        },
-                                    ]}
+                                    css={{
+                                        display: "flex",
+                                        flexDirection: isWide
+                                            ? "row"
+                                            : "column",
+                                    }}
                                 >
-                                    <div>
-                                        <LinkOrA href={`${url}/${page.url}`}>
-                                            {titleH === "h3" ? (
-                                                <h3
-                                                    css={{
-                                                        fontSize: isWide
-                                                            ? "27px"
-                                                            : "x-large",
-                                                    }}
-                                                >
-                                                    {page.title}
-                                                </h3>
-                                            ) : (
-                                                <h2
-                                                    css={{
-                                                        fontSize: isWide
-                                                            ? "27px"
-                                                            : "x-large",
-                                                    }}
-                                                >
-                                                    {page.title}
-                                                </h2>
-                                            )}
+                                    {page.imgPath && (
+                                        <LinkOrA
+                                            href={`${url}/${page.url}`}
+                                            pCss={c.articleLink}
+                                        >
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    overflow: "hidden",
+                                                    height: "100%",
+                                                    width: "100%",
+                                                }}
+                                            >
+                                                {i < 15 && titleH === "h2" ? (
+                                                    image
+                                                ) : (
+                                                    <LazyLoad>{image}</LazyLoad>
+                                                )}
+                                            </div>
                                         </LinkOrA>
-                                        <p
+                                    )}
+                                    <div
+                                        css={[
+                                            c.articleDesc,
+                                            {
+                                                margin: isWide
+                                                    ? "0 0 10px 20px"
+                                                    : "10px 5px",
+                                                alignItems: isWide
+                                                    ? "flex-end"
+                                                    : "flex-start",
+                                            },
+                                        ]}
+                                    >
+                                        <div>
+                                            <LinkOrA
+                                                href={`${url}/${page.url}`}
+                                            >
+                                                {titleH === "h3" ? (
+                                                    <h3
+                                                        css={{
+                                                            fontSize: isWide
+                                                                ? "27px"
+                                                                : "x-large",
+                                                        }}
+                                                    >
+                                                        {page.title}
+                                                    </h3>
+                                                ) : (
+                                                    <h2
+                                                        css={{
+                                                            fontSize: isWide
+                                                                ? "27px"
+                                                                : "x-large",
+                                                        }}
+                                                    >
+                                                        {page.title}
+                                                    </h2>
+                                                )}
+                                            </LinkOrA>
+                                            <p
+                                                css={{
+                                                    fontSize: isWide
+                                                        ? undefined
+                                                        : "medium",
+                                                    margin: 0,
+                                                }}
+                                            >
+                                                {page.description.length > 200
+                                                    ? page.description.slice(
+                                                          0,
+                                                          200
+                                                      ) + "..."
+                                                    : page.description}
+                                            </p>
+                                        </div>
+                                        <div
                                             css={{
-                                                fontSize: isWide
-                                                    ? undefined
-                                                    : "medium",
-                                                margin: 0,
+                                                position: "relative",
+                                                top: 10,
+                                                left: isWide ? 0 : -5,
                                             }}
                                         >
-                                            {page.description.length > 200
-                                                ? page.description.slice(
-                                                      0,
-                                                      200
-                                                  ) + "..."
-                                                : page.description}
-                                        </p>
-                                    </div>
-                                    <div
-                                        css={{
-                                            position: "relative",
-                                            top: 10,
-                                            left: isWide ? 0 : -5,
-                                        }}
-                                    >
-                                        <AuthorCard
-                                            author={allAuthors.find(
-                                                a =>
-                                                    a.authorId === page.authorId
-                                            )}
-                                            screenWidth={screenWidth}
-                                            style={{ borderRadius: 0 }}
-                                            iconLazy={titleH === "h3"}
-                                        />
+                                            <AuthorCard
+                                                author={allAuthors.find(
+                                                    a =>
+                                                        a.authorId ===
+                                                        page.authorId
+                                                )}
+                                                screenWidth={screenWidth}
+                                                style={{ borderRadius: 0 }}
+                                                iconLazy={titleH === "h3"}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </ScrollBox>
-                    </article>
-                ))
+                            </ScrollBox>
+                        </article>
+                    );
+                })
             ) : (
                 <ShurikenProgress size="20%" />
             )}
@@ -179,9 +190,10 @@ const c = getClasses({
         justifyContent: "space-between",
     },
     articleLink: {
-        display: "block",
         flex: 1,
         maxHeight: 250,
         overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
     },
 });
