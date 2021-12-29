@@ -45,7 +45,7 @@ export async function getArticleProps(pageName: string): Promise<Props> {
     const indexInfo = makeIndexInfo(articleContent);
 
     // Other articles
-    const param = `?num=10&${isAboutFolktale ? "&isAboutFolktale=true" : ""}`;
+    const param = `?num=1000&${isAboutFolktale ? "&isAboutFolktale=true" : ""}`;
     const articles: Page[] = await (
         await fetchZAppsFromServerSide("api/Articles/GetRandomArticles" + param)
     ).json();
