@@ -4,10 +4,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React, { useEffect } from "react";
-import LazyLoad from "react-lazyload";
 import { BLOB_URL } from "../../../../../const/public";
 import { getClasses } from "../../../../../lib/css";
 import { vocab, vocabGenre } from "../../../../../types/vocab";
+import { LazyLoad } from "../../../../shared/LazyLoad";
 import ShurikenProgress from "../../../../shared/ShurikenProgress";
 
 const tableHeadStyle: React.CSSProperties = {

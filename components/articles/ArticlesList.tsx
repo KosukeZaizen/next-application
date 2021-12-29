@@ -1,7 +1,7 @@
 import * as React from "react";
-import LazyLoad from "react-lazyload";
 import { css, getClasses } from "../../lib/css";
 import { Page } from "../../pages/articles/[pageName]";
+import { LazyLoad } from "../shared/LazyLoad";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
 import ShurikenProgress from "../shared/ShurikenProgress";

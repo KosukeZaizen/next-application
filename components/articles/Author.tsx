@@ -10,7 +10,7 @@ import classes from "../shared/CharacterComment/CharacterComment.module.css";
 import { ARTICLES_BLOB } from "../../const/public";
 import { Avatar, Card } from "@material-ui/core";
 import { RightPanel } from "../shared/RightPanel";
-import LazyLoad from "react-lazyload";
+import { LazyLoad } from "../shared/LazyLoad";
 
 export interface Author {
     authorId: number;

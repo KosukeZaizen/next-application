@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import LazyLoad from "react-lazyload";
 import { BLOB_URL } from "../../../../const/public";
 import { getClasses } from "../../../../lib/css";
+import { LazyLoad } from "../../../shared/LazyLoad";
 import ShurikenProgress from "../../../shared/ShurikenProgress";
 
 interface SpeakerProps {
