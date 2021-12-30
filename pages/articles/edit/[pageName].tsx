@@ -1,11 +1,11 @@
 import { debounce } from "@material-ui/core";
 import { GetServerSideProps } from "next";
-import Link from "next/link";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Author } from "../../../components/articles/Author";
 import { checkImgExtension } from "../../../components/articles/Markdown/ImageRender";
 import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
+import { Link } from "../../../components/shared/Link/Link";
 import { fetchZAppsFromFrontEnd } from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/screenSize";
 import { ArticleContent } from "../[pageName]";
@@ -303,14 +303,9 @@ export default function Articles({
                     Hide
                 </button>
                 <Link href="/articles/edit">
-                    <a>
-                        <button
-                            className="btn btn-primary"
-                            style={{ margin: 15 }}
-                        >
-                            Go to Edit Top
-                        </button>
-                    </a>
+                    <button className="btn btn-primary" style={{ margin: 15 }}>
+                        Go to Edit Top
+                    </button>
                 </Link>
             </div>
         </>

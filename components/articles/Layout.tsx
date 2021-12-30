@@ -2,10 +2,10 @@ import { css } from "@emotion/react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Link from "next/link";
 import React, { useEffect } from "react";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { Helmet, HelmetProps } from "../shared/Helmet";
+import { Link } from "../shared/Link/Link";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
@@ -54,22 +54,18 @@ export function Layout({
                         <MenuIcon />
                     </IconButton> */}
                     <Link href="/articles">
-                        <a>
-                            <Typography
-                                variant="h4"
-                                style={{
-                                    flexGrow: 1,
-                                    fontWeight: "bold",
-                                    color: "white",
-                                    fontSize:
-                                        screenWidth > 600
-                                            ? undefined
-                                            : "x-large",
-                                }}
-                            >
-                                Lingual Ninja
-                            </Typography>
-                        </a>
+                        <Typography
+                            variant="h4"
+                            style={{
+                                flexGrow: 1,
+                                fontWeight: "bold",
+                                color: "white",
+                                fontSize:
+                                    screenWidth > 600 ? undefined : "x-large",
+                            }}
+                        >
+                            Lingual Ninja
+                        </Typography>
                     </Link>
                 </Toolbar>
             </AppBar>

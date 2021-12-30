@@ -5,7 +5,6 @@ import {
     GetStaticPropsResult,
 } from "next";
 import { useRouter } from "next/dist/client/router";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import {
@@ -27,6 +26,7 @@ import {
 import CharacterComment from "../../components/shared/CharacterComment";
 import FB from "../../components/shared/FaceBook";
 import { HelmetProps } from "../../components/shared/Helmet";
+import { Link } from "../../components/shared/Link/Link";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
@@ -281,10 +281,8 @@ function BreadCrumbs({ title }: { title: string }) {
                 itemScope
                 itemType="http://schema.org/ListItem"
             >
-                <Link href="/articles">
-                    <a itemProp="item" css={breadCrumbsCss}>
-                        <span itemProp="name">{"Home"}</span>
-                    </a>
+                <Link href="/articles" itemProp="item" pCss={breadCrumbsCss}>
+                    <span itemProp="name">{"Home"}</span>
                 </Link>
                 <meta itemProp="position" content="1" />
             </span>

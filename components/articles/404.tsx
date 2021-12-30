@@ -1,8 +1,8 @@
 import { useRouter } from "next/dist/client/router";
-import Link from "next/link";
 import React from "react";
 import { useScreenSize } from "../../lib/screenSize";
 import { domain, siteName } from "../../pages/articles";
+import { Link } from "../shared/Link/Link";
 import { h1TitleCss, Layout } from "./Layout";
 
 export default function NotFoundPage() {
@@ -34,14 +34,12 @@ export default function NotFoundPage() {
             </h2>
             <p>Please check if the url is correct!</p>
             <Link href="/">
-                <a>
-                    <button
-                        style={{ width: "50%", fontWeight: "bold" }}
-                        className="btn btn-primary"
-                    >
-                        {"Home"}
-                    </button>
-                </a>
+                <button
+                    style={{ width: "50%", fontWeight: "bold" }}
+                    className="btn btn-primary"
+                >
+                    {"Home"}
+                </button>
             </Link>
         </Layout>
     );

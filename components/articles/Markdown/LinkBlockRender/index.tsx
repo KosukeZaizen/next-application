@@ -1,6 +1,6 @@
-import Link from "next/link";
 import React from "react";
 import { ATargetBlank } from "../../../shared/Link/ATargetBlank";
+import { Link } from "../../../shared/Link/Link";
 import { linkShadowStyle } from "./linkShadowStyle";
 
 export const LinkRender = (props: {
@@ -39,8 +39,8 @@ const LinkRenderBase = ({
         );
     }
     return (
-        <Link href={href}>
-            <a css={style}>{children}</a>
+        <Link href={href} pCss={style}>
+            {children}
         </Link>
     );
 };

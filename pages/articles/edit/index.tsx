@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next";
-import Link from "next/link";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { domain, siteName } from "..";
@@ -10,6 +9,7 @@ import {
 } from "../../../components/articles/Layout";
 import CharacterComment from "../../../components/shared/CharacterComment";
 import { HelmetProps } from "../../../components/shared/Helmet";
+import { Link } from "../../../components/shared/Link/Link";
 import { ScrollBox } from "../../../components/shared/ScrollBox";
 import ShurikenProgress from "../../../components/shared/ShurikenProgress";
 import {
@@ -176,12 +176,10 @@ export default function ArticlesTop({ pages, helmetProps }: Props) {
                                         <Link
                                             href={`/articles/edit/${page.url}`}
                                         >
-                                            <a>
-                                                <h2>
-                                                    {page.title ||
-                                                        "Add contents >>"}
-                                                </h2>
-                                            </a>
+                                            <h2>
+                                                {page.title ||
+                                                    "Add contents >>"}
+                                            </h2>
                                         </Link>
                                         <p style={{ margin: "0 0 20px" }}>
                                             {page.description}
