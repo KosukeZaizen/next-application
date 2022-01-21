@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
 import { Page } from "./[pageName]";
-import {
-    getImgNumber,
-    Layout,
-    whiteShadowStyle,
-} from "../../components/articles/Layout";
+import { Layout, whiteShadowStyle } from "../../components/articles/Layout";
 import { HelmetProps } from "../../components/shared/Helmet";
 import CharacterComment from "../../components/shared/CharacterComment";
 import { ArticlesList } from "../../components/articles/ArticlesList";
@@ -25,7 +21,7 @@ export const desc =
     "Articles about studying Japanese language and culture! I hope these articles help you to learn about Japan!";
 export const domain = "articles.lingual-ninja.com";
 
-const imgNumber = getImgNumber();
+const imgNumber = 1;
 
 export interface Props {
     pages: Page[];
