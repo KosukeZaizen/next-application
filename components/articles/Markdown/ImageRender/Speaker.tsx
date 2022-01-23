@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BLOB_URL } from "../../../../const/public";
 import { getClasses } from "../../../../lib/css";
-import { LazyLoad } from "../../../shared/LazyLoad";
 import ShurikenProgress from "../../../shared/ShurikenProgress";
+import { SoundLoader } from "../../../shared/Sound/SoundLoader";
 
 interface SpeakerProps {
     src: string;
@@ -78,20 +78,10 @@ export class Speaker extends React.Component<
         return (
             <>
                 <ShurikenProgress key="circle" size={40} style={c.shuriken} />
-                <LazyLoad>
-                    <SoundLoader load={this.loadSound} />
-                </LazyLoad>
+                <SoundLoader load={this.loadSound} />
             </>
         );
     }
-}
-
-function SoundLoader({ load }: { load: () => void }) {
-    useEffect(() => {
-        load();
-    }, [load]);
-
-    return null;
 }
 
 const c = getClasses({

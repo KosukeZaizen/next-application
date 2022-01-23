@@ -46,7 +46,11 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
             />
         );
     } else if (checkSoundExtension(src)) {
-        return <Speaker src={src} alt={alt} />;
+        return (
+            <LazyLoad>
+                <Speaker src={src} alt={alt} />
+            </LazyLoad>
+        );
     } else if (src === "vocab") {
         return <VocabList genreName={alt} />;
     }
