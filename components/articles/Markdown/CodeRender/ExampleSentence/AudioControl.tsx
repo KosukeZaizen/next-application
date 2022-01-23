@@ -28,6 +28,10 @@ export class AudioControl extends React.Component<AudioControlProps> {
         void audio?.load();
     }
 
+    load = () => {
+        this.setState({ isLoadingStarted: true });
+    };
+
     render() {
         const { audioPath, style } = this.props;
         const { isLoadingStarted } = this.state;
@@ -55,18 +59,14 @@ export class AudioControl extends React.Component<AudioControlProps> {
                     <div
                         css={{
                             width: "100%",
-                            height: "30px",
+                            height: "35px",
                             marginTop: "5px",
                             ...style,
                         }}
                     />
                 )}
                 <LazyLoad>
-                    <SoundLoader
-                        load={() => {
-                            this.setState({ startLoading: true });
-                        }}
-                    />
+                    <SoundLoader load={this.load} />
                 </LazyLoad>
             </>
         );
