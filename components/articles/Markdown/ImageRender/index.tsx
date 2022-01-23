@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { css } from "../../../../lib/css";
-import { AutoHeightImg } from "../../../shared/Img";
+import { LazyLoad } from "../../../shared/LazyLoad";
 import { YouTubeVideo } from "../../../shared/YouTubeVideo";
 import { Speaker } from "./Speaker";
 import { VocabList } from "./VocabList";
@@ -51,14 +51,9 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
         return <VocabList genreName={alt} />;
     }
     return (
-        <AutoHeightImg
-            src={src}
-            alt={alt}
-            title={alt}
-            containerStyle={imgInArticleStyle}
-            maxHeight={450}
-            loading="noTime"
-        />
+        <LazyLoad>
+            <img src={src} alt={alt} title={alt} css={imgInArticleStyle} />
+        </LazyLoad>
     );
 };
 
