@@ -107,14 +107,19 @@ function useRevisedProps(props: Props) {
     const [_props, setProps] = useState<Props>(props);
 
     useEffect(() => {
-        if (props.pageName !== props.pageName.toLowerCase()) {
+        // Redirect to lower case (in case where the redirection in getStaticProps doesn't work)
+        if (
+            window.location.pathname !== window.location.pathname.toLowerCase()
+        ) {
             window.location.href =
                 window.location.href.split("/articles/")[0] +
                 "/articles/" +
                 props.pageName.toLowerCase();
             return;
         }
+    }, [props.pageName]);
 
+    useEffect(() => {
         (async () => {
             await sleepAsync(200);
             const result = await fetchGet<GetArticleProps>(
