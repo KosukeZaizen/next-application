@@ -17,30 +17,35 @@ export default function NotFoundPage() {
                 desc: "Page not found",
                 domain,
                 siteName,
+                noindex: true,
             }}
         >
-            <h1 css={[h1TitleCss, { fontWeight: "bold" }]}>Page not found!</h1>
-            <img
-                src={
-                    "https://lingualninja.blob.core.windows.net/lingual-storage/appsPublic/img/404.png"
-                }
-                width="50%"
-                alt="404 error"
-                title="404 error"
-                css={{ marginBottom: 20 }}
-            />
-            <h2>
-                No match for <code>{router.asPath}</code>
-            </h2>
-            <p>Please check if the url is correct!</p>
-            <Link href="/">
-                <button
-                    style={{ width: "50%", fontWeight: "bold" }}
-                    className="btn btn-primary"
-                >
-                    {"Home"}
-                </button>
-            </Link>
+            <div css={{ textAlign: "center" }}>
+                <h1 css={[h1TitleCss, { fontWeight: "bold" }]}>
+                    Page not found!
+                </h1>
+                <img
+                    src={
+                        "https://lingualninja.blob.core.windows.net/lingual-storage/appsPublic/img/404.png"
+                    }
+                    width="50%"
+                    alt="404 error"
+                    title="404 error"
+                    css={{ marginBottom: 20 }}
+                />
+                <h2>
+                    No match for <code>{router.asPath}</code>
+                </h2>
+                <p>Please check if the url is correct!</p>
+                <Link href="/">
+                    <button
+                        style={{ width: "50%", fontWeight: "bold" }}
+                        className="btn btn-primary"
+                    >
+                        {"Home"}
+                    </button>
+                </Link>
+            </div>
         </Layout>
     );
 }
