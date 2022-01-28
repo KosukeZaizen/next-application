@@ -1,6 +1,5 @@
 import React from "react";
-import { LazyLoad } from "../../../../shared/LazyLoad";
-import { SoundLoader } from "../../../../shared/Sound/SoundLoader";
+import { LazyExecutor } from "../../../../shared/LazyLoad";
 
 type AudioControlProps = {
     audioPath: string;
@@ -65,9 +64,7 @@ export class AudioControl extends React.Component<AudioControlProps> {
                         }}
                     />
                 )}
-                <LazyLoad>
-                    <SoundLoader load={this.load} />
-                </LazyLoad>
+                <LazyExecutor fnc={this.load} />
             </>
         );
     }

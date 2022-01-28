@@ -1,8 +1,8 @@
 import React from "react";
 import { BLOB_URL } from "../../../../const/public";
 import { getClasses } from "../../../../lib/css";
+import { Executor } from "../../../shared/LazyLoad";
 import ShurikenProgress from "../../../shared/ShurikenProgress";
-import { SoundLoader } from "../../../shared/Sound/SoundLoader";
 
 interface SpeakerProps {
     src: string;
@@ -78,7 +78,7 @@ export class Speaker extends React.Component<
         return (
             <>
                 <ShurikenProgress key="circle" size={40} style={c.shuriken} />
-                <SoundLoader load={this.loadSound} />
+                <Executor fnc={this.loadSound} />
             </>
         );
     }
