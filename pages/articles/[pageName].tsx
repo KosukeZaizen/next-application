@@ -378,15 +378,21 @@ export const getStaticProps = async ({
             return { notFound: true, revalidate: 5 };
         }
 
-        // Redirect to lower case
+        // including upper case
         const lowerPageName = pageName.toLowerCase();
         if (pageName !== lowerPageName) {
-            return {
-                redirect: {
-                    permanent: true,
-                    destination: lowerPageName,
-                },
-            };
+            return { notFound: true, revalidate: 5 };
+        }
+
+        // including "&" without "?"
+        if (pageName.includes("&")) {
+            const beforeAmpersand = pageName.split("&")[0];
+            if (
+                !beforeAmpersand.includes("?") &&
+                !beforeAmpersand.includes("#")
+            ) {
+                return { notFound: true, revalidate: 5 };
+            }
         }
 
         // generate props
