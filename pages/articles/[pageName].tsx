@@ -107,6 +107,14 @@ function useRevisedProps(props: Props) {
     const [_props, setProps] = useState<Props>(props);
 
     useEffect(() => {
+        if (props.pageName !== props.pageName.toLowerCase()) {
+            window.location.href =
+                window.location.href.split("/articles/")[0] +
+                "/articles/" +
+                props.pageName.toLowerCase();
+            return;
+        }
+
         (async () => {
             await sleepAsync(200);
             const result = await fetchGet<GetArticleProps>(
@@ -378,10 +386,15 @@ export const getStaticProps = async ({
             return { notFound: true, revalidate: 5 };
         }
 
-        // including upper case
+        // Redirect to lower case
         const lowerPageName = pageName.toLowerCase();
         if (pageName !== lowerPageName) {
-            return { notFound: true, revalidate: 5 };
+            return {
+                redirect: {
+                    permanent: true,
+                    destination: lowerPageName,
+                },
+            };
         }
 
         // including "&" without "?"
