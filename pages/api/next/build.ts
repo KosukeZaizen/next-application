@@ -25,6 +25,10 @@ let lastExecutionResult: ExecutionResult = null;
 let isExecutingNow = false;
 
 const handler = async (): Promise<Response> => {
+    /**
+     * This API is still not working well in Production Environment
+     */
+
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
