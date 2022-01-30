@@ -19,7 +19,7 @@ function flatten(
 export const HeadingRenderer = (props: HeadingProps) => {
     const children = React.Children.toArray(props.children);
     const text = children.reduce(flatten, "");
-    const slug = encodeURIComponent(text);
+    const slug = encodeURIComponent(text.split("#").join(""));
     return React.createElement("h" + props.level, { id: slug }, props.children);
 };
 

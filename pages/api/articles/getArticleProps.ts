@@ -62,7 +62,9 @@ export async function getArticleProps(pageName: string): Promise<Props> {
         imgPath,
         indexInfo,
         otherArticles,
-        imgNumber: getImgNumber(pageName.length),
+        imgNumber: [2, 3].includes(authorId) // woman authors
+            ? 3
+            : getImgNumber(pageName.length),
         authorId,
         allAuthors: await (await authorPromise).json(),
         helmetProps: {
