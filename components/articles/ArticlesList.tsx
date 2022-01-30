@@ -111,22 +111,7 @@ export function ArticleScroll({
                             href={`${url}/${page.url}`}
                             pCss={c.articleLink}
                         >
-                            <div
-                                css={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    overflow: "hidden",
-                                    height: "100%",
-                                    width: "100%",
-                                    "& div": {
-                                        display: "flex",
-                                        alignItems: "center",
-                                        overflow: "hidden",
-                                        height: "100%",
-                                        width: "100%",
-                                    },
-                                }}
-                            >
+                            <div css={c.articleImageContainer}>
                                 {isImageLazy ? (
                                     <LazyLoad>{image}</LazyLoad>
                                 ) : (
@@ -220,5 +205,19 @@ const c = getClasses({
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
+    },
+    articleImageContainer: {
+        display: "flex",
+        alignItems: "center",
+        overflow: "hidden",
+        height: "100%",
+        width: "100%",
+        "& div": {
+            display: "flex",
+            alignItems: "center",
+            overflow: "hidden",
+            height: "100%",
+            width: "100%",
+        },
     },
 });
