@@ -8,7 +8,9 @@ export function sendRes<T>(
     res: NextApiResponse<ServerResponse<T>>,
     responseData: T
 ) {
-    res.status(200).json({ responseType: "success", ...responseData });
+    if (res) {
+        res.status(200).json({ responseType: "success", ...responseData });
+    }
 }
 
 export const apiGet =

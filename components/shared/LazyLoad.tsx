@@ -1,8 +1,8 @@
-import ReactLazyLoad from "react-lazyload";
-import React, { ReactNode, useEffect } from "react";
+import ReactLazyLoad, { LazyLoadProps } from "react-lazyload";
+import React, { useEffect } from "react";
 
-export function LazyLoad({ children }: { children: ReactNode }) {
-    return <ReactLazyLoad offset={500}>{children}</ReactLazyLoad>;
+export function LazyLoad(props: LazyLoadProps) {
+    return <ReactLazyLoad offset={500} {...props} />;
 }
 
 export function LazyExecutor({ fnc }: { fnc: () => void }) {

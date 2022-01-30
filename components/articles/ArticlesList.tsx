@@ -112,12 +112,19 @@ export function ArticleScroll({
                             pCss={c.articleLink}
                         >
                             <div
-                                style={{
+                                css={{
                                     display: "flex",
                                     alignItems: "center",
                                     overflow: "hidden",
                                     height: "100%",
                                     width: "100%",
+                                    "& div": {
+                                        display: "flex",
+                                        alignItems: "center",
+                                        overflow: "hidden",
+                                        height: "100%",
+                                        width: "100%",
+                                    },
                                 }}
                             >
                                 {isImageLazy ? (
