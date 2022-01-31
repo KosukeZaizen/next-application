@@ -366,18 +366,21 @@ const adStyle = {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
+    return {
+        paths: await getPaths(),
+        fallback: "blocking",
+    };
+};
+
+export const getPaths = async () => {
     const response: Response = await fetchZAppsFromServerSide(
         "api/Articles/GetAllArticles"
     );
     const pages: Page[] = await response.json();
-    const paths: string[] = pages
+    return pages
         .map(p => p.url?.toLowerCase())
         .filter(u => u)
         .map(u => `/articles/${u}`);
-    return {
-        paths,
-        fallback: "blocking",
-    };
 };
 
 export const getStaticProps = async ({

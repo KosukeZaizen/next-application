@@ -15,11 +15,12 @@ import {
 } from "../api/articles/getArticleTopProps";
 import { sleepAsync } from "../../lib/sleep";
 import { fetchGet } from "../../lib/fetch";
+import { apps } from "../../const/public";
 
 export const siteName = "Articles about Japan";
 export const desc =
     "Articles about studying Japanese language and culture! I hope these articles help you to learn about Japan!";
-export const domain = "articles.lingual-ninja.com";
+export const domain = apps.articles.host;
 
 const imgNumber = 1;
 
