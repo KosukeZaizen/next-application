@@ -5,7 +5,7 @@ import {
     GetStaticPropsResult,
 } from "next";
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import {
     Author,
@@ -30,15 +30,11 @@ import { Link } from "../../components/shared/Link/Link";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
-import { fetchGet, fetchZAppsFromServerSide } from "../../lib/fetch";
+import { fetchZAppsFromServerSide } from "../../lib/fetch";
 import { useHashScroll } from "../../lib/hooks/useHashScroll";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { useScreenSize } from "../../lib/screenSize";
-import { sleepAsync } from "../../lib/sleep";
-import {
-    getArticleProps,
-    GetArticleProps,
-} from "../api/articles/getArticleProps";
+import { getArticleProps } from "../api/articles/getArticleProps";
 
 export interface Page {
     url?: string;
@@ -64,21 +60,21 @@ export interface Props extends Page {
     allAuthors: Author[];
 }
 
-export default function Articles(props: Props) {
+export default function Articles({
+    title,
+    description,
+    articleContent,
+    indexInfo,
+    otherArticles,
+    imgNumber,
+    pageName,
+    helmetProps,
+    allAuthors,
+    authorId,
+}: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
 
-    const {
-        title,
-        description,
-        articleContent,
-        indexInfo,
-        otherArticles,
-        imgNumber,
-        pageName,
-        helmetProps,
-        allAuthors,
-        authorId,
-    } = useRevisedProps(props);
+    useLowerCaseRedirection(pageName);
 
     return (
         <Layout
@@ -103,39 +99,20 @@ export default function Articles(props: Props) {
     );
 }
 
-function useRevisedProps(props: Props) {
-    const [_props, setProps] = useState<Props>(props);
-
+function useLowerCaseRedirection(pageName: string) {
     useEffect(() => {
-        // Redirect to lower case (in case where the redirection in getStaticProps doesn't work)
+        // Redirect to lower case
+        // (in case where the redirection in getStaticProps doesn't work)
         if (
             window.location.pathname !== window.location.pathname.toLowerCase()
         ) {
             window.location.href =
                 window.location.href.split("/articles/")[0] +
                 "/articles/" +
-                props.pageName.toLowerCase();
+                pageName.toLowerCase();
             return;
         }
-    }, [props.pageName]);
-
-    useEffect(() => {
-        (async () => {
-            await sleepAsync(200);
-            const result = await fetchGet<GetArticleProps>(
-                "/api/articles/getArticleProps",
-                {
-                    pageName: props.pageName,
-                }
-            );
-            if (result.responseType === "success") {
-                // Don't replace otherArticles
-                setProps({ ...result, otherArticles: props.otherArticles });
-            }
-        })();
-    }, [props.pageName, props.otherArticles]);
-
-    return _props;
+    }, [pageName]);
 }
 
 // export const excludedArticleTitles = ["Kamikaze"];

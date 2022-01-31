@@ -30,9 +30,8 @@ export interface Props {
     helmetProps: HelmetProps;
 }
 
-export default function Home(props: Props) {
+export default function Home({ pages, allAuthors, helmetProps }: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
-    const { pages, allAuthors, helmetProps } = useRevisedProps(props);
 
     return (
         <Layout

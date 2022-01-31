@@ -4,7 +4,7 @@ import { getErrorMessage } from "../../../lib/error";
 import { execCommandAsync } from "../../../lib/childProcess";
 import { apps } from "../../../const/public";
 import { GetParams } from "../../../types/next";
-import { generateSitemapXml } from "../../articles/sitemap.xml";
+import { getSsgUrls } from "../../articles/sitemap.xml";
 
 export interface RemoveStaticCache {
     url: "/api/next/removeStaticCache";
@@ -70,14 +70,8 @@ const handler = async ({ path }: GetParams<Params>): Promise<Response> => {
 };
 
 async function checkValidPath(path: string) {
-    const sitemap = await generateSitemapXml();
-    const urls = sitemap
-        .split("<loc>")
-        .filter((u, i) => i)
-        .map(u => u.split("</loc>")[0])
-        .map(u => u.replace(apps.articles.url, ""));
-
-    return urls.includes(path);
+    const ssgUrls = await getSsgUrls();
+    return ssgUrls.map(u => u.replace(apps.articles.url, "")).includes(path);
 }
 
 export default apiGet<RemoveStaticCache>(handler);

@@ -20,9 +20,29 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     };
 };
 
-export async function generateSitemapXml(): Promise<string> {
+async function generateSitemapXml(): Promise<string> {
     let xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
 
+    const ssgUrls = await getSsgUrls();
+    const nonSsgUrls = getNonSsgUrls();
+
+    [...ssgUrls, ...nonSsgUrls].forEach(url => {
+        xml += `<url><loc>${url}</loc></url>`;
+    });
+
+    xml += `</urlset>`;
+    return xml;
+}
+
+// Pages that doesn't need to be the target of the removal by removeStaticCache
+// (removeStaticCache function deletes html and json files created by SSG)
+function getNonSsgUrls() {
+    return [];
+}
+
+// Target of the removal by the removeStaticCache function
+// (removeStaticCache function deletes html and json files created by SSG)
+export async function getSsgUrls() {
     const response: Response[] = await Promise.all([
         fetchZAppsFromServerSide(
             "api/Articles/GetAllArticles?isAboutFolktale=false"
@@ -39,10 +59,5 @@ export async function generateSitemapXml(): Promise<string> {
         .filter(u => u)
         .map(u => `${topUrl}/articles/${u}`);
 
-    [`${topUrl}/articles`, ...paths].forEach(url => {
-        xml += `<url><loc>${url}</loc></url>`;
-    });
-
-    xml += `</urlset>`;
-    return xml;
+    return [`${topUrl}/articles`, ...paths];
 }
