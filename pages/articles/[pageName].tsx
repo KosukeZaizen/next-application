@@ -372,7 +372,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export const getPaths = async () => {
+const getPaths = async () => {
     const response: Response = await fetchZAppsFromServerSide(
         "api/Articles/GetAllArticles"
     );
