@@ -3,6 +3,8 @@ import { EmptyObject } from "../../../types/util";
 import child_process from "child_process";
 import { getErrorMessage } from "../../../lib/error";
 import { execCommandAsync } from "../../../lib/childProcess";
+import { generateSitemapXml } from "../../articles/sitemap.xml";
+import { apps } from "../../../const/public";
 
 export interface RemoveStaticCache {
     url: "/api/next/removeStaticCache";
@@ -13,18 +15,20 @@ type Params = EmptyObject;
 type Response = {
     message: string;
     lastExecutionDate: string;
-    executionResult?: ExecutionResult;
+    executionResults?: ExecutionResults;
 };
-type ExecutionResult =
-    | {
-          stdout: string;
-          stderr: string;
-          error: child_process.ExecException | null;
-          removedFilesAndFolders: string[];
-      }
-    | { errorMsg: string }
-    | null;
-
+type ExecutionResult = {
+    stdout: string;
+    stderr: string;
+    error: child_process.ExecException | null;
+};
+type ExecutionResults = {
+    [url: string]: {
+        htmlDeletion: ExecutionResult;
+        jsonDeletion: ExecutionResult;
+        fetchStatus: number;
+    };
+};
 let lastResponse: Response | null = null;
 let isExecutingNow = false;
 
@@ -41,7 +45,7 @@ const handler = async (): Promise<Response> => {
             message:
                 "Now another person is executing the same command! Wait for a while!",
             lastExecutionDate: `${year}/${month}/${day}`,
-            executionResult: lastResponse?.executionResult,
+            executionResults: lastResponse?.executionResults,
         };
     }
 
@@ -49,28 +53,38 @@ const handler = async (): Promise<Response> => {
         return {
             message: "Today's execution has already been finished!",
             lastExecutionDate: `${year}/${month}/${day}`,
-            executionResult: lastResponse.executionResult,
+            executionResults: lastResponse.executionResults,
         };
     }
 
     isExecutingNow = true;
     try {
-        const prevDirResult = (await execCommandAsync("dir /b")).stdout.split(
-            "\r\n"
-        );
-        const deleteResult = await execCommandAsync("rmdir /s /q .next");
-        const dirResult = (await execCommandAsync("dir /b")).stdout.split(
-            "\r\n"
-        );
+        const sitemap = await generateSitemapXml();
+        const urls = sitemap
+            .split("<loc>")
+            .filter((u, i) => i)
+            .map(u => u.split("</loc>")[0])
+            .map(u => u.replace(apps.articles.url, ""));
 
-        const removedFilesAndFolders = prevDirResult.filter(
-            p => !dirResult.includes(p)
-        );
+        const executionResults: ExecutionResults = {};
+        for (const url of urls) {
+            const commandPath = url.split("/").join("\\");
+
+            executionResults[url] = {
+                htmlDeletion: await execCommandAsync(
+                    `del .\\.next\\server\\pages${commandPath}.html`
+                ),
+                jsonDeletion: await execCommandAsync(
+                    `del .\\.next\\server\\pages${commandPath}.json`
+                ),
+                fetchStatus: (await fetch(`${apps.articles.url}${url}`)).status,
+            };
+        }
 
         lastResponse = {
             message: "Done!",
             lastExecutionDate: `${year}/${month}/${day}`,
-            executionResult: { ...deleteResult, removedFilesAndFolders },
+            executionResults,
         };
         isExecutingNow = false;
         return lastResponse;

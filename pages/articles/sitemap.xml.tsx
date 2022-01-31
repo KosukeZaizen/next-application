@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     };
 };
 
-async function generateSitemapXml(): Promise<string> {
+export async function generateSitemapXml(): Promise<string> {
     let xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
 
     const response: Response[] = await Promise.all([
@@ -39,7 +39,7 @@ async function generateSitemapXml(): Promise<string> {
         .filter(u => u)
         .map(u => `${topUrl}/articles/${u}`);
 
-    [topUrl, ...paths].forEach(url => {
+    [`${topUrl}/articles`, ...paths].forEach(url => {
         xml += `<url><loc>${url}</loc></url>`;
     });
 
