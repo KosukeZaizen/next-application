@@ -8,7 +8,7 @@ import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
 import { Link } from "../../../components/shared/Link/Link";
 import { fetchZAppsFromFrontEnd } from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/screenSize";
-import { ArticleContent } from "../[pageName]";
+import { ArticleContent } from "../[[...path]]";
 
 const fireWindowScroll = debounce(() => {
     window.dispatchEvent(new CustomEvent("scroll"));

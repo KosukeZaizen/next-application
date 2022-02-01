@@ -39,6 +39,8 @@ import {
     getArticleProps,
     GetArticleProps,
 } from "../api/articles/getArticleProps";
+import { getArticleTopProps } from "../api/articles/getArticleTopProps";
+import Home, { Props as HomeProps } from "../../components/articles/Home";
 
 export interface Page {
     url?: string;
@@ -56,6 +58,7 @@ export type IndexInfo = {
 }[];
 
 export interface Props extends Page {
+    pageType: "article";
     indexInfo: IndexInfo;
     otherArticles: Page[];
     imgNumber: number;
@@ -64,7 +67,14 @@ export interface Props extends Page {
     allAuthors: Author[];
 }
 
-export default function Articles(props: Props) {
+export default function _Articles(props: Props | HomeProps) {
+    if (props.pageType === "home") {
+        return <Home {...props} />;
+    }
+    return <Articles {...props} />;
+}
+
+export function Articles(props: Props) {
     const { screenWidth, screenHeight } = useScreenSize();
 
     const {
@@ -176,8 +186,8 @@ export function ArticleContent({
     const { isFirstRender } = useIsFirstRender();
     useHashScroll(isFirstRender);
 
-    const router = useRouter();
-    if (router.query.pageName !== pageName) {
+    const { query } = useRouter();
+    if (!query.path || query.path[0] !== pageName) {
         // During the transition from another article
         return <FullScreenShuriken />;
     }
@@ -374,14 +384,24 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps = async ({
     params,
-}: GetStaticPropsContext<{ pageName: string }>): Promise<
-    GetStaticPropsResult<Props>
+}: GetStaticPropsContext<{ path: string }>): Promise<
+    GetStaticPropsResult<Props | HomeProps>
 > => {
     try {
-        const pageName = params?.pageName;
-        if (!pageName) {
+        const path = params?.path;
+        if (!path || !Array.isArray(path) || path.length === 0) {
+            return {
+                props: await getArticleTopProps(),
+                revalidate: 5,
+            };
+        }
+
+        // Long path
+        if (path.length > 1) {
             return { notFound: true, revalidate: 5 };
         }
+
+        const pageName = path[0];
 
         // Redirect to lower case
         const lowerPageName = pageName.toLowerCase();

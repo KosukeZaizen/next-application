@@ -1,7 +1,12 @@
 import { fetchZAppsFromServerSide } from "../../../lib/fetch";
 import { apiGet } from "../../../lib/nextApi";
 import { EmptyObject } from "../../../types/util";
-import { desc, domain, Props, siteName } from "../../articles";
+import {
+    desc,
+    domain,
+    Props,
+    siteName,
+} from "../../../components/articles/Home";
 
 export interface GetArticleTopProps {
     url: "/api/articles/getArticleTopProps";
@@ -26,6 +31,7 @@ export async function getArticleTopProps(): Promise<Response> {
     );
 
     return {
+        pageType: "home",
         pages: await (await pagesPromise).json(),
         allAuthors: await (await authorPromise).json(),
         helmetProps: {

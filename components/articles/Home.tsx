@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
-import { Page } from "./[pageName]";
-import { Layout, whiteShadowStyle } from "../../components/articles/Layout";
-import { HelmetProps } from "../../components/shared/Helmet";
-import CharacterComment from "../../components/shared/CharacterComment";
-import { ArticlesList } from "../../components/articles/ArticlesList";
-import { Author, AuthorArea } from "../../components/articles/Author";
-import FB from "../../components/shared/FaceBook";
+import { Page } from "../../pages/articles/[[...path]]";
+import { Layout, whiteShadowStyle } from "./Layout";
+import { HelmetProps } from "../shared/Helmet";
+import CharacterComment from "../shared/CharacterComment";
+import { ArticlesList } from "./ArticlesList";
+import { Author, AuthorArea } from "./Author";
+import FB from "../shared/FaceBook";
 import { GetStaticProps } from "next";
 import {
     GetArticleTopProps,
     getArticleTopProps,
-} from "../api/articles/getArticleTopProps";
+} from "../../pages/api/articles/getArticleTopProps";
 import { sleepAsync } from "../../lib/sleep";
 import { fetchGet } from "../../lib/fetch";
 import { apps } from "../../const/public";
@@ -25,6 +25,7 @@ export const domain = apps.articles.host;
 const imgNumber = 1;
 
 export interface Props {
+    pageType: "home";
     pages: Page[];
     allAuthors: Author[];
     helmetProps: HelmetProps;

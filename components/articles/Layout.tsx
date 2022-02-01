@@ -161,6 +161,6 @@ export function getImgNumber(num = 0) {
     const todayNumber = today.getMonth() + today.getDate() + num;
     const mod = todayNumber % 30;
     if (mod > 19) return 2;
-    if (mod > 16) return 3;
+    if (mod > 17) return 3;
     return 1;
 }

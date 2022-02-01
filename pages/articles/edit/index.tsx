@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { domain, siteName } from "..";
+import { domain, siteName } from "../../../components/articles/Home";
 import {
     getImgNumber,
     Layout,

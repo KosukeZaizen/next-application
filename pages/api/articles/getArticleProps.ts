@@ -2,8 +2,8 @@ import { getImgNumber } from "../../../components/articles/Layout";
 import { fetchZAppsFromServerSide } from "../../../lib/fetch";
 import { apiGet } from "../../../lib/nextApi";
 import { GetParams } from "../../../types/next";
-import { domain, siteName } from "../../articles";
-import { Page, Props } from "../../articles/[pageName]";
+import { domain, siteName } from "../../../components/articles/Home";
+import { Page, Props } from "../../articles/[[...path]]";
 
 export interface GetArticleProps {
     url: "/api/articles/getArticleProps";
@@ -53,6 +53,7 @@ export async function getArticleProps(pageName: string): Promise<Props> {
     const otherArticles = articles.filter(a => a.title !== title);
 
     return {
+        pageType: "article",
         pageName,
         url,
         description,
