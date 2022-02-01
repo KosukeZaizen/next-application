@@ -8,11 +8,7 @@ import CharacterComment from "../shared/CharacterComment";
 import { ArticlesList } from "./ArticlesList";
 import { Author, AuthorArea } from "./Author";
 import FB from "../shared/FaceBook";
-import { GetStaticProps } from "next";
-import {
-    GetArticleTopProps,
-    getArticleTopProps,
-} from "../../pages/api/articles/getArticleTopProps";
+import { GetArticleTopProps } from "../../pages/api/articles/getArticleTopProps";
 import { sleepAsync } from "../../lib/sleep";
 import { fetchGet } from "../../lib/fetch";
 import { apps } from "../../const/public";
@@ -115,15 +111,3 @@ const c = getClasses({
     author: { marginTop: 45 },
     fb: { marginTop: 20, width: "100%", textAlign: "center" },
 });
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-    try {
-        const props = await getArticleTopProps();
-        return {
-            props,
-            revalidate: 5,
-        };
-    } catch {
-        return { notFound: true, revalidate: 5 };
-    }
-};
