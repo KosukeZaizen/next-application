@@ -30,7 +30,7 @@ import { Link } from "../../components/shared/Link/Link";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";
-import { fetchGet, fetchZAppsFromServerSide } from "../../lib/fetch";
+import { fetchGet } from "../../lib/fetch";
 import { useHashScroll } from "../../lib/hooks/useHashScroll";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { useScreenSize } from "../../lib/screenSize";
@@ -367,20 +367,9 @@ const adStyle = {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
-        paths: await getPaths(),
+        paths: [], // Set an empty array to enable ISR in Azure App Service
         fallback: "blocking",
     };
-};
-
-const getPaths = async () => {
-    const response: Response = await fetchZAppsFromServerSide(
-        "api/Articles/GetAllArticles"
-    );
-    const pages: Page[] = await response.json();
-    return pages
-        .map(p => p.url?.toLowerCase())
-        .filter(u => u)
-        .map(u => `/articles/${u}`);
 };
 
 export const getStaticProps = async ({
