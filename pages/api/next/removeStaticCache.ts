@@ -1,10 +1,10 @@
 import { apiGet } from "../../../lib/nextApi";
-import child_process from "child_process";
 import { getErrorMessage } from "../../../lib/error";
-import { execCommandAsync } from "../../../lib/childProcess";
 import { apps } from "../../../const/public";
 import { GetParams } from "../../../types/next";
 import { getSsgUrls } from "../../articles/sitemap.xml";
+import { sleepAsync } from "../../../lib/sleep";
+import fs from "fs";
 
 export interface RemoveStaticCache {
     url: "/api/next/removeStaticCache";
@@ -17,14 +17,14 @@ type Response = {
     executionResults?: ExecutionResults;
 };
 type ExecutionResult = {
-    stdout: string;
-    stderr: string;
-    error: child_process.ExecException | null;
+    beforeDeletion: string;
+    afterDeletion: string;
 };
 type ExecutionResults = {
     htmlDeletion: ExecutionResult;
     jsonDeletion: ExecutionResult;
     fetchStatus: number;
+    afterFetch: { json: string; html: string };
 };
 
 const handler = async ({ path }: GetParams<Params>): Promise<Response> => {
@@ -43,16 +43,14 @@ const handler = async ({ path }: GetParams<Params>): Promise<Response> => {
             };
         }
 
-        const commandPath = path.split("/").join("\\");
-
-        const htmlDeletion = await execCommandAsync(
-            `del .\\.next\\server\\pages${commandPath}.html`
-        );
-        const jsonDeletion = await execCommandAsync(
-            `del .\\.next\\server\\pages${commandPath}.json`
-        );
+        const htmlDeletion = await executeDeletion(`${path}.html`);
+        const jsonDeletion = await executeDeletion(`${path}.json`);
 
         const fetchStatus = (await fetch(`${apps.articles.url}${path}`)).status;
+
+        await sleepAsync(1000);
+        const html = checkFileExistence(`./.next/server/pages${path}.html`);
+        const json = checkFileExistence(`./.next/server/pages${path}.html`);
 
         return {
             message: "Done!",
@@ -60,6 +58,10 @@ const handler = async ({ path }: GetParams<Params>): Promise<Response> => {
                 htmlDeletion,
                 jsonDeletion,
                 fetchStatus,
+                afterFetch: {
+                    html,
+                    json,
+                },
             },
         };
     } catch (error) {
@@ -69,9 +71,36 @@ const handler = async ({ path }: GetParams<Params>): Promise<Response> => {
     }
 };
 
-async function checkValidPath(path: string) {
+export async function checkValidPath(path: string) {
     const ssgUrls = await getSsgUrls();
     return ssgUrls.map(u => u.replace(apps.articles.url, "")).includes(path);
+}
+
+async function executeDeletion(
+    commandPathWithExtension: string
+): Promise<ExecutionResult> {
+    const beforeDeletion = checkFileExistence(
+        `./.next/server/pages${commandPathWithExtension}`
+    );
+
+    try {
+        fs.unlinkSync(`./.next/server/pages${commandPathWithExtension}`);
+    } catch {
+        // Do nothing
+    }
+
+    const afterDeletion = checkFileExistence(
+        `./.next/server/pages${commandPathWithExtension}`
+    );
+
+    return {
+        beforeDeletion,
+        afterDeletion,
+    };
+}
+
+export function checkFileExistence(path: string) {
+    return fs.existsSync(path) ? "File Exists" : "File Not Found";
 }
 
 export default apiGet<RemoveStaticCache>(handler);
