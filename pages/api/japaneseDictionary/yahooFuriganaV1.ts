@@ -100,7 +100,7 @@ function convertIntoV1XML({ result: { word } }: V2Json) {
 }
 
 function getRow(attributeName: string, val: WordInfo) {
-    const value = val[attributeName.toLowerCase()];
+    const value = val[attributeName.toLowerCase() as keyof WordInfo];
     if (value) {
         return `<${attributeName}>${value}</${attributeName}>`;
     }
