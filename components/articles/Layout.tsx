@@ -13,13 +13,6 @@ import { PopupAd } from "../shared/YouTubeAd/Popup";
 import { Author, AuthorArea } from "./Author";
 
 const styles = {
-    appBar: {
-        backgroundColor: "rgb(34, 34, 34)",
-        marginBottom: 20,
-        position: "fixed",
-        top: 0,
-        width: "100%",
-    },
     toolBar: {
         display: "flex",
         justifyContent: "center",
@@ -36,6 +29,9 @@ interface Props {
     maxWidth: number;
 }
 
+let previousScrollY = 0;
+let isHidden = false;
+
 export function Layout({
     children,
     screenWidth,
@@ -51,6 +47,39 @@ export function Layout({
         style.overflowX = "hidden";
     }, []);
 
+    const [hideAppBar, setHideAppBar] = useState(false);
+    useEffect(() => {
+        const scrollHandler = () => {
+            const isRapidScroll = window.scrollY > previousScrollY + 500;
+            previousScrollY = window.scrollY;
+
+            if (window.scrollY < 100) {
+                setHideAppBar(false);
+                return;
+            }
+
+            if (isHidden) {
+                return;
+            }
+
+            if (!isRapidScroll) {
+                return;
+            }
+
+            setHideAppBar(true);
+            isHidden = true;
+            setTimeout(() => {
+                setHideAppBar(false);
+                isHidden = false;
+            }, 5000);
+        };
+
+        window.addEventListener("scroll", scrollHandler);
+        return () => {
+            window.removeEventListener("scroll", scrollHandler);
+        };
+    }, []);
+
     const { isFirstRender } = useIsFirstRender();
 
     const isWide = screenWidth > 600;
@@ -59,7 +88,18 @@ export function Layout({
     return (
         <>
             <Helmet {...helmetProps} />
-            <AppBar position="static" style={styles.appBar}>
+            <AppBar
+                position="static"
+                style={{
+                    backgroundColor: "rgb(34, 34, 34)",
+                    marginBottom: 20,
+                    position: "fixed",
+                    top: hideAppBar ? -100 : 0,
+                    transitionDuration: "1s",
+                    transitionProperty: "top",
+                    width: "100%",
+                }}
+            >
                 <Toolbar style={styles.toolBar}>
                     <div
                         css={{
@@ -229,7 +269,6 @@ const mainContainerStyle = css(
     {
         marginRight: 10,
         marginLeft: 10,
-        zIndex: 0,
     },
     centerStyle
 );
