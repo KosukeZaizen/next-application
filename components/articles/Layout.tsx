@@ -9,6 +9,7 @@ import { Link } from "../shared/Link/Link";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
+import { Author, AuthorCard } from "./Author";
 
 const styles = {
     appBar: {
@@ -23,6 +24,7 @@ interface Props {
     screenHeight: number;
     helmetProps: HelmetProps;
     noSeasonAnimation?: boolean;
+    author?: Author;
 }
 
 export function Layout({
@@ -31,6 +33,7 @@ export function Layout({
     screenHeight,
     helmetProps,
     noSeasonAnimation,
+    author,
 }: Props) {
     useEffect(() => {
         const { style } = window.document.body;
@@ -53,6 +56,11 @@ export function Layout({
                     >
                         <MenuIcon />
                     </IconButton> */}
+                    <AuthorCard
+                        author={author}
+                        screenWidth={screenWidth}
+                        // style={{ marginTop: 30 }}
+                    />
                     <Link href="/articles">
                         <Typography
                             variant="h4"

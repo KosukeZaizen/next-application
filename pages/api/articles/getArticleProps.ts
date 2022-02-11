@@ -4,6 +4,7 @@ import { apiGet } from "../../../lib/nextApi";
 import { GetParams } from "../../../types/next";
 import { domain, siteName } from "../../../components/articles/Home";
 import { ArticlesProps, Page } from "../../../components/articles/Articles";
+import { Author } from "../../../components/articles/Author";
 
 export interface GetArticleProps {
     url: "/api/articles/getArticleProps";
@@ -54,6 +55,8 @@ export async function getArticleProps(
 
     const otherArticles = articles.filter(a => a.title !== title);
 
+    const allAuthors: Author[] = await (await authorPromise).json();
+
     return {
         pageType: "article",
         pageName,
@@ -69,7 +72,7 @@ export async function getArticleProps(
             ? 3
             : getImgNumber(pageName.length),
         authorId,
-        allAuthors: await (await authorPromise).json(),
+        allAuthors,
         helmetProps: {
             title,
             desc: description,
@@ -77,6 +80,7 @@ export async function getArticleProps(
             ogImg: imgPath,
             siteName,
         },
+        author: allAuthors.find(a => a.authorId === authorId),
     };
 }
 

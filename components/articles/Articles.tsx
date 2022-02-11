@@ -57,6 +57,7 @@ export interface ArticlesProps extends Page {
     pageName: string;
     helmetProps: HelmetProps;
     allAuthors: Author[];
+    author?: Author;
 }
 
 export function Articles(props: ArticlesProps) {
@@ -72,7 +73,7 @@ export function Articles(props: ArticlesProps) {
         pageName,
         helmetProps,
         allAuthors,
-        authorId,
+        author,
     } = useRevisedProps(props);
 
     return (
@@ -80,6 +81,7 @@ export function Articles(props: ArticlesProps) {
             screenWidth={screenWidth}
             screenHeight={screenHeight}
             helmetProps={helmetProps}
+            author={author}
         >
             <ArticleContent
                 title={title}
@@ -91,7 +93,7 @@ export function Articles(props: ArticlesProps) {
                 indexInfo={indexInfo}
                 imgNumber={imgNumber}
                 pageName={pageName}
-                authorId={authorId}
+                author={author}
                 allAuthors={allAuthors}
             />
         </Layout>
@@ -151,7 +153,7 @@ interface ArticleContentProps {
     otherArticles: Page[];
     imgNumber: number;
     pageName: string;
-    authorId: number;
+    author?: Author;
     allAuthors: Author[];
 }
 export function ArticleContent({
@@ -163,7 +165,7 @@ export function ArticleContent({
     otherArticles,
     imgNumber,
     pageName,
-    authorId,
+    author,
     allAuthors,
 }: ArticleContentProps) {
     const isWide = screenWidth > 991;
@@ -195,7 +197,7 @@ export function ArticleContent({
                 <IndexAndAd isWide={isWide} indexInfo={indexInfo} />
 
                 <AuthorCard
-                    author={allAuthors.find(a => a.authorId === authorId)}
+                    author={author}
                     screenWidth={screenWidth}
                     style={{ marginTop: 30 }}
                 />
@@ -228,7 +230,7 @@ export function ArticleContent({
             <AuthorArea
                 style={AuthorStyle}
                 screenWidth={screenWidth}
-                author={allAuthors.find(a => a.authorId === authorId)}
+                author={author}
             />
             <hr />
             {otherArticles.length > 0 && (

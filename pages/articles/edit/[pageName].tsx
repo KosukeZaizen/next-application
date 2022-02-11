@@ -130,7 +130,7 @@ export default function Articles({
                         content={content}
                         otherArticles={[]}
                         indexInfo={indexInfo}
-                        authorId={authorId}
+                        author={allAuthors.find(a => a.authorId === authorId)}
                         allAuthors={allAuthors}
                     />
                 </div>
