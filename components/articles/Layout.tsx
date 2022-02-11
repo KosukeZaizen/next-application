@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -18,6 +18,7 @@ const styles = {
         marginBottom: 20,
         position: "fixed",
         top: 0,
+        width: "100%",
     },
     toolBar: {
         display: "flex",
@@ -53,6 +54,7 @@ export function Layout({
     const { isFirstRender } = useIsFirstRender();
 
     const isWide = screenWidth > 600;
+    const contentsMarginTop = css({ marginTop: isWide ? 84 : 76 });
 
     return (
         <>
@@ -78,15 +80,10 @@ export function Layout({
                 </Toolbar>
             </AppBar>
             {isFirstRender ? (
-                <FullScreenShuriken />
+                <FullScreenShuriken style={contentsMarginTop} />
             ) : (
                 <>
-                    <div
-                        css={[
-                            mainContainerStyle,
-                            { marginTop: isWide ? 84 : 76 },
-                        ]}
-                    >
+                    <div css={[mainContainerStyle, contentsMarginTop]}>
                         {children}
                     </div>
                     {!noSeasonAnimation && (
@@ -103,9 +100,9 @@ export function Layout({
     );
 }
 
-export function FullScreenShuriken() {
+export function FullScreenShuriken({ style }: { style?: SerializedStyles }) {
     return (
-        <div css={shurikenContainerStyle}>
+        <div css={[shurikenContainerStyle, style]}>
             <ShurikenProgress size="100%" style={shurikenStyle} />
         </div>
     );
@@ -232,6 +229,7 @@ const mainContainerStyle = css(
     {
         marginRight: 10,
         marginLeft: 10,
+        zIndex: 0,
     },
     centerStyle
 );

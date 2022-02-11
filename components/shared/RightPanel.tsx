@@ -40,21 +40,22 @@ export function RightPanel({
 
     return (
         <>
-            <div
-                css={{
-                    zIndex: isContentShown ? 10000 : -100,
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    backgroundColor: "black",
-                    opacity: open ? 0.7 : 0,
-                    width: "100%",
-                    height: "100%",
-                    transitionDuration,
-                    transitionProperty: "opacity",
-                }}
-                onClick={onClose}
-            />
+            {(open || isContentShown) && (
+                <div
+                    css={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        backgroundColor: "black",
+                        opacity: open && isContentShown ? 0.7 : 0,
+                        width: "100%",
+                        height: "100%",
+                        transitionDuration,
+                        transitionProperty: "opacity",
+                    }}
+                    onClick={onClose}
+                />
+            )}
             <Card
                 style={{
                     height: "calc(100% - 30px)",
