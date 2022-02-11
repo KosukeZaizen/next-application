@@ -36,6 +36,7 @@ export default function Home(props: Props) {
             screenWidth={screenWidth}
             screenHeight={screenHeight}
             helmetProps={helmetProps}
+            maxWidth={maxWidth}
         >
             <main css={c.main}>
                 <h1 css={c.h1}>{siteName}</h1>
@@ -92,8 +93,10 @@ function useRevisedProps(props: Props) {
     return _props;
 }
 
+const maxWidth = 900;
+
 const c = getClasses({
-    main: { maxWidth: 900, textAlign: "left" },
+    main: { maxWidth, textAlign: "left" },
     h1: [
         {
             margin: "30px 0 40px",

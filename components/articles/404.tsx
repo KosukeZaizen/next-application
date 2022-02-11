@@ -19,6 +19,7 @@ export default function NotFoundPage() {
                 siteName,
                 noindex: true,
             }}
+            maxWidth={1000}
         >
             <div css={{ textAlign: "center" }}>
                 <h1 css={[h1TitleCss, { fontWeight: "bold" }]}>

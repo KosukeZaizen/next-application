@@ -46,6 +46,7 @@ export default function ArticlesTop({ pages, helmetProps }: Props) {
             screenWidth={screenWidth}
             screenHeight={screenHeight}
             helmetProps={helmetProps}
+            maxWidth={900}
         >
             <div
                 style={{

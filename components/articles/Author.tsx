@@ -21,9 +21,11 @@ export interface Author {
     imgExtension: string;
 }
 
-function getAuthorImgPath({ authorId, imgExtension }: Author) {
+export function getAuthorImgPath({ authorId, imgExtension }: Author) {
     return `${ARTICLES_BLOB}/_authors/${authorId}${imgExtension}`;
 }
+
+const maxPanelWidth = 1000;
 
 export function AuthorCard({
     author,
@@ -42,7 +44,8 @@ export function AuthorCard({
         return null;
     }
 
-    const panelWidth = screenWidth > 1000 ? 1000 : screenWidth;
+    const panelWidth =
+        screenWidth > maxPanelWidth ? maxPanelWidth : screenWidth;
 
     const image = (
         <img
@@ -88,7 +91,7 @@ export function AuthorCard({
                     setIsPanelOpen(false);
                 }}
                 screenWidth={screenWidth}
-                panelWidth={1000}
+                panelWidth={maxPanelWidth}
             >
                 <AuthorArea author={author} screenWidth={panelWidth} />
             </RightPanel>

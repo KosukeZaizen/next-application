@@ -2,19 +2,26 @@ import { css } from "@emotion/react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { Helmet, HelmetProps } from "../shared/Helmet";
 import { Link } from "../shared/Link/Link";
+import { RightPanel } from "../shared/RightPanel";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
-import { Author, AuthorCard } from "./Author";
+import { Author, AuthorArea } from "./Author";
 
 const styles = {
     appBar: {
         backgroundColor: "rgb(34, 34, 34)",
         marginBottom: 20,
+        position: "fixed",
+        top: 0,
+    },
+    toolBar: {
+        display: "flex",
+        justifyContent: "center",
     },
 } as const;
 
@@ -25,6 +32,7 @@ interface Props {
     helmetProps: HelmetProps;
     noSeasonAnimation?: boolean;
     author?: Author;
+    maxWidth: number;
 }
 
 export function Layout({
@@ -34,6 +42,7 @@ export function Layout({
     helmetProps,
     noSeasonAnimation,
     author,
+    maxWidth,
 }: Props) {
     useEffect(() => {
         const { style } = window.document.body;
@@ -43,45 +52,43 @@ export function Layout({
 
     const { isFirstRender } = useIsFirstRender();
 
+    const isWide = screenWidth > 600;
+
     return (
         <>
             <Helmet {...helmetProps} />
             <AppBar position="static" style={styles.appBar}>
-                <Toolbar>
-                    {/* <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        className={classes.menuButton}
+                <Toolbar style={styles.toolBar}>
+                    <div
+                        css={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            maxWidth,
+                        }}
                     >
-                        <MenuIcon />
-                    </IconButton> */}
-                    <AuthorCard
-                        author={author}
-                        screenWidth={screenWidth}
-                        // style={{ marginTop: 30 }}
-                    />
-                    <Link href="/articles">
-                        <Typography
-                            variant="h4"
-                            style={{
-                                flexGrow: 1,
-                                fontWeight: "bold",
-                                color: "white",
-                                fontSize:
-                                    screenWidth > 600 ? undefined : "x-large",
-                            }}
-                        >
-                            Lingual Ninja
-                        </Typography>
-                    </Link>
+                        <Title isWide={isWide} />
+                        <AuthorButton
+                            author={author}
+                            screenWidth={screenWidth}
+                            isWide={isWide}
+                        />
+                    </div>
                 </Toolbar>
             </AppBar>
             {isFirstRender ? (
                 <FullScreenShuriken />
             ) : (
                 <>
-                    <div css={mainContainerStyle}>{children}</div>
+                    <div
+                        css={[
+                            mainContainerStyle,
+                            { marginTop: isWide ? 84 : 76 },
+                        ]}
+                    >
+                        {children}
+                    </div>
                     {!noSeasonAnimation && (
                         <SeasonAnimation
                             frequencySec={2}
@@ -101,6 +108,71 @@ export function FullScreenShuriken() {
         <div css={shurikenContainerStyle}>
             <ShurikenProgress size="100%" style={shurikenStyle} />
         </div>
+    );
+}
+
+function Title({ isWide }: { isWide: boolean }) {
+    return (
+        <Link href="/articles">
+            <Typography
+                variant="h4"
+                style={{
+                    flexGrow: 1,
+                    fontWeight: "bold",
+                    color: "white",
+                    fontSize: isWide ? undefined : "x-large",
+                }}
+            >
+                Lingual Ninja
+            </Typography>
+        </Link>
+    );
+}
+
+const maxAuthorPanelWidth = 1000;
+
+function AuthorButton({
+    author,
+    screenWidth,
+    isWide,
+}: {
+    author?: Author;
+    screenWidth: number;
+    isWide: boolean;
+}) {
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+    if (!author) {
+        return null;
+    }
+
+    const panelWidth =
+        screenWidth > maxAuthorPanelWidth ? maxAuthorPanelWidth : screenWidth;
+
+    return (
+        <>
+            <div
+                onClick={() => {
+                    setIsPanelOpen(true);
+                }}
+                css={{
+                    cursor: "pointer",
+                    fontSize: isWide ? "large" : "medium",
+                }}
+            >
+                {"Author"}
+            </div>
+            <RightPanel
+                open={isPanelOpen}
+                onClose={() => {
+                    setIsPanelOpen(false);
+                }}
+                screenWidth={screenWidth}
+                panelWidth={maxAuthorPanelWidth}
+            >
+                <AuthorArea author={author} screenWidth={panelWidth} />
+            </RightPanel>
+        </>
     );
 }
 

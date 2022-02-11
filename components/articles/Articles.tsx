@@ -82,13 +82,13 @@ export function Articles(props: ArticlesProps) {
             screenHeight={screenHeight}
             helmetProps={helmetProps}
             author={author}
+            maxWidth={maxWidth}
         >
             <ArticleContent
                 title={title}
                 description={description}
                 screenWidth={screenWidth}
                 content={articleContent}
-                // adsense={true}
                 otherArticles={otherArticles}
                 indexInfo={indexInfo}
                 imgNumber={imgNumber}
@@ -149,7 +149,6 @@ interface ArticleContentProps {
     screenWidth: number;
     indexInfo: IndexInfo;
     content: string;
-    // adsense: boolean;
     otherArticles: Page[];
     imgNumber: number;
     pageName: string;
@@ -362,8 +361,10 @@ const adStyle = {
     alignItems: "center",
 };
 
+const maxWidth = 900;
+
 const mainCss = css`
-    max-width: 900px;
+    max-width: ${maxWidth}px;
     overflow-x: hidden;
 `;
 
