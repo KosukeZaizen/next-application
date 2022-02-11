@@ -1,14 +1,15 @@
 import { GetServerSideProps } from "next";
+import { ArticlesProps, Page } from "../../../components/articles/Articles";
 import { domain, siteName } from "../../../components/articles/Home";
 import { getImgNumber } from "../../../components/articles/Layout";
 import { fetchZAppsFromServerSide } from "../../../lib/fetch";
 import { makeIndexInfo } from "../../api/articles/getArticleProps";
-import Articles, { Page, Props } from "../[[...path]]";
+import Articles from "../[[...path]]";
 
 export default Articles;
 
 export const getServerSideProps: GetServerSideProps<
-    Props,
+    ArticlesProps,
     { pageName: string }
 > = async ({ params }) => {
     try {

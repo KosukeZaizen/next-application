@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getClasses } from "../../lib/css";
 import { useScreenSize } from "../../lib/screenSize";
-import { Page } from "../../pages/articles/[[...path]]";
 import { Layout, whiteShadowStyle } from "./Layout";
 import { HelmetProps } from "../shared/Helmet";
 import CharacterComment from "../shared/CharacterComment";
@@ -12,6 +11,7 @@ import { GetArticleTopProps } from "../../pages/api/articles/getArticleTopProps"
 import { sleepAsync } from "../../lib/sleep";
 import { fetchGet } from "../../lib/fetch";
 import { apps } from "../../const/public";
+import { Page } from "./Articles";
 
 export const siteName = "Articles about Japan";
 export const desc =

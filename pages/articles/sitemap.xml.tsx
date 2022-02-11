@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
+import { Page } from "../../components/articles/Articles";
 import { apps } from "../../const/public";
 import { fetchZAppsFromServerSide } from "../../lib/fetch";
-import { Page } from "./[[...path]]";
 
 const topUrl = apps.articles.url;
 

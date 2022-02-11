@@ -3,7 +3,7 @@ import { fetchZAppsFromServerSide } from "../../../lib/fetch";
 import { apiGet } from "../../../lib/nextApi";
 import { GetParams } from "../../../types/next";
 import { domain, siteName } from "../../../components/articles/Home";
-import { Page, Props } from "../../articles/[[...path]]";
+import { ArticlesProps, Page } from "../../../components/articles/Articles";
 
 export interface GetArticleProps {
     url: "/api/articles/getArticleProps";
@@ -11,7 +11,7 @@ export interface GetArticleProps {
     response: Response;
 }
 type Params = { pageName: string };
-type Response = Props;
+type Response = ArticlesProps;
 
 const handler = async ({ pageName }: GetParams<Params>): Promise<Response> => {
     if (typeof pageName !== "string") {
@@ -22,7 +22,9 @@ const handler = async ({ pageName }: GetParams<Params>): Promise<Response> => {
 
 export default apiGet<GetArticleProps>(handler);
 
-export async function getArticleProps(pageName: string): Promise<Props> {
+export async function getArticleProps(
+    pageName: string
+): Promise<ArticlesProps> {
     // Article
     const page: Page = await (
         await fetchZAppsFromServerSide(`api/Articles/GetArticle?p=${pageName}`)

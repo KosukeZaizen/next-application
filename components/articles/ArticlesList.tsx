@@ -1,10 +1,10 @@
 import { CSSObject } from "@emotion/react";
 import * as React from "react";
 import { css, getClasses } from "../../lib/css";
-import { Page } from "../../pages/articles/[[...path]]";
 import { LazyLoad } from "../shared/LazyLoad";
 import { LinkOrA } from "../shared/Link/LinkOrA";
 import { ScrollBox } from "../shared/ScrollBox";
+import { Page } from "./Articles";
 import { Author, AuthorCard } from "./Author";
 
 interface ArticlesListProps {
