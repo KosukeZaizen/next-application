@@ -94,7 +94,7 @@ export function Layout({
                     backgroundColor: "rgb(34, 34, 34)",
                     marginBottom: 20,
                     position: "fixed",
-                    top: hideAppBar ? -100 : 0,
+                    top: hideAppBar ? -100 : -1,
                     transitionDuration: "1s",
                     transitionProperty: "top",
                     width: "100%",
