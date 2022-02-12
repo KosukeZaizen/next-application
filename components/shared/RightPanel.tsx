@@ -52,6 +52,7 @@ export function RightPanel({
                         height: "100%",
                         transitionDuration,
                         transitionProperty: "opacity",
+                        zIndex: 10000,
                     }}
                     onClick={onClose}
                 />

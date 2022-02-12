@@ -52,6 +52,7 @@ export const PopupAd = () => {
                 height: "100%",
                 opacity: isShown ? 1 : 0,
                 transition: "2s",
+                zIndex: 2147483647,
             }}
         >
             <div css={c.grayDiv} />
@@ -67,7 +68,6 @@ export const PopupAd = () => {
                         alignItems: "center",
                         flexDirection: "column",
                         borderRadius: 10,
-                        zIndex: 2147483647,
                     }}
                     onClick={ev => ev.stopPropagation()}
                 >
@@ -98,8 +98,8 @@ const c = getClasses({
         top: 0,
         width: "100%",
         height: "100%",
-        backgroundColor: "gray",
-        opacity: 0.5,
+        backgroundColor: "black",
+        opacity: 0.7,
     },
     close: { cursor: "pointer", color: "black" },
 });

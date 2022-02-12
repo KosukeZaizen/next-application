@@ -83,7 +83,6 @@ export function Layout({
     const { isFirstRender } = useIsFirstRender();
 
     const isWide = screenWidth > 600;
-    const contentsMarginTop = css({ marginTop: isWide ? 84 : 76 });
 
     return (
         <>
@@ -120,10 +119,17 @@ export function Layout({
                 </Toolbar>
             </AppBar>
             {isFirstRender ? (
-                <FullScreenShuriken style={contentsMarginTop} />
+                <FullScreenShuriken
+                    style={css({ marginTop: isWide ? 134 : 126 })}
+                />
             ) : (
                 <>
-                    <div css={[mainContainerStyle, contentsMarginTop]}>
+                    <div
+                        css={[
+                            mainContainerStyle,
+                            { marginTop: isWide ? 84 : 76 },
+                        ]}
+                    >
                         {children}
                     </div>
                     {!noSeasonAnimation && (
