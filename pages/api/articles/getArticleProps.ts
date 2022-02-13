@@ -24,11 +24,15 @@ const handler = async ({ pageName }: GetParams<Params>): Promise<Response> => {
 export default apiGet<GetArticleProps>(handler);
 
 export async function getArticleProps(
-    pageName: string
+    pageName: string,
+    isPreview?: boolean
 ): Promise<ArticlesProps> {
     // Article
+    const getArticleUrl = isPreview
+        ? `api/Articles/GetArticleForEdit?p=${pageName}`
+        : `api/Articles/GetArticle?p=${pageName}`;
     const page: Page = await (
-        await fetchZAppsFromServerSide(`api/Articles/GetArticle?p=${pageName}`)
+        await fetchZAppsFromServerSide(getArticleUrl)
     ).json();
 
     const {
