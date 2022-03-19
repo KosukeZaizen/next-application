@@ -41,15 +41,21 @@ export const CodeRender = ({
                 boldInfo={params[2]}
             />
         );
-    } else if (language === "e") {
+    }
+
+    if (language === "e") {
         return <OriginalExample params={params} />;
-    } else if (language === "box") {
+    }
+
+    if (language === "box") {
         return (
             <div className={styles.greenBox}>
                 <Markdown source={value} noLinkShadow />
             </div>
         );
-    } else if (language.startsWith("button-")) {
+    }
+
+    if (language.startsWith("button-")) {
         const [_button, openLabel, closeLabel] = language.split("-");
         return (
             <CollapseButton
