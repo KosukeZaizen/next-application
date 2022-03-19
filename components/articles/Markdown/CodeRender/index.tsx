@@ -1,4 +1,5 @@
-import React from "react";
+import { Collapse } from "@material-ui/core";
+import React, { useState } from "react";
 import { Markdown } from "..";
 import { getClasses } from "../../../../lib/css";
 import { sentence } from "../../../../types/stories";
@@ -48,6 +49,15 @@ export const CodeRender = ({
                 <Markdown source={value} noLinkShadow />
             </div>
         );
+    } else if (language.startsWith("button-")) {
+        const [_, openLabel, closeLabel] = language.split("-");
+        return (
+            <CollapseButton
+                openLabel={openLabel || "Open"}
+                closeLabel={closeLabel || "Close"}
+                content={value}
+            />
+        );
     }
 
     return (
@@ -56,6 +66,39 @@ export const CodeRender = ({
         </PointBox>
     );
 };
+
+function CollapseButton({
+    openLabel,
+    closeLabel,
+    content,
+}: {
+    openLabel: string;
+    closeLabel: string;
+    content: string;
+}) {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <div style={{ margin: "20px 0" }}>
+            <button
+                onClick={() => {
+                    setOpen(!open);
+                }}
+                className={`btn ${open ? "btn-dark" : "btn-primary"} btn-xs`}
+                style={{ boxShadow: "none", margin: 0 }}
+            >
+                {open
+                    ? closeLabel.replaceAll("_", " ")
+                    : openLabel.replaceAll("_", " ")}
+            </button>
+            <Collapse in={open} timeout={1000} style={{ margin: 0 }}>
+                <div className={styles.answerBox}>
+                    <Markdown source={content} noLinkShadow />
+                </div>
+            </Collapse>
+        </div>
+    );
+}
 
 function OriginalExample({ params }: { params: { [key: number]: string } }) {
     const s: sentence = {

@@ -133,6 +133,17 @@
     text-shadow: initial;
 }
 
+.markdownArea .answerBox {
+    position: relative;
+    padding: 24px 24px 12px 12px;
+    color: black;
+    border-radius: 0 10px 10px 10px;
+    background: #e3f5d8;
+    margin: 0;
+    display: inline-block;
+    text-shadow: initial;
+}
+
 .normalFont {
     font-size: normal;
 }
