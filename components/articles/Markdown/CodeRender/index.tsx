@@ -50,7 +50,7 @@ export const CodeRender = ({
             </div>
         );
     } else if (language.startsWith("button-")) {
-        const [_, openLabel, closeLabel] = language.split("-");
+        const [_button, openLabel, closeLabel] = language.split("-");
         return (
             <CollapseButton
                 openLabel={openLabel || "Open"}
