@@ -124,7 +124,7 @@
 
 .markdownArea .greenBox {
     position: relative;
-    padding: 24px 24px 12px 12px;
+    padding: 24px 24px 12px 24px;
     color: black;
     border-radius: 10px;
     background: #e3f5d8;
@@ -135,7 +135,7 @@
 
 .markdownArea .answerBox {
     position: relative;
-    padding: 24px 24px 12px 12px;
+    padding: 24px 24px 12px 24px;
     color: black;
     border-radius: 0 10px 10px 10px;
     background: #e3f5d8;
