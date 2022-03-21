@@ -49,8 +49,10 @@ export const CodeRender = ({
 
     if (language === "box") {
         return (
-            <div className={styles.greenBox}>
-                <Markdown source={value} noLinkShadow />
+            <div>
+                <div className={styles.greenBox}>
+                    <Markdown source={value} noLinkShadow />
+                </div>
             </div>
         );
     }

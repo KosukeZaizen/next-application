@@ -25,7 +25,7 @@ export function PointBox({
     }
 
     return (
-        <>
+        <div>
             <div
                 css={[
                     css`
@@ -55,6 +55,6 @@ export function PointBox({
             >
                 {children}
             </div>
-        </>
+        </div>
     );
 }
