@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { css } from "../../../../lib/css";
 import { LazyLoad } from "../../../shared/LazyLoad";
-import { YouTubeVideo } from "../../../shared/YouTubeVideo";
+import { Video, YouTubeVideo } from "../../../shared/YouTubeVideo";
 import { Speaker } from "./Speaker";
 import { VocabList } from "./VocabList";
 
-const imgExtensions = [".png", ".jpg"];
+const imgExtensions = [".png", ".jpg", ".gif"];
 const soundExtensions = [".m4a"];
+const videoExtensions = [".mp4"];
 
 export function checkImgExtension(str: string) {
-    if (!str) {
-        return false;
-    }
-    return imgExtensions.some(e => str.toLowerCase().includes(e));
+    return checkExtension(str, imgExtensions);
 }
 
-function checkSoundExtension(str: string) {
+function checkExtension(str: string, extensions: string[]) {
     if (!str) {
         return false;
     }
-    return soundExtensions.some(e => str.toLowerCase().includes(e));
+    return extensions.some(e => str.toLowerCase().includes(e));
 }
 
 export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
@@ -45,10 +43,16 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
                 }
             />
         );
-    } else if (checkSoundExtension(src)) {
+    } else if (checkExtension(src, soundExtensions)) {
         return (
             <LazyLoad>
                 <Speaker src={src} alt={alt} />
+            </LazyLoad>
+        );
+    } else if (checkExtension(src, videoExtensions)) {
+        return (
+            <LazyLoad>
+                <Video src={src} screenWidth={screenWidth} />
             </LazyLoad>
         );
     } else if (src === "vocab") {
