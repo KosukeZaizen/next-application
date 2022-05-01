@@ -210,6 +210,7 @@ function FallingImg({
                 width={50 * scale}
                 height={50 * scale}
                 objectFit="contain"
+                objectPosition="50% 50%"
             />
         </div>
     );
