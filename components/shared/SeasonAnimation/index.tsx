@@ -198,6 +198,7 @@ function FallingImg({
             style={{
                 top: -1.5 * 90 * scale,
                 left: l.initialX,
+                overflow: "visible",
             }}
             className="fallingImg"
         >
@@ -208,6 +209,7 @@ function FallingImg({
                 layout="fixed"
                 width={50 * scale}
                 height={50 * scale}
+                objectFit="contain"
             />
         </div>
     );
