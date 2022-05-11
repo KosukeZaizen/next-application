@@ -99,16 +99,11 @@ export function ArticleScroll({
                             pCss={c.articleLink}
                         >
                             <div css={c.articleImageContainer}>
-                                {isImageLazy ? (
-                                    <LazyLoad>
-                                        <ArticleImg
-                                            page={page}
-                                            imgSize={imgSize}
-                                        />
-                                    </LazyLoad>
-                                ) : (
-                                    <ArticleImg page={page} imgSize={imgSize} />
-                                )}
+                                <ArticleImg
+                                    page={page}
+                                    imgSize={imgSize}
+                                    isImageLazy={isImageLazy}
+                                />
                             </div>
                         </LinkOrA>
                     )}
@@ -179,7 +174,15 @@ export function ArticleScroll({
     );
 }
 
-function ArticleImg({ page, imgSize }: { page: Page; imgSize: CSSObject }) {
+function ArticleImg({
+    page,
+    imgSize,
+    isImageLazy,
+}: {
+    page: Page;
+    imgSize: CSSObject;
+    isImageLazy: boolean;
+}) {
     if (
         page.imgPath?.endsWith("/hqdefault.jpg") ||
         page.imgPath?.endsWith("/0.jpg")
@@ -187,7 +190,7 @@ function ArticleImg({ page, imgSize }: { page: Page; imgSize: CSSObject }) {
         return <TrimmedImg page={page} imgSize={imgSize} />;
     }
 
-    return (
+    const img = (
         <img
             alt={page.title}
             src={page.imgPath}
@@ -201,11 +204,15 @@ function ArticleImg({ page, imgSize }: { page: Page; imgSize: CSSObject }) {
             ]}
         />
     );
+    if (isImageLazy) {
+        return <LazyLoad>{img}</LazyLoad>;
+    }
+    return img;
 }
 
 function TrimmedImg({ page, imgSize }: { page: Page; imgSize: CSSObject }) {
     const ref = useRef<HTMLImageElement>(null);
-    const [height, setHeight] = useState(100);
+    const [height, setHeight] = useState(120);
 
     const currentWidth = ref.current?.width;
 
