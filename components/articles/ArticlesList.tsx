@@ -1,5 +1,6 @@
 import { CSSObject } from "@emotion/react";
 import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import { css, getClasses } from "../../lib/css";
 import { LazyLoad } from "../shared/LazyLoad";
 import { LinkOrA } from "../shared/Link/LinkOrA";
@@ -79,20 +80,6 @@ export function ArticleScroll({
     page,
     i,
 }: ArticleScrollProps) {
-    const image = (
-        <img
-            alt={page.title}
-            src={page.imgPath}
-            css={[
-                {
-                    objectFit: "cover",
-                    objectPosition: "50% 50%",
-                    margin: 0,
-                },
-                imgSize,
-            ]}
-        />
-    );
     const isImageLazy = i > 10 || titleH === "h3";
 
     return (
@@ -113,9 +100,14 @@ export function ArticleScroll({
                         >
                             <div css={c.articleImageContainer}>
                                 {isImageLazy ? (
-                                    <LazyLoad>{image}</LazyLoad>
+                                    <LazyLoad>
+                                        <ArticleImg
+                                            page={page}
+                                            imgSize={imgSize}
+                                        />
+                                    </LazyLoad>
                                 ) : (
-                                    image
+                                    <ArticleImg page={page} imgSize={imgSize} />
                                 )}
                             </div>
                         </LinkOrA>
@@ -184,6 +176,60 @@ export function ArticleScroll({
                 </div>
             </ScrollBox>
         </article>
+    );
+}
+
+function ArticleImg({ page, imgSize }: { page: Page; imgSize: CSSObject }) {
+    if (
+        page.imgPath?.endsWith("/hqdefault.jpg") ||
+        page.imgPath?.endsWith("/0.jpg")
+    ) {
+        return <TrimmedImg page={page} imgSize={imgSize} />;
+    }
+
+    return (
+        <img
+            alt={page.title}
+            src={page.imgPath}
+            css={[
+                {
+                    objectFit: "cover",
+                    objectPosition: "50% 50%",
+                    margin: 0,
+                },
+                imgSize,
+            ]}
+        />
+    );
+}
+
+function TrimmedImg({ page, imgSize }: { page: Page; imgSize: CSSObject }) {
+    const ref = useRef<HTMLImageElement>(null);
+    const [height, setHeight] = useState(100);
+
+    const currentWidth = ref.current?.width;
+
+    useEffect(() => {
+        if (currentWidth) {
+            setHeight((currentWidth * 9) / 16 - 2);
+        }
+    }, [currentWidth]);
+
+    return (
+        <img
+            alt={page.title}
+            src={page.imgPath}
+            css={[
+                {
+                    objectFit: "cover",
+                    objectPosition: "50% 50%",
+                    margin: 0,
+                },
+                imgSize,
+                { height },
+            ]}
+            ref={ref}
+        />
     );
 }
 
