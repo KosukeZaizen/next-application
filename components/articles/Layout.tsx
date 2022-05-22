@@ -109,12 +109,31 @@ export function Layout({
                             maxWidth,
                         }}
                     >
-                        <Title isWide={isWide} />
-                        <AuthorButton
-                            author={author}
-                            screenWidth={screenWidth}
+                        <Title
                             isWide={isWide}
+                            href={
+                                author
+                                    ? "/articles"
+                                    : "https://www.lingual-ninja.com"
+                            }
                         />
+                        {author ? (
+                            <AuthorButton
+                                author={author}
+                                screenWidth={screenWidth}
+                                isWide={isWide}
+                            />
+                        ) : (
+                            <a
+                                css={{
+                                    fontSize: isWide ? "large" : "medium",
+                                    color: "white",
+                                }}
+                                href={"https://www.lingual-ninja.com"}
+                            >
+                                {"Apps"}
+                            </a>
+                        )}
                     </div>
                 </Toolbar>
             </AppBar>
@@ -154,9 +173,9 @@ export function FullScreenShuriken({ style }: { style?: SerializedStyles }) {
     );
 }
 
-function Title({ isWide }: { isWide: boolean }) {
+function Title({ isWide, href }: { isWide: boolean; href: string }) {
     return (
-        <Link href="/articles">
+        <Link href={href}>
             <Typography
                 variant="h4"
                 style={{
@@ -179,15 +198,11 @@ function AuthorButton({
     screenWidth,
     isWide,
 }: {
-    author?: Author;
+    author: Author;
     screenWidth: number;
     isWide: boolean;
 }) {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-
-    if (!author) {
-        return null;
-    }
 
     const panelWidth =
         screenWidth > maxAuthorPanelWidth ? maxAuthorPanelWidth : screenWidth;

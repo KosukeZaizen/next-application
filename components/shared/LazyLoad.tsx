@@ -5,9 +5,12 @@ export function LazyLoad(props: LazyLoadProps) {
     return <ReactLazyLoad offset={500} {...props} />;
 }
 
-export function LazyExecutor({ fnc }: { fnc: () => void }) {
+export function LazyExecutor({
+    fnc,
+    ...lazyLoadProps
+}: { fnc: () => void } & LazyLoadProps) {
     return (
-        <LazyLoad>
+        <LazyLoad {...lazyLoadProps}>
             <Executor fnc={fnc} />
         </LazyLoad>
     );
