@@ -128,6 +128,10 @@ export function Layout({
                                 css={{
                                     fontSize: isWide ? "large" : "medium",
                                     color: "white",
+                                    "&:hover": {
+                                        opacity: 0.5,
+                                        color: "white",
+                                    },
                                 }}
                                 href={"https://www.lingual-ninja.com"}
                             >
@@ -184,6 +188,12 @@ function Title({ isWide, href }: { isWide: boolean; href: string }) {
                     color: "white",
                     fontSize: isWide ? undefined : "x-large",
                 }}
+                css={{
+                    "&:hover": {
+                        opacity: 0.5,
+                        color: "white",
+                    },
+                }}
             >
                 Lingual Ninja
             </Typography>
@@ -216,6 +226,9 @@ function AuthorButton({
                 css={{
                     cursor: "pointer",
                     fontSize: isWide ? "large" : "medium",
+                    "&:hover": {
+                        opacity: 0.5,
+                    },
                 }}
             >
                 {"Author"}
