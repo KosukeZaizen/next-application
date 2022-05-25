@@ -111,11 +111,7 @@ export function Layout({
                     >
                         <Title
                             isWide={isWide}
-                            href={
-                                author
-                                    ? "/articles"
-                                    : "https://www.lingual-ninja.com"
-                            }
+                            href={"https://www.lingual-ninja.com"}
                         />
                         {author ? (
                             <AuthorButton
