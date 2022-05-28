@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArticlesList } from "../../components/articles/ArticlesList";
 import {
     Author,
@@ -180,7 +180,7 @@ export function ArticleContent({
 
     return (
         <main css={mainCss}>
-            <BreadCrumbs title={title} />
+            <BreadCrumbs title={title} screenWidth={screenWidth} />
             <article css={articleCss}>
                 <h1 css={h1TitleCss}>{title}</h1>
 
@@ -278,34 +278,68 @@ const h2Style = css`
     text-align: center;
 `;
 
-function BreadCrumbs({ title }: { title: string }) {
+function BreadCrumbs({
+    title,
+    screenWidth,
+}: {
+    title: string;
+    screenWidth: number;
+}) {
+    const homeRef = useRef<HTMLSpanElement>(null);
+    const [homeWidth, setHomeWidth] = useState(68);
+
+    useEffect(() => {
+        if (homeRef.current) {
+            setHomeWidth(homeRef.current.offsetWidth + 5);
+        }
+    }, [screenWidth]);
+
     return (
-        <div
-            itemScope
-            itemType="https://schema.org/BreadcrumbList"
-            css={breadCrumbsContainerCss}
-        >
+        <div css={{ display: "flex", position: "relative" }}>
             <span
-                itemProp="itemListElement"
-                itemScope
-                itemType="http://schema.org/ListItem"
+                css={[
+                    whiteShadowStyle,
+                    { position: "absolute", top: 0, left: 0 },
+                ]}
+                ref={homeRef}
             >
-                <Link href="/articles" itemProp="item" pCss={breadCrumbsCss}>
-                    <span itemProp="name">{"Home"}</span>
-                </Link>
-                <meta itemProp="position" content="1" />
+                <a href={Z_APPS_TOP_URL} css={{ marginRight: 5 }}>
+                    Home
+                </a>
+                {" > "}
             </span>
-            {" > "}
-            <span
-                itemProp="itemListElement"
+            <div
                 itemScope
-                itemType="http://schema.org/ListItem"
+                itemType="https://schema.org/BreadcrumbList"
+                css={breadCrumbsContainerCss}
             >
-                <span itemProp="name" css={breadCrumbsCss}>
-                    {title}
+                <span
+                    itemProp="itemListElement"
+                    itemScope
+                    itemType="http://schema.org/ListItem"
+                    css={{ marginLeft: homeWidth }}
+                >
+                    <Link
+                        href="/articles"
+                        itemProp="item"
+                        pCss={breadCrumbsCss}
+                    >
+                        <span itemProp="name">{"Articles"}</span>
+                    </Link>
+                    <meta itemProp="position" content="1" />
                 </span>
-                <meta itemProp="position" content="2" />
-            </span>
+                {" > "}
+                <span
+                    itemProp="itemListElement"
+                    itemScope
+                    itemType="http://schema.org/ListItem"
+                >
+                    <span itemProp="name" css={breadCrumbsCss}>
+                        {title}
+                    </span>
+                    <meta itemProp="position" content="2" />
+                </span>
+            </div>
         </div>
     );
 }
