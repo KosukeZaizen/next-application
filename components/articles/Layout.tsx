@@ -4,6 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import React, { useEffect, useState } from "react";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
+import FooterAnimation from "../shared/FooterAnimation";
 import { Helmet, HelmetProps } from "../shared/Helmet";
 import { Link } from "../shared/Link/Link";
 import { RightPanel } from "../shared/RightPanel";
@@ -158,6 +159,7 @@ export function Layout({
                             screenHeight={screenHeight}
                         />
                     )}
+                    <FooterAnimation />
                     <PopupAd />
                 </>
             )}
