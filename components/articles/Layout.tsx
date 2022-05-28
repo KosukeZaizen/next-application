@@ -147,7 +147,7 @@ export function Layout({
                     <div
                         css={[
                             mainContainerStyle,
-                            { marginTop: isWide ? 84 : 76 },
+                            { marginTop: isWide ? 70 : 61 },
                         ]}
                     >
                         {children}

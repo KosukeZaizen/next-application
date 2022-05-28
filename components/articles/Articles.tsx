@@ -295,15 +295,9 @@ function BreadCrumbs({
     }, [screenWidth]);
 
     return (
-        <div css={{ display: "flex", position: "relative" }}>
-            <span
-                css={[
-                    whiteShadowStyle,
-                    { position: "absolute", top: 0, left: 0 },
-                ]}
-                ref={homeRef}
-            >
-                <a href={Z_APPS_TOP_URL} css={{ marginRight: 5 }}>
+        <div css={breadCrumbsBlockCss}>
+            <span css={breadHomeSpanCss} ref={homeRef}>
+                <a href={Z_APPS_TOP_URL} css={breadHomeAnchorCss}>
                     Home
                 </a>
                 {" > "}
@@ -453,3 +447,12 @@ const commentCss = css`
     padding-left: 25px;
     padding-right: 20px;
 `;
+
+const breadHomeSpanCss = css([
+    whiteShadowStyle,
+    { position: "absolute", top: 0, left: 0 },
+]);
+
+const breadHomeAnchorCss = { marginRight: 5 };
+
+const breadCrumbsBlockCss = { position: "relative" } as const;

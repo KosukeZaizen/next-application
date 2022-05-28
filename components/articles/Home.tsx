@@ -10,7 +10,7 @@ import FB from "../shared/FaceBook";
 import { GetArticleTopProps } from "../../pages/api/articles/getArticleTopProps";
 import { sleepAsync } from "../../lib/sleep";
 import { fetchGet } from "../../lib/fetch";
-import { apps } from "../../const/public";
+import { apps, Z_APPS_TOP_URL } from "../../const/public";
 import { Page } from "./Articles";
 
 export const siteName = "Articles about Japan";
@@ -39,12 +39,23 @@ export default function Home(props: Props) {
             maxWidth={maxWidth}
         >
             <main css={c.main}>
-                <h1 css={c.h1}>{siteName}</h1>
+                <BreadCrumbs />
+                <h1
+                    css={[
+                        c.h1,
+                        {
+                            margin:
+                                screenWidth > 600 ? "40px 0" : "30px 0 40px",
+                        },
+                    ]}
+                >
+                    {siteName}
+                </h1>
                 <CharacterComment
                     imgNumber={imgNumber}
                     screenWidth={screenWidth}
                     comment={
-                        <div css={{ textAlign: "left" }}>
+                        <div css={c.characterComment}>
                             {desc.split("! ").map((d, i, arr) => (
                                 <p key={i}>
                                     {d + (i < arr.length - 1 ? "! " : "")}
@@ -74,6 +85,16 @@ export default function Home(props: Props) {
     );
 }
 
+function BreadCrumbs() {
+    return (
+        <div css={whiteShadowStyle}>
+            <a href={Z_APPS_TOP_URL}>Home</a>
+            <span css={c.breadArrow}>{" > "}</span>
+            <span>Articles</span>
+        </div>
+    );
+}
+
 function useRevisedProps(props: Props) {
     const [_props, setProps] = useState<Props>(props);
 
@@ -99,7 +120,6 @@ const c = getClasses({
     main: { maxWidth, textAlign: "left" },
     h1: [
         {
-            margin: "30px 0 40px",
             fontWeight: "bolder",
             textAlign: "center",
         },
@@ -109,8 +129,10 @@ const c = getClasses({
         paddingLeft: 20,
         paddingRight: 20,
     },
+    characterComment: { textAlign: "left" },
     container: { margin: "20px 0" },
     red: { color: "red" },
     author: { marginTop: 45 },
     fb: { marginTop: 20, width: "100%", textAlign: "center" },
+    breadArrow: { marginLeft: 5, marginRight: 5 },
 });

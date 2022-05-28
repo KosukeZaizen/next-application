@@ -125,7 +125,6 @@ export const SeasonAnimation = ({
                 >
                     <img
                         alt="japanese festival"
-                        title="japanese festival"
                         src={festivalImgPath}
                         loading="eager"
                         css={{ width: festivalWidth, height: festivalHeight }}
