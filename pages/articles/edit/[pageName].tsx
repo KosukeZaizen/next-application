@@ -8,7 +8,7 @@ import { checkImgExtension } from "../../../components/articles/Markdown/ImageRe
 import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
 import { Link } from "../../../components/shared/Link/Link";
 import { fetchZAppsFromFrontEnd } from "../../../lib/fetch";
-import { useScreenSize } from "../../../lib/screenSize";
+import { useScreenSize } from "../../../lib/hooks/useScreenSize";
 
 const fireWindowScroll = debounce(() => {
     window.dispatchEvent(new CustomEvent("scroll"));

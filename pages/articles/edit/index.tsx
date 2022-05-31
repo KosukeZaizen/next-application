@@ -16,7 +16,7 @@ import {
     fetchZAppsFromFrontEnd,
     fetchZAppsFromServerSide,
 } from "../../../lib/fetch";
-import { useScreenSize } from "../../../lib/screenSize";
+import { useScreenSize } from "../../../lib/hooks/useScreenSize";
 import { Page } from "./[pageName]";
 
 const imgNumber = getImgNumber();

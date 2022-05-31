@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getClasses } from "../../lib/css";
-import { useScreenSize } from "../../lib/screenSize";
+import { useScreenSize } from "../../lib/hooks/useScreenSize";
 import { Layout, whiteShadowStyle } from "./Layout";
 import { HelmetProps } from "../shared/Helmet";
 import CharacterComment from "../shared/CharacterComment";

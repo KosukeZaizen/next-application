@@ -29,7 +29,7 @@ import { Z_APPS_TOP_URL } from "../../const/public";
 import { fetchGet } from "../../lib/fetch";
 import { useHashScroll } from "../../lib/hooks/useHashScroll";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
-import { useScreenSize } from "../../lib/screenSize";
+import { useScreenSize } from "../../lib/hooks/useScreenSize";
 import { sleepAsync } from "../../lib/sleep";
 
 import { GetArticleProps } from "../../pages/api/articles/getArticleProps";

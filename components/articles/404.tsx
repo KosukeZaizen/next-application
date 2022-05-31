@@ -1,6 +1,6 @@
 import { useRouter } from "next/dist/client/router";
 import React from "react";
-import { useScreenSize } from "../../lib/screenSize";
+import { useScreenSize } from "../../lib/hooks/useScreenSize";
 import { domain, siteName } from "./Home";
 import { Link } from "../shared/Link/Link";
 import { h1TitleCss, Layout } from "./Layout";
