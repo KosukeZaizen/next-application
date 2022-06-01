@@ -8,24 +8,23 @@ export const PopupAd = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            const showAd = () => {
-                const savedDate = localStorage.getItem("YouTubeAdClosed");
-                if (savedDate) {
-                    const date = new Date(savedDate);
-                    const dif = new Date().getTime() - date.getTime();
-                    if (dif < 1000 * 60 * 60 * 24 * 14) {
-                        // Don't show for two weeks
-                        return;
-                    }
+            const savedDate = localStorage.getItem("YouTubeAdClosed");
+            if (savedDate) {
+                const date = new Date(savedDate);
+                const dif = new Date().getTime() - date.getTime();
+                if (dif < 1000 * 60 * 60 * 24 * 14) {
+                    // Don't show for two weeks
+                    return;
                 }
+            }
+
+            const showAd = () => {
+                document.removeEventListener("scroll", showAd);
                 setIsTimerStarted(true);
                 setTimeout(() => setIsShown(true), 10);
             };
-            const body = document.querySelector("body");
-            if (!body) {
-                return;
-            }
-            body.onscroll = showAd;
+
+            document.addEventListener("scroll", showAd);
         }, 30 * 1000);
     }, []);
 
