@@ -6,7 +6,7 @@ import { ArticleContent } from "../../../components/articles/Articles";
 import { Author } from "../../../components/articles/Author";
 import { checkImgExtension } from "../../../components/articles/Markdown/ImageRender";
 import { Helmet, HelmetProps } from "../../../components/shared/Helmet";
-import { Link } from "../../../components/shared/Link/Link";
+import { Link } from "../../../components/shared/Link/LinkWithYouTube";
 import { fetchZAppsFromFrontEnd } from "../../../lib/fetch";
 import { useScreenSize } from "../../../lib/hooks/useScreenSize";
 

@@ -31,3 +31,5 @@ export const APPS_PUBLIC_IMG_URL =
     "https://lingualninja.blob.core.windows.net/lingual-storage/appsPublic/img/";
 
 export const AZURE_HOST = "next-application.azurewebsites.net";
+
+export const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/c/LingualNinja";

@@ -1,7 +1,7 @@
 import { SerializedStyles } from "@emotion/react";
 import React, { AnchorHTMLAttributes } from "react";
 import { ATargetBlank } from "./ATargetBlank";
-import { Link } from "./Link";
+import { Link } from "./LinkWithYouTube";
 
 interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
     pCss?: SerializedStyles;

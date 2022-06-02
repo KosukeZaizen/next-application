@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import FooterAnimation from "../shared/FooterAnimation";
 import { Helmet, HelmetProps } from "../shared/Helmet";
-import { Link } from "../shared/Link/Link";
+import { Link } from "../shared/Link/LinkWithYouTube";
 import { RightPanel } from "../shared/RightPanel";
 import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";

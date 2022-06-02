@@ -22,7 +22,7 @@ import {
 import CharacterComment from "../../components/shared/CharacterComment";
 import FB from "../../components/shared/FaceBook";
 import { HelmetProps } from "../../components/shared/Helmet";
-import { Link } from "../../components/shared/Link/Link";
+import { Link } from "../../components/shared/Link/LinkWithYouTube";
 import { ScrollBox } from "../../components/shared/ScrollBox";
 import { YouTubeAd } from "../../components/shared/YouTubeAd";
 import { Z_APPS_TOP_URL } from "../../const/public";

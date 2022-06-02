@@ -9,7 +9,7 @@ import {
 } from "../../../components/articles/Layout";
 import CharacterComment from "../../../components/shared/CharacterComment";
 import { HelmetProps } from "../../../components/shared/Helmet";
-import { Link } from "../../../components/shared/Link/Link";
+import { Link } from "../../../components/shared/Link/LinkWithYouTube";
 import { ScrollBox } from "../../../components/shared/ScrollBox";
 import ShurikenProgress from "../../../components/shared/ShurikenProgress";
 import {

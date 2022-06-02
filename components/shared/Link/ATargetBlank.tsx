@@ -1,10 +1,10 @@
 import { SerializedStyles } from "@emotion/react";
 import React, { AnchorHTMLAttributes } from "react";
+import { A } from "./LinkWithYouTube";
 
 export function ATargetBlank({
     nofollow,
     children,
-    pCss,
     ...rest
 }: AnchorHTMLAttributes<HTMLAnchorElement> & {
     nofollow?: boolean;
@@ -15,8 +15,8 @@ export function ATargetBlank({
         : "noopener noreferrer";
 
     return (
-        <a target="_blank" rel={rel} {...rest} css={pCss}>
+        <A target="_blank" rel={rel} {...rest}>
             {children}
-        </a>
+        </A>
     );
 }

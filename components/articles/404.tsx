@@ -2,7 +2,7 @@ import { useRouter } from "next/dist/client/router";
 import React from "react";
 import { useScreenSize } from "../../lib/hooks/useScreenSize";
 import { domain, siteName } from "./Home";
-import { Link } from "../shared/Link/Link";
+import { Link } from "../shared/Link/LinkWithYouTube";
 import { h1TitleCss, Layout } from "./Layout";
 
 export default function NotFoundPage() {
