@@ -24,19 +24,7 @@ function recentlyAccessed(strSavedDate: string | null): boolean {
 }
 
 export function Link(props: LinkProps) {
-    const [unseenVideo, setUnseenVideo] = useState<
-        keyof typeof youTubeVideoUrls | null
-    >(null);
-
-    useEffect(() => {
-        const v = Object.keys(youTubeVideoUrls).find(
-            k =>
-                !recentlyAccessed(localStorage.getItem(seenVideoStorageKey + k))
-        ) as keyof typeof youTubeVideoUrls | null;
-        if (v) {
-            setUnseenVideo(v);
-        }
-    }, []);
+    const unseenVideo = useUnseenVideo();
 
     if (unseenVideo) {
         const { onClick, pCss, ...rest } = props;
@@ -65,19 +53,7 @@ export function Link(props: LinkProps) {
 export function A(
     props: AnchorHTMLAttributes<HTMLAnchorElement> & { pCss?: SerializedStyles }
 ) {
-    const [unseenVideo, setUnseenVideo] = useState<
-        keyof typeof youTubeVideoUrls | null
-    >(null);
-
-    useEffect(() => {
-        const v = Object.keys(youTubeVideoUrls).find(
-            k =>
-                !recentlyAccessed(localStorage.getItem(seenVideoStorageKey + k))
-        ) as keyof typeof youTubeVideoUrls | null;
-        if (v) {
-            setUnseenVideo(v);
-        }
-    }, []);
+    const unseenVideo = useUnseenVideo();
 
     if (unseenVideo) {
         const { onClick, pCss, ...rest } = props;
@@ -102,4 +78,36 @@ export function A(
     }
     const { pCss, ...rest } = props;
     return <a {...rest} css={pCss} />;
+}
+
+type UnseenVideoState = {
+    unseenVideo: keyof typeof youTubeVideoUrls | null;
+} | null;
+let unseenVideoState: UnseenVideoState = null;
+
+function useUnseenVideo() {
+    const [videoState, setVideoState] = useState<UnseenVideoState>(null);
+
+    useEffect(() => {
+        if (window.navigator.userAgent.toLowerCase().includes("bot")) {
+            setVideoState(null);
+            return;
+        }
+
+        if (unseenVideoState) {
+            // already checked by another component
+            setVideoState(unseenVideoState);
+            return; // return not to access localStorage again and again
+        }
+
+        const v = Object.keys(youTubeVideoUrls).find(
+            k =>
+                !recentlyAccessed(localStorage.getItem(seenVideoStorageKey + k))
+        ) as keyof typeof youTubeVideoUrls | null;
+
+        unseenVideoState = { unseenVideo: v };
+        setVideoState(unseenVideoState);
+    }, []);
+
+    return videoState?.unseenVideo;
 }
