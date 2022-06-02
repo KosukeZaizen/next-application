@@ -1,5 +1,5 @@
 import { SerializedStyles } from "@emotion/react";
-import React, { AnchorHTMLAttributes } from "react";
+import React, { AnchorHTMLAttributes, useEffect, useState } from "react";
 import { YOUTUBE_CHANNEL_URL } from "../../../const/public";
 import { LinkProps, Link as LinkWithoutYouTube } from "./Link";
 
@@ -10,10 +10,6 @@ const youTubeVideoUrls = {
     how_to_say_do: "https://youtu.be/K1sDYLPunJ8",
     channel_page: YOUTUBE_CHANNEL_URL,
 } as const;
-
-const unseenVideo = Object.keys(youTubeVideoUrls).find(
-    k => !recentlyAccessed(localStorage.getItem(seenVideoStorageKey + k))
-) as keyof typeof youTubeVideoUrls | null;
 
 function recentlyAccessed(strSavedDate: string | null): boolean {
     if (strSavedDate) {
@@ -28,6 +24,20 @@ function recentlyAccessed(strSavedDate: string | null): boolean {
 }
 
 export function Link(props: LinkProps) {
+    const [unseenVideo, setUnseenVideo] = useState<
+        keyof typeof youTubeVideoUrls | null
+    >(null);
+
+    useEffect(() => {
+        const v = Object.keys(youTubeVideoUrls).find(
+            k =>
+                !recentlyAccessed(localStorage.getItem(seenVideoStorageKey + k))
+        ) as keyof typeof youTubeVideoUrls | null;
+        if (v) {
+            setUnseenVideo(v);
+        }
+    }, []);
+
     if (unseenVideo) {
         const { onClick, pCss, ...rest } = props;
         return (
@@ -55,6 +65,20 @@ export function Link(props: LinkProps) {
 export function A(
     props: AnchorHTMLAttributes<HTMLAnchorElement> & { pCss?: SerializedStyles }
 ) {
+    const [unseenVideo, setUnseenVideo] = useState<
+        keyof typeof youTubeVideoUrls | null
+    >(null);
+
+    useEffect(() => {
+        const v = Object.keys(youTubeVideoUrls).find(
+            k =>
+                !recentlyAccessed(localStorage.getItem(seenVideoStorageKey + k))
+        ) as keyof typeof youTubeVideoUrls | null;
+        if (v) {
+            setUnseenVideo(v);
+        }
+    }, []);
+
     if (unseenVideo) {
         const { onClick, pCss, ...rest } = props;
         return (
