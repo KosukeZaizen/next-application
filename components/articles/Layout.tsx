@@ -114,13 +114,13 @@ export function Layout({
                             isWide={isWide}
                             href={"https://www.lingual-ninja.com"}
                         />
-                        {author ? (
-                            <AuthorButton
-                                author={author}
-                                screenWidth={screenWidth}
-                                isWide={isWide}
-                            />
-                        ) : (
+                        <div
+                            css={{
+                                display: "flex",
+                                alignItems: "center",
+                                flexDirection: "row",
+                            }}
+                        >
                             <a
                                 css={{
                                     fontSize: isWide ? "large" : "medium",
@@ -129,12 +129,20 @@ export function Layout({
                                         opacity: 0.5,
                                         color: "white",
                                     },
+                                    margin: `0 ${isWide ? 3 : 1}rem`,
                                 }}
                                 href={"https://www.lingual-ninja.com"}
                             >
                                 {"Apps"}
                             </a>
-                        )}
+                            {author && (
+                                <AuthorButton
+                                    author={author}
+                                    screenWidth={screenWidth}
+                                    isWide={isWide}
+                                />
+                            )}
+                        </div>
                     </div>
                 </Toolbar>
             </AppBar>
@@ -205,10 +213,12 @@ function AuthorButton({
     author,
     screenWidth,
     isWide,
+    pCss,
 }: {
     author: Author;
     screenWidth: number;
     isWide: boolean;
+    pCss?: SerializedStyles;
 }) {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
 
@@ -221,13 +231,16 @@ function AuthorButton({
                 onClick={() => {
                     setIsPanelOpen(true);
                 }}
-                css={{
-                    cursor: "pointer",
-                    fontSize: isWide ? "large" : "medium",
-                    "&:hover": {
-                        opacity: 0.5,
+                css={[
+                    {
+                        cursor: "pointer",
+                        fontSize: isWide ? "large" : "medium",
+                        "&:hover": {
+                            opacity: 0.5,
+                        },
                     },
-                }}
+                    pCss,
+                ]}
             >
                 {"Author"}
             </div>
