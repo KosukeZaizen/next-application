@@ -3,9 +3,12 @@ import { AppProps } from "next/dist/shared/lib/router/router";
 import React, { useEffect } from "react";
 import { startAnimation } from "../components/shared/FooterAnimation/animation";
 import { apps, AZURE_HOST } from "../const/public";
+import { changeAppState } from "../lib/appState";
 import "../styles/global.css";
 
 export default function App({ Component, pageProps }: AppProps) {
+    useNoYouTubeMode();
+
     useSubDomain();
 
     useEffect(startAnimation, []);
@@ -44,4 +47,11 @@ function useSubDomain() {
             return;
         }
     }, []);
+}
+
+function useNoYouTubeMode() {
+    if (location.hash === "#n" || localStorage.getItem("noYouTubeMode")) {
+        changeAppState("isNoYouTubeAdMode", true);
+        localStorage.setItem("noYouTubeMode", "yes");
+    }
 }

@@ -1,6 +1,7 @@
 import { SerializedStyles } from "@emotion/react";
 import React, { AnchorHTMLAttributes, useEffect, useState } from "react";
 import { YOUTUBE_CHANNEL_URL } from "../../../const/public";
+import { useAppState } from "../../../lib/appState";
 import { LinkProps, Link as LinkWithoutYouTube } from "./Link";
 
 const seenVideoStorageKey = "seenVideoStorageKey-";
@@ -25,8 +26,9 @@ function recentlyAccessed(strSavedDate: string | null): boolean {
 
 export function Link(props: LinkProps) {
     const unseenVideo = useUnseenVideo();
+    const [isNoYouTubeAdMode] = useAppState("isNoYouTubeAdMode");
 
-    if (unseenVideo) {
+    if (unseenVideo && !isNoYouTubeAdMode) {
         const { onClick, pCss, ...rest } = props;
         return (
             <a
@@ -54,8 +56,9 @@ export function A(
     props: AnchorHTMLAttributes<HTMLAnchorElement> & { pCss?: SerializedStyles }
 ) {
     const unseenVideo = useUnseenVideo();
+    const [isNoYouTubeAdMode] = useAppState("isNoYouTubeAdMode");
 
-    if (unseenVideo) {
+    if (unseenVideo && !isNoYouTubeAdMode) {
         const { onClick, pCss, ...rest } = props;
         return (
             <a
