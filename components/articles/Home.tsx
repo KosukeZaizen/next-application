@@ -12,6 +12,7 @@ import { sleepAsync } from "../../lib/sleep";
 import { fetchGet } from "../../lib/fetch";
 import { apps, Z_APPS_TOP_URL } from "../../const/public";
 import { Page } from "./Articles";
+import { FooterAnimation } from "../shared/FooterAnimation";
 
 export const siteName = "Articles about Japan";
 export const desc =
@@ -81,6 +82,10 @@ export default function Home(props: Props) {
                 </div>
                 <FB style={c.fb} screenWidth={screenWidth} />
             </main>
+            <FooterAnimation
+                screenWidth={screenWidth}
+                screenHeight={screenHeight}
+            />
         </Layout>
     );
 }

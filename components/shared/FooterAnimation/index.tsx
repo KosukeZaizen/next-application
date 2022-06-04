@@ -59,7 +59,13 @@ const hoverRotation = {
     }s linear, transform 2s`,
 };
 
-export default function WelcomeAnimation() {
+export function FooterAnimation({
+    screenWidth,
+    screenHeight,
+}: {
+    screenWidth: number;
+    screenHeight: number;
+}) {
     const [flyingNinjaRotate, setFlyingNinjaRotate] = useState(false);
     const [animationState, setAnimationState] = useState(initialAnimationState);
 
@@ -139,10 +145,7 @@ export default function WelcomeAnimation() {
         return null;
     }
 
-    const innerWidth = window.innerWidth;
-    const innerHeight = window.innerHeight;
-
-    const squareLength = (innerWidth + innerHeight) / 2;
+    const squareLength = (screenWidth + screenHeight) / 2;
 
     const U = squareLength / 1000; // unit length
 
@@ -153,7 +156,7 @@ export default function WelcomeAnimation() {
             <img
                 src={runningNinja}
                 alt="running ninja"
-                style={{
+                css={{
                     willChange: "left",
                     backfaceVisibility: "hidden",
                     ...baseStyle,
@@ -163,11 +166,12 @@ export default function WelcomeAnimation() {
                     transform: animationState.turn ? "scale(-1, 1)" : "",
                     ...smoothPosition,
                 }}
+                key="running-ninja"
             />
             <img
                 src={badNinja}
                 alt="bad ninja"
-                style={{
+                css={{
                     willChange: "left",
                     backfaceVisibility: "hidden",
                     ...baseStyle,
@@ -177,11 +181,12 @@ export default function WelcomeAnimation() {
                     transform: animationState.turn ? "" : "scale(-1, 1)",
                     ...smoothPosition,
                 }}
+                key="bad-ninja-1"
             />
             <img
                 src={badNinja}
                 alt="bad ninja"
-                style={{
+                css={{
                     willChange: "left",
                     backfaceVisibility: "hidden",
                     ...baseStyle,
@@ -191,11 +196,12 @@ export default function WelcomeAnimation() {
                     transform: animationState.turn ? "" : "scale(-1, 1)",
                     ...smoothPosition,
                 }}
+                key="bad-ninja-2"
             />
             <img
                 src={badNinja}
                 alt="bad ninja"
-                style={{
+                css={{
                     willChange: "left",
                     backfaceVisibility: "hidden",
                     ...baseStyle,
@@ -205,11 +211,12 @@ export default function WelcomeAnimation() {
                     transform: animationState.turn ? "" : "scale(-1, 1)",
                     ...smoothPosition,
                 }}
+                key="bad-ninja-3"
             />
             <img
                 src={badNinja}
                 alt="bad ninja"
-                style={{
+                css={{
                     willChange: "left",
                     backfaceVisibility: "hidden",
                     ...baseStyle,
@@ -219,11 +226,12 @@ export default function WelcomeAnimation() {
                     transform: animationState.turn ? "" : "scale(-1, 1)",
                     ...smoothPosition,
                 }}
+                key="bad-ninja-4"
             />
             <img
                 src={badNinja}
                 alt="bad ninja"
-                style={{
+                css={{
                     willChange: "left",
                     backfaceVisibility: "hidden",
                     ...baseStyle,
@@ -233,11 +241,12 @@ export default function WelcomeAnimation() {
                     transform: animationState.turn ? "" : "scale(-1, 1)",
                     ...smoothPosition,
                 }}
+                key="bad-ninja-5"
             />
             <img
                 src={badNinja}
                 alt="bad ninja"
-                style={{
+                css={{
                     willChange: "left",
                     backfaceVisibility: "hidden",
                     ...baseStyle,
@@ -247,13 +256,14 @@ export default function WelcomeAnimation() {
                     transform: animationState.turn ? "" : "scale(-1, 1)",
                     ...smoothPosition,
                 }}
+                key="bad-ninja-6"
             />
             {animationState.time > 10000 / timeStep && (
                 <>
                     <img
                         src={rock}
                         alt="rock"
-                        style={{
+                        css={{
                             willChange: "lef",
                             backfaceVisibility: "hidden",
                             ...baseStyle,
@@ -263,11 +273,12 @@ export default function WelcomeAnimation() {
                             zIndex: 1000000001,
                             ...smoothPosition,
                         }}
+                        key="rock"
                     />
                     <img
                         src={fire}
                         alt="fire"
-                        style={{
+                        css={{
                             willChange: "left",
                             backfaceVisibility: "hidden",
                             ...baseStyle,
@@ -276,6 +287,7 @@ export default function WelcomeAnimation() {
                             width: ninjaLength * U * 1.3,
                             ...smoothPosition,
                         }}
+                        key="fire"
                     />
                 </>
             )}
@@ -283,7 +295,7 @@ export default function WelcomeAnimation() {
                 <img
                     src={flyingNinja}
                     alt="flying ninja"
-                    style={{
+                    css={{
                         willChange: "left, bottom",
                         backfaceVisibility: "hidden",
                         ...baseStyle,
@@ -305,6 +317,7 @@ export default function WelcomeAnimation() {
                     onTouchStart={() => {
                         setFlyingNinjaRotate(true);
                     }}
+                    key="flying-ninja"
                 />
             )}
         </>
