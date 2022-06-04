@@ -47,8 +47,10 @@ export function Layout({
         style.overflowX = "hidden";
     }, []);
 
-    const [hideAppBar, setHideAppBar] = useState(false);
+    const [hideAppBar, setHideAppBar] = useState(true);
     useEffect(() => {
+        setHideAppBar(false);
+
         const scrollHandler = () => {
             const isRapidScroll = window.scrollY > previousScrollY + 500;
             previousScrollY = window.scrollY;
@@ -94,8 +96,7 @@ export function Layout({
                     marginBottom: 20,
                     position: "fixed",
                     top: hideAppBar ? -100 : -1,
-                    transitionDuration: "1s",
-                    transitionProperty: "top",
+                    transition: "top 1s",
                     width: "100%",
                 }}
             >
@@ -123,12 +124,12 @@ export function Layout({
                             <a
                                 css={{
                                     fontSize: isWide ? "large" : "medium",
+                                    margin: `0 ${isWide ? 3 : 1}rem`,
                                     color: "white",
                                     "&:hover": {
                                         opacity: 0.5,
                                         color: "white",
                                     },
-                                    margin: `0 ${isWide ? 3 : 1}rem`,
                                 }}
                                 href={"https://www.lingual-ninja.com"}
                             >
@@ -147,14 +148,20 @@ export function Layout({
             </AppBar>
             {isFirstRender ? (
                 <FullScreenShuriken
-                    style={css({ marginTop: isWide ? 134 : 126 })}
+                    style={css({
+                        marginTop: isWide ? 134 : 126,
+                        transition: "margin-top 1s",
+                    })}
                 />
             ) : (
                 <>
                     <div
                         css={[
                             mainContainerStyle,
-                            { marginTop: isWide ? 70 : 61 },
+                            {
+                                marginTop: isWide ? 70 : 61,
+                                transition: "margin-top 1s",
+                            },
                         ]}
                     >
                         {children}
