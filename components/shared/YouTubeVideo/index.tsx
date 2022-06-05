@@ -1,40 +1,43 @@
-import { Button } from "@material-ui/core";
 import React, { CSSProperties } from "react";
-import { ATargetBlank } from "../ATargetBlank";
+import { ATargetBlank } from "../Link/ATargetBlank";
 
 export function YouTubeVideo({
     videoId,
     screenWidth,
-    pageNameForLog,
     style,
     buttonLabel,
 }: {
     videoId: string;
     screenWidth: number;
-    pageNameForLog: string;
     style?: CSSProperties;
     buttonLabel?: string;
 }) {
     const isWide = screenWidth > 600;
     return (
         <div
-            style={{
+            css={{
                 backgroundColor: isWide ? "rgb(231, 233, 231)" : undefined,
                 padding: "5px 0",
                 border: 0,
                 ...style,
             }}
         >
-            <div style={{ maxWidth: 600 }}>
+            <div
+                css={{
+                    maxWidth: 600,
+                    marginRight: "auto",
+                    marginLeft: "auto",
+                }}
+            >
                 <div
-                    style={{
+                    css={{
                         position: "relative",
                         width: "100%",
                         paddingTop: "56.25%",
                     }}
                 >
                     <iframe
-                        style={{
+                        css={{
                             position: "absolute",
                             top: 0,
                             right: 0,
@@ -51,22 +54,89 @@ export function YouTubeVideo({
                     nofollow
                     href="http://www.youtube.com/channel/UCii35PcojqMUNkSRalUw35g?sub_confirmation=1"
                 >
-                    <style jsx>{`
-                        button:hover {
-                            opacity: 0.5;
-                        }
-                    `}</style>
-                    <Button
-                        style={{
+                    <button
+                        css={{
                             marginTop: 5,
                             width: "100%",
                             backgroundColor: "red",
                             color: "white",
+                            "&:hover": {
+                                opacity: 0.5,
+                                backgroundColor: "red",
+                            },
                         }}
+                        className="btn btn-danger"
                     >
                         {buttonLabel ||
                             "Click to subscribe to this YouTube channel!"}
-                    </Button>
+                    </button>
+                </ATargetBlank>
+            </div>
+        </div>
+    );
+}
+
+export interface VideoProps {
+    src: string;
+    screenWidth: number;
+    style?: CSSProperties;
+    buttonLabel?: string;
+}
+
+export function Video({ src, screenWidth, style, buttonLabel }: VideoProps) {
+    const isWide = screenWidth > 600;
+    return (
+        <div
+            style={{
+                backgroundColor: isWide ? "rgb(231, 233, 231)" : undefined,
+                padding: "5px 0",
+                border: 0,
+                textShadow: "none",
+                display: "flex",
+                justifyContent: "center",
+                ...style,
+            }}
+        >
+            <div style={{ maxWidth: 600, width: "100%" }}>
+                <div
+                    style={{
+                        position: "relative",
+                        width: "100%",
+                        paddingTop: "56.25%",
+                    }}
+                >
+                    <video
+                        src={src}
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            right: 0,
+                            width: "100%",
+                            height: "100%",
+                        }}
+                        controls
+                    />
+                </div>
+                <ATargetBlank
+                    nofollow
+                    href="http://www.youtube.com/channel/UCii35PcojqMUNkSRalUw35g?sub_confirmation=1"
+                >
+                    <button
+                        css={{
+                            marginTop: 5,
+                            width: "100%",
+                            backgroundColor: "red",
+                            color: "white",
+                            "&:hover": {
+                                opacity: 0.5,
+                                backgroundColor: "red",
+                            },
+                        }}
+                        className="btn btn-danger"
+                    >
+                        {buttonLabel ||
+                            "Click to subscribe to this YouTube channel!"}
+                    </button>
                 </ATargetBlank>
             </div>
         </div>

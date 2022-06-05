@@ -1,4 +1,8 @@
-/* Folktale等のabbrの下線除去 */
+html {
+    scroll-behavior: auto !important;
+}
+
+/* Remove underline for abbr in Folktale */
 abbr[title] {
     text-decoration: none;
     border-bottom-width: 0;
@@ -6,4 +10,5 @@ abbr[title] {
 
 a {
     text-decoration: none;
+    cursor: pointer;
 }

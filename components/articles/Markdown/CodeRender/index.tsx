@@ -1,5 +1,7 @@
-import React from "react";
+import { Collapse } from "@material-ui/core";
+import React, { useState } from "react";
 import { Markdown } from "..";
+import { getClasses } from "../../../../lib/css";
 import { sentence } from "../../../../types/stories";
 import styles from "../index.module.css";
 import { ExampleSentence } from "./ExampleSentence";
@@ -39,22 +41,72 @@ export const CodeRender = ({
                 boldInfo={params[2]}
             />
         );
-    } else if (language === "e") {
+    }
+
+    if (language === "e") {
         return <OriginalExample params={params} />;
-    } else if (language === "box") {
+    }
+
+    if (language === "box") {
         return (
-            <div className={styles.greenBox}>
-                <Markdown source={value} noLinkShadow />
+            <div>
+                <div className={styles.greenBox}>
+                    <Markdown source={value} noLinkShadow />
+                </div>
             </div>
         );
     }
 
+    if (language?.startsWith("button-")) {
+        const [_button, openLabel, closeLabel] = language.split("-");
+        return (
+            <CollapseButton
+                openLabel={openLabel || "Open"}
+                closeLabel={closeLabel || "Close"}
+                content={value}
+            />
+        );
+    }
+
     return (
-        <PointBox language={language} style={{ textShadow: "initial" }}>
+        <PointBox language={language} style={cs.initialShadow}>
             <Markdown source={value} noLinkShadow />
         </PointBox>
     );
 };
+
+function CollapseButton({
+    openLabel,
+    closeLabel,
+    content,
+}: {
+    openLabel: string;
+    closeLabel: string;
+    content: string;
+}) {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <div style={{ margin: "20px 0" }}>
+            <button
+                onClick={() => {
+                    setOpen(!open);
+                }}
+                className={`btn ${open ? "btn-dark" : "btn-primary"} btn-xs`}
+                style={{ boxShadow: "none", margin: 0 }}
+            >
+                {open
+                    ? closeLabel.replaceAll("_", " ")
+                    : openLabel.replaceAll("_", " ")}
+            </button>
+            <Collapse in={open} timeout={1000} style={{ margin: 0 }}>
+                <div className={styles.answerBox}>
+                    <Markdown source={content} noLinkShadow />
+                </div>
+            </Collapse>
+        </div>
+    );
+}
 
 function OriginalExample({ params }: { params: { [key: number]: string } }) {
     const s: sentence = {
@@ -72,7 +124,9 @@ function OriginalExample({ params }: { params: { [key: number]: string } }) {
         try {
             const arrWords: string[] = JSON.parse(strWords);
             threeItemsArrays = sliceByNumber<string>(arrWords, 3);
-        } catch (e) {}
+        } catch {
+            //
+        }
     }
     const words = threeItemsArrays.map((items, i) => ({
         lineNumber: 0,
@@ -83,7 +137,7 @@ function OriginalExample({ params }: { params: { [key: number]: string } }) {
     }));
 
     return (
-        <div style={{ marginBottom: 20, marginTop: 10, textShadow: "initial" }}>
+        <div css={cs.exampleContainer}>
             <ExampleSentence
                 s={s}
                 boldInfo={params[4]}
@@ -93,3 +147,14 @@ function OriginalExample({ params }: { params: { [key: number]: string } }) {
         </div>
     );
 }
+
+const cs = getClasses({
+    initialShadow: {
+        textShadow: "initial",
+    },
+    exampleContainer: {
+        marginBottom: 20,
+        marginTop: 10,
+        textShadow: "initial",
+    },
+});

@@ -1,5 +1,6 @@
-import Link from "next/link";
-import { ATargetBlank } from "../../../shared/ATargetBlank";
+import React from "react";
+import { ATargetBlank } from "../../../shared/Link/ATargetBlank";
+import { A, Link } from "../../../shared/Link/LinkWithYouTube";
 import { linkShadowStyle } from "./linkShadowStyle";
 
 export const LinkRender = (props: {
@@ -25,14 +26,21 @@ const LinkRenderBase = ({
 
     if (href.includes("https://") || href.includes("http://")) {
         return (
-            <ATargetBlank href={href} style={style}>
+            <ATargetBlank href={href} css={style}>
                 {children}
             </ATargetBlank>
         );
     }
+    if (href.includes("#")) {
+        return (
+            <A href={href} pCss={style}>
+                {children}
+            </A>
+        );
+    }
     return (
-        <Link href={href}>
-            <a style={style}>{children}</a>
+        <Link href={href} pCss={style}>
+            {children}
         </Link>
     );
 };

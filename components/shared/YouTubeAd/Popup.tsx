@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { YouTubeAd } from ".";
+import { getClasses } from "../../../lib/css";
 
 export const PopupAd = () => {
     const [isShown, setIsShown] = React.useState(false);
@@ -7,24 +8,23 @@ export const PopupAd = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            const showAd = () => {
-                const savedDate = localStorage.getItem("YouTubeAdClosed");
-                if (savedDate) {
-                    const date = new Date(savedDate);
-                    const dif = new Date().getTime() - date.getTime();
-                    if (dif < 1000 * 60 * 60 * 24 * 14) {
-                        // ２週間出さない
-                        return;
-                    }
+            const savedDate = localStorage.getItem("YouTubeAdClosed");
+            if (savedDate) {
+                const date = new Date(savedDate);
+                const dif = new Date().getTime() - date.getTime();
+                if (dif < 1000 * 60 * 60 * 24 * 14) {
+                    // Don't show for two weeks
+                    return;
                 }
+            }
+
+            const showAd = () => {
+                document.removeEventListener("scroll", showAd);
                 setIsTimerStarted(true);
                 setTimeout(() => setIsShown(true), 10);
             };
-            var body = document.querySelector("body");
-            if (!body) {
-                return;
-            }
-            body.onscroll = showAd;
+
+            document.addEventListener("scroll", showAd);
         }, 30 * 1000);
     }, []);
 
@@ -43,7 +43,7 @@ export const PopupAd = () => {
 
     return (
         <div
-            style={{
+            css={{
                 position: "fixed",
                 left: 0,
                 top: 0,
@@ -51,34 +51,14 @@ export const PopupAd = () => {
                 height: "100%",
                 opacity: isShown ? 1 : 0,
                 transition: "2s",
+                zIndex: 2147483647,
             }}
         >
-            <div
-                style={{
-                    position: "fixed",
-                    left: 0,
-                    top: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "gray",
-                    opacity: 0.5,
-                }}
-            ></div>
+            <div css={c.grayDiv} />
 
-            <div
-                style={{
-                    position: "fixed",
-                    left: 0,
-                    top: 0,
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
+            <div css={c.container}>
                 <div
-                    style={{
+                    css={{
                         width: adWidth - 20,
                         height: adWidth,
                         backgroundColor: "white",
@@ -87,15 +67,11 @@ export const PopupAd = () => {
                         alignItems: "center",
                         flexDirection: "column",
                         borderRadius: 10,
-                        zIndex: 2147483647,
                     }}
                     onClick={ev => ev.stopPropagation()}
                 >
                     <YouTubeAd width={adWidth - 60} />
-                    <div
-                        onClick={close}
-                        style={{ cursor: "pointer", color: "black" }}
-                    >
+                    <div onClick={close} css={c.close}>
                         Close
                     </div>
                 </div>
@@ -103,3 +79,26 @@ export const PopupAd = () => {
         </div>
     );
 };
+
+const c = getClasses({
+    container: {
+        position: "fixed",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    grayDiv: {
+        position: "fixed",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "black",
+        opacity: 0.7,
+    },
+    close: { cursor: "pointer", color: "black" },
+});

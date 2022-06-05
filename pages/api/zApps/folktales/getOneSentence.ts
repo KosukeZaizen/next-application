@@ -1,4 +1,4 @@
-import { fetchZApps } from "../../../../lib/fetch";
+import { fetchZAppsFromServerSide } from "../../../../lib/fetch";
 import { apiGet } from "../../../../lib/nextApi";
 import { GetParams } from "../../../../types/next";
 import { sentence, word } from "../../../../types/stories";
@@ -22,7 +22,7 @@ const handler = async ({
     lineNumber,
 }: GetParams<Params>): Promise<Response> => {
     const url = `api/Stories/GetOneSentence/${storyName}/${lineNumber}`;
-    const response = await fetchZApps(url);
+    const response = await fetchZAppsFromServerSide(url);
 
     return await response.json();
 };

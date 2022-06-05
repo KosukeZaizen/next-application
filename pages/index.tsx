@@ -1,33 +1,18 @@
 import { GetServerSideProps } from "next";
-import Articles from "../components/articles/Home";
-import { fetchZApps } from "../lib/fetch";
-import { Page } from "./articles/[pageName]";
+import React from "react";
+import ShurikenProgress from "../components/shared/ShurikenProgress";
 
-type Props = { type: "articles"; pages: Page[] };
-
-export default function Home(props: Props) {
-    switch (props.type) {
-        case "articles": {
-            return <Articles {...props} />;
-        }
-        default: {
-            const exhaustiveCheck: never = props.type;
-        }
-    }
+export default function Home() {
+    return <ShurikenProgress size="30%" />;
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({
+export const getServerSideProps: GetServerSideProps = async ({
     req: {
         headers: { host },
     },
 }) => {
     console.log("host", host);
-    const response: Response = await fetchZApps("api/Articles/GetAllArticles");
-    const pages: Page[] = await response.json();
-    return {
-        props: {
-            type: "articles",
-            pages,
-        },
-    };
+
+    // Articles
+    return { redirect: { permanent: true, destination: "/articles" } };
 };

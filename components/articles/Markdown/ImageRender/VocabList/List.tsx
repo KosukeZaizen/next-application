@@ -3,10 +3,11 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import React from "react";
-import LazyLoad from "react-lazyload";
+import React, { useEffect } from "react";
 import { BLOB_URL } from "../../../../../const/public";
+import { getClasses } from "../../../../../lib/css";
 import { vocab, vocabGenre } from "../../../../../types/vocab";
+import { LazyLoad } from "../../../../shared/LazyLoad";
 import ShurikenProgress from "../../../../shared/ShurikenProgress";
 
 const tableHeadStyle: React.CSSProperties = {
@@ -20,7 +21,6 @@ const tableElementStyle: React.CSSProperties = {
 type TVListProps = {
     g: vocabGenre;
     vocabList: vocab[];
-    noLazyLoad?: boolean;
     style?: React.CSSProperties;
     vocabIncorrectIds?: number[];
     kanjiIncorrectIds?: number[];
@@ -28,7 +28,6 @@ type TVListProps = {
 export function VList({
     g,
     vocabList,
-    noLazyLoad,
     style,
     vocabIncorrectIds,
     kanjiIncorrectIds,
@@ -36,7 +35,7 @@ export function VList({
     return vocabList && vocabList.length > 0 ? (
         <Table aria-label="simple table" style={style}>
             <TableHead>
-                <TableRow style={{ backgroundColor: "papayawhip" }}>
+                <TableRow css={{ backgroundColor: "papayawhip" }}>
                     <TableCell style={tableHeadStyle} align="center">
                         Kanji
                     </TableCell>
@@ -86,13 +85,7 @@ export function VList({
                             {v.english}
                         </TableCell>
                         <TableCell style={tableElementStyle} align="center">
-                            {noLazyLoad ? (
-                                <Speaker v={v} g={g} />
-                            ) : (
-                                <LazyLoad>
-                                    <Speaker v={v} g={g} />
-                                </LazyLoad>
-                            )}
+                            <Speaker v={v} g={g} />
                         </TableCell>
                     </TableRow>
                 ))}
@@ -126,10 +119,6 @@ class Speaker extends React.Component<
         this.didUnmount = false;
     }
 
-    componentDidMount = () => {
-        this.loadSound();
-    };
-
     loadSound = () => {
         const { v, g } = this.props;
 
@@ -155,17 +144,33 @@ class Speaker extends React.Component<
             <img
                 alt="vocab speaker"
                 src={BLOB_URL + "/vocabulary-quiz/img/speaker.png"}
-                style={{ width: "60%", maxWidth: 30, cursor: "pointer" }}
+                css={{ width: "60%", maxWidth: 30, cursor: "pointer" }}
                 onClick={() => {
                     vocabSound && vocabSound.play();
                 }}
             />
         ) : (
-            <ShurikenProgress
-                key="circle"
-                size="100%"
-                style={{ width: "60%", maxWidth: 30 }}
-            />
+            <>
+                <ShurikenProgress size="100%" style={c.shuriken} />
+                <LazyLoad>
+                    <SoundLoader load={this.loadSound} />
+                </LazyLoad>
+            </>
         );
     }
 }
+
+function SoundLoader({ load }: { load: () => void }) {
+    useEffect(() => {
+        load();
+    }, [load]);
+
+    return null;
+}
+
+const c = getClasses({
+    shuriken: {
+        width: "60%",
+        maxWidth: 30,
+    },
+});

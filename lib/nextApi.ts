@@ -8,7 +8,9 @@ export function sendRes<T>(
     res: NextApiResponse<ServerResponse<T>>,
     responseData: T
 ) {
-    res.status(200).json({ responseType: "success", ...responseData });
+    if (res) {
+        res.status(200).json({ responseType: "success", ...responseData });
+    }
 }
 
 export const apiGet =
@@ -26,7 +28,8 @@ export const apiGet =
                 console.log("Fetch method is not GET");
             }
             sendRes(res, await handler(req.query));
-        } catch {
+        } catch (error) {
+            console.log("error", error);
             sendRes(res, {
                 responseType: "system_error",
                 message: SERVER_SIDE_ERROR_MESSAGE,
@@ -36,11 +39,7 @@ export const apiGet =
 
 export const apiPost =
     <T extends Apis>(
-        handler: (
-            params: T["params"]
-        ) =>
-            | Promise<ServerResponse<T["response"]>>
-            | ServerResponse<T["response"]>
+        handler: (params: T["params"]) => Promise<T["response"]> | T["response"]
     ) =>
     async (
         req: Req<T["params"]>,
@@ -51,7 +50,8 @@ export const apiPost =
                 console.log("Fetch method is not POST");
             }
             sendRes(res, await handler(req.body));
-        } catch {
+        } catch (error) {
+            console.log("error", error);
             sendRes(res, {
                 responseType: "system_error",
                 message: SERVER_SIDE_ERROR_MESSAGE,

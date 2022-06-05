@@ -1,0 +1,49 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "prettier"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint/eslint-plugin", "react", "unused-imports"],
+    "rules": {
+        "quotes": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            { "varsIgnorePattern": "^_.+" }
+        ],
+        "unused-imports/no-unused-imports-ts": "warn",
+        "@next/next/no-img-element": "off"
+    },
+    "settings": {
+        "react": {
+            "createClass": "createReactClass", // Regex for Component Factory to use,
+            // default to "createReactClass"
+            "pragma": "React", // Pragma to use, default to "React"
+            "version": "detect" // React version. "detect" automatically picks the version you have installed.
+            // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
+            // default to latest and warns if missing
+        }
+    }
+}

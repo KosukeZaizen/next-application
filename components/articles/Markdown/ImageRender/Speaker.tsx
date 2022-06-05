@@ -1,6 +1,7 @@
-import { Button } from "@material-ui/core";
 import React from "react";
 import { BLOB_URL } from "../../../../const/public";
+import { getClasses } from "../../../../lib/css";
+import { Executor } from "../../../shared/LazyLoad";
 import ShurikenProgress from "../../../shared/ShurikenProgress";
 
 interface SpeakerProps {
@@ -18,17 +19,11 @@ export class Speaker extends React.Component<
 
     constructor(props: SpeakerProps) {
         super(props);
-
         this.state = {
             showImg: false,
         };
-
         this.didUnmount = false;
     }
-
-    componentDidMount = () => {
-        this.loadSound();
-    };
 
     loadSound = () => {
         const { src } = this.props;
@@ -39,7 +34,9 @@ export class Speaker extends React.Component<
         this.vocabSound.src = src;
 
         this.vocabSound.oncanplaythrough = () => {
-            if (!this.didUnmount) this.setState({ showImg: true });
+            if (!this.didUnmount) {
+                this.setState({ showImg: true });
+            }
         };
         this.vocabSound.load();
     };
@@ -52,28 +49,47 @@ export class Speaker extends React.Component<
         const { alt } = this.props;
         const { showImg } = this.state;
         const { vocabSound } = this;
-        return showImg ? (
-            <Button color="primary">
-                <img
-                    alt={alt}
-                    src={BLOB_URL + "/articles/img/speaker.png"}
-                    style={{
-                        width: "60%",
-                        maxWidth: 60,
-                        cursor: "pointer",
-                        zIndex: 900,
-                    }}
+
+        if (showImg) {
+            return (
+                <button
+                    css={c.greenBtn}
+                    className="btn"
                     onClick={() => {
                         vocabSound && vocabSound.play();
                     }}
-                />
-            </Button>
-        ) : (
-            <ShurikenProgress
-                key="circle"
-                size="100%"
-                style={{ width: "60%", maxWidth: 30 }}
-            />
+                >
+                    <img
+                        alt={alt}
+                        src={BLOB_URL + "/articles/img/speaker.png"}
+                        style={{
+                            width: "60%",
+                            maxWidth: 60,
+                            cursor: "pointer",
+                            zIndex: 900,
+                        }}
+                        onClick={() => {
+                            vocabSound && vocabSound.play();
+                        }}
+                    />
+                </button>
+            );
+        }
+        return (
+            <>
+                <ShurikenProgress key="circle" size={40} style={c.shuriken} />
+                <Executor fnc={this.loadSound} />
+            </>
         );
     }
 }
+
+const c = getClasses({
+    greenBtn: {
+        backgroundColor: "green",
+    },
+    shuriken: {
+        width: "60%",
+        maxWidth: 40,
+    },
+});

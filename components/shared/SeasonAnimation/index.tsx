@@ -1,10 +1,13 @@
+import { css } from "@emotion/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { appsPublicImg } from "../../../const/public";
+import { APPS_PUBLIC_IMG_URL } from "../../../const/public";
 import { fetchGet } from "../../../lib/fetch";
 import { GetFallingImages } from "../../../pages/api/zApps/fallingImage/getFallingImages";
-import styles from "./animation.module.css";
+import { Img } from "../Img";
 import { FallingImage } from "./type";
+
+const festivalImgPath = APPS_PUBLIC_IMG_URL + "japanese-festival.png";
 
 let count = 0;
 let ls: Leaf[] = [];
@@ -98,7 +101,7 @@ export const SeasonAnimation = ({
         return () => {
             clearInterval(intervalId);
         };
-    }, [screenWidth, screenHeight]);
+    }, [screenWidth, screenHeight, frequencySec]);
 
     useEffect(() => {
         return () => {
@@ -106,50 +109,34 @@ export const SeasonAnimation = ({
         };
     }, []);
 
-    let getImg;
-    const seasonItem = seasonItems?.find(item => item.name === season);
-
-    if (!season || season === "none" || !seasonItem) {
-        getImg = () => null;
-    } else {
-        getImg = (l: Leaf) => (
-            <img
-                key={`falling item ${l.id}`}
-                src={appsPublicImg + seasonItem.fileName}
-                alt={`${seasonItem.alt} ${l.id}`}
-                title={`${seasonItem.alt} ${l.id}`}
-                style={{
-                    willChange: "animation",
-                    backfaceVisibility: "hidden",
-                    maxWidth: 50 * scale,
-                    maxHeight: 50 * scale,
-                    position: "fixed",
-                    top: -1.5 * 90 * scale,
-                    left: l.initialX,
-                    zIndex: -100,
-                }}
-                className={styles.falling}
-            />
-        );
-    }
+    const festivalWidth = screenWidth * 1.28;
+    const festivalHeight = festivalWidth * (21 / 48);
 
     return (
         <>
             {!isFestivalHidden && (
-                <img
-                    alt="japanese festival"
-                    title="japanese festival"
-                    src={appsPublicImg + "japanese-festival.png"}
-                    style={{
-                        position: "absolute",
-                        width: "128%",
-                        top: 80 - screenWidth * 0.34,
-                        left: -(screenWidth * 0.28),
-                        zIndex: -110,
-                    }}
-                />
+                <div
+                    css={css`
+                        position: absolute;
+                        top: ${70 - screenWidth * 0.33}px;
+                        left: ${-(screenWidth * 0.28)}px;
+                        z-index: -110;
+                    `}
+                >
+                    <img
+                        alt="japanese festival"
+                        src={festivalImgPath}
+                        loading="eager"
+                        css={{ width: festivalWidth, height: festivalHeight }}
+                    />
+                </div>
             )}
-            {leaves.map(getImg)}
+            <FallingImages
+                seasonItems={seasonItems}
+                season={season}
+                leaves={leaves}
+                scale={scale}
+            />
         </>
     );
 };
@@ -165,3 +152,100 @@ export async function getFallingImages(): Promise<FallingImage[]> {
 
     return response.data;
 }
+
+function FallingImages({
+    seasonItems,
+    season,
+    leaves,
+    scale,
+}: {
+    seasonItems: FallingImage[];
+    season: string;
+    leaves: Leaf[];
+    scale: number;
+}) {
+    const seasonItem = seasonItems?.find(item => item.name === season);
+
+    if (!season || season === "none" || !seasonItem) {
+        return null;
+    }
+    return (
+        <div css={fallingAnimation}>
+            {leaves.map(l => (
+                <FallingImg
+                    key={l.id}
+                    seasonItem={seasonItem}
+                    scale={scale}
+                    l={l}
+                />
+            ))}
+        </div>
+    );
+}
+
+function FallingImg({
+    l,
+    seasonItem,
+    scale,
+}: {
+    l: Leaf;
+    seasonItem: FallingImage;
+    scale: number;
+}) {
+    return (
+        <div
+            style={{
+                top: -1.5 * 90 * scale,
+                left: l.initialX,
+                overflow: "visible",
+            }}
+            className="fallingImg"
+        >
+            <Img
+                src={APPS_PUBLIC_IMG_URL + seasonItem.fileName}
+                alt={`${seasonItem.alt} ${l.id}`}
+                title={`${seasonItem.alt} ${l.id}`}
+                layout="fixed"
+                width={50 * scale}
+                height={50 * scale}
+                objectFit="contain"
+                objectPosition="50% 50%"
+            />
+        </div>
+    );
+}
+
+const fallingAnimation = css`
+    & .fallingImg {
+        will-change: animation;
+        backface-visibility: hidden;
+        position: fixed;
+        z-index: -100;
+    }
+    @media only screen and (max-width: 600px) {
+        & .fallingImg {
+            animation: fallSmall 40s 1s ease-out;
+        }
+    }
+    @media only screen and (min-width: 601px) {
+        & .fallingImg {
+            animation: fall 25s 1s ease-out;
+        }
+    }
+    @keyframes fallSmall {
+        0% {
+            transform: translate(0px, 0px) rotate(0deg);
+        }
+        100% {
+            transform: translate(-1000px, 2000px) rotate(2000deg);
+        }
+    }
+    @keyframes fall {
+        0% {
+            transform: translate(0px, 0px) rotate(0deg);
+        }
+        100% {
+            transform: translate(-1000px, 2000px) rotate(1000deg);
+        }
+    }
+`;
