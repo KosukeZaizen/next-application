@@ -3,6 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import React, { useEffect, useState } from "react";
+import { Z_APPS_TOP_URL } from "../../const/public";
 import { useIsFirstRender } from "../../lib/hooks/useIsFirstRender";
 import { Helmet, HelmetProps } from "../shared/Helmet";
 import { Link } from "../shared/Link/LinkWithYouTube";
@@ -110,10 +111,7 @@ export function Layout({
                             maxWidth,
                         }}
                     >
-                        <Title
-                            isWide={isWide}
-                            href={"https://www.lingual-ninja.com"}
-                        />
+                        <Title isWide={isWide} href={Z_APPS_TOP_URL} />
                         <div
                             css={{
                                 display: "flex",
@@ -131,7 +129,7 @@ export function Layout({
                                         color: "white",
                                     },
                                 }}
-                                href={"https://www.lingual-ninja.com"}
+                                href={Z_APPS_TOP_URL}
                             >
                                 {"Apps"}
                             </a>
