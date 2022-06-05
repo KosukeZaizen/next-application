@@ -6,8 +6,8 @@ import { LinkProps, Link as LinkWithoutYouTube } from "./Link";
 
 const seenVideoStorageKey = "seenVideoStorageKey-";
 const youTubeVideoUrls = {
-    beginner_grammar1: "https://youtu.be/6gdQS1djlL8",
     how_to_say_you: "https://youtu.be/CHFBq9xjOD4",
+    beginner_grammar1: "https://youtu.be/6gdQS1djlL8",
     how_to_say_do: "https://youtu.be/K1sDYLPunJ8",
     channel_page: YOUTUBE_CHANNEL_URL,
 } as const;
