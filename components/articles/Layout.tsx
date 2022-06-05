@@ -124,7 +124,7 @@ export function Layout({
                             <a
                                 css={{
                                     fontSize: isWide ? "large" : "medium",
-                                    margin: `0 ${isWide ? 3 : 1}rem`,
+                                    margin: `0 ${isWide ? 3 : 2}rem`,
                                     color: "white",
                                     "&:hover": {
                                         opacity: 0.5,
