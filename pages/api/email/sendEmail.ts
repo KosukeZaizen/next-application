@@ -2,7 +2,9 @@ import sendmail, { MailInput } from "sendmail";
 import { emailAuthToken } from "../../../const/private";
 import { apiPost } from "../../../lib/nextApi";
 
-type Response = { result: "ok" };
+const send = sendmail({});
+
+type Response = { emailResult: "sent" };
 type MailData = Pick<MailInput, "from" | "to" | "subject" | "html">;
 type Params = MailData & {
     token: string;
@@ -23,12 +25,12 @@ const handler = async ({ token, ...mailInput }: Params): Promise<Response> => {
 
 async function sendEmail(mailData: MailData): Promise<Response> {
     return new Promise((resolve, reject) => {
-        sendmail({})(mailData, function (err) {
+        send(mailData, function (err) {
             if (err) {
                 reject();
                 return;
             }
-            resolve({ result: "ok" });
+            resolve({ emailResult: "sent" });
         });
     });
 }
