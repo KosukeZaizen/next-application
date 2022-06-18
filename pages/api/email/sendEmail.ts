@@ -1,35 +1,36 @@
-import { apiGet } from "../../../lib/nextApi";
-import { EmptyObject } from "../../../types/util";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const sendmail = require("sendmail")();
+import sendmail, { MailInput } from "sendmail";
+import { emailAuthToken } from "../../../const/private";
+import { apiPost } from "../../../lib/nextApi";
 
-type Response = { reply: unknown; err: unknown };
+type Response = { result: "ok" };
+type MailData = Pick<MailInput, "from" | "to" | "subject" | "html">;
+type Params = MailData & {
+    token: string;
+};
 
 export interface SendEmailProps {
     url: "/api/email/sendEmail";
     params: Params;
     response: Response;
 }
-type Params = EmptyObject;
 
-const handler = async (): Promise<Response> => {
-    return sendEmail();
+const handler = async ({ token, ...mailInput }: Params): Promise<Response> => {
+    if (token !== emailAuthToken) {
+        throw new Error("unauthorized");
+    }
+    return sendEmail(mailInput);
 };
 
-async function sendEmail(): Promise<Response> {
-    return new Promise(r => {
-        sendmail(
-            {
-                from: "xxx@yyy.com",
-                to: "kosukezaizen@yahoo.co.jp",
-                subject: "メールのタイトルです",
-                text: "メールの本文です。この例はテキストです。html形式でもOK。",
-            },
-            function (err: any, reply: any) {
-                r({ reply, err: err && err.stack });
+async function sendEmail(mailData: MailData): Promise<Response> {
+    return new Promise((resolve, reject) => {
+        sendmail({})(mailData, function (err) {
+            if (err) {
+                reject();
+                return;
             }
-        );
+            resolve({ result: "ok" });
+        });
     });
 }
 
-export default apiGet<SendEmailProps>(handler);
+export default apiPost<SendEmailProps>(handler);
