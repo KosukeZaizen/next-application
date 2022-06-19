@@ -16,18 +16,18 @@ export interface SendEmailProps {
     response: Response;
 }
 
-const handler = async ({ token, ...mailInput }: Params): Promise<Response> => {
+const handler = async ({ token, ...mailData }: Params): Promise<Response> => {
     if (token !== emailAuthToken) {
         throw new Error("unauthorized");
     }
-    return sendEmail(mailInput);
+    return sendEmail(mailData);
 };
 
 async function sendEmail(mailData: MailData): Promise<Response> {
     return new Promise((resolve, reject) => {
         send(mailData, function (err) {
             if (err) {
-                reject();
+                reject(err);
                 return;
             }
             resolve({ emailResult: "sent" });
