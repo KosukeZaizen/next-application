@@ -51,9 +51,9 @@ function useSubDomain() {
 
 function useNoYouTubeMode() {
     useEffect(() => {
-        if (location.hash === "#n" || localStorage.getItem("noYouTubeMode")) {
-            changeAppState("isNoYouTubeAdMode", true);
-            localStorage.setItem("noYouTubeMode", "yes");
-        }
+        // if (location.hash === "#n" || localStorage.getItem("noYouTubeMode")) {
+        changeAppState("isNoYouTubeAdMode", true);
+        localStorage.setItem("noYouTubeMode", "yes");
+        // }
     }, []);
 }

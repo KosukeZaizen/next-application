@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { YouTubeAd } from ".";
+import { getAppState } from "../../../lib/appState";
 import { getClasses } from "../../../lib/css";
 
 export const PopupAd = () => {
@@ -16,6 +17,11 @@ export const PopupAd = () => {
                     // Don't show for two weeks
                     return;
                 }
+            }
+
+            if (getAppState().isNoYouTubeAdMode) {
+                // No YouTube AD mode
+                return;
             }
 
             const showAd = () => {
