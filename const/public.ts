@@ -22,13 +22,13 @@ export type Apps = {
 export const Z_APPS_HOST = "www.lingual-ninja.com";
 export const Z_APPS_TOP_URL = `https://${Z_APPS_HOST}`;
 
-export const BLOB_URL =
-    "https://lingualninja.blob.core.windows.net/lingual-storage";
+const CDN_URL = "https://ninja-cdn.azureedge.net";
+
+export const BLOB_URL = `${CDN_URL}/lingual-storage`;
 
 export const ARTICLES_BLOB = `${BLOB_URL}/articles`;
 
-export const APPS_PUBLIC_IMG_URL =
-    "https://lingualninja.blob.core.windows.net/lingual-storage/appsPublic/img/";
+export const APPS_PUBLIC_IMG_URL = `${BLOB_URL}/appsPublic/img/`;
 
 export const AZURE_HOST = "next-application.azurewebsites.net";
 

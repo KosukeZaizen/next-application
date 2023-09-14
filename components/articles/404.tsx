@@ -4,6 +4,7 @@ import { useScreenSize } from "../../lib/hooks/useScreenSize";
 import { domain, siteName } from "./Home";
 import { Link } from "../shared/Link/LinkWithYouTube";
 import { h1TitleCss, Layout } from "./Layout";
+import { BLOB_URL } from "../../const/public";
 
 export default function NotFoundPage() {
     const router = useRouter();
@@ -26,9 +27,7 @@ export default function NotFoundPage() {
                     Page not found!
                 </h1>
                 <img
-                    src={
-                        "https://lingualninja.blob.core.windows.net/lingual-storage/appsPublic/img/404.png"
-                    }
+                    src={`${BLOB_URL}/appsPublic/img/404.png`}
                     width="50%"
                     alt="404 error"
                     title="404 error"
