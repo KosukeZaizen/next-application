@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useUnmounted } from "./useUnmounted";
 
 export function useScreenSize() {
@@ -8,9 +8,12 @@ export function useScreenSize() {
     });
     const { getIsUnmounted } = useUnmounted();
 
+    const getIsUnmountedWrapper = useRef<() => boolean>(getIsUnmounted);
+    getIsUnmountedWrapper.current = getIsUnmounted;
+
     useEffect(() => {
         const changeScreenSize = () => {
-            if (!getIsUnmounted()) {
+            if (!getIsUnmountedWrapper.current()) {
                 setScreenSize(getScreenSize());
             }
         };
@@ -26,7 +29,7 @@ export function useScreenSize() {
         onResize();
 
         return () => window.removeEventListener("resize", onResize);
-    }, [getIsUnmounted]);
+    }, []);
 
     return screenSize;
 }
