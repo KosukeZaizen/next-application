@@ -86,6 +86,7 @@ export function Layout({
     const { isFirstRender } = useIsFirstRender();
 
     const isWide = screenWidth > 600;
+    const isSuperNarrow = screenWidth < 310;
 
     return (
         <>
@@ -122,7 +123,11 @@ export function Layout({
                             <a
                                 css={{
                                     fontSize: isWide ? "large" : "medium",
-                                    margin: `0 ${isWide ? 3 : 2}rem`,
+                                    margin: isWide
+                                        ? `0 3rem`
+                                        : isSuperNarrow
+                                        ? `0 0.7rem 0 1rem`
+                                        : `0 1rem 0 1.5rem`,
                                     color: "white",
                                     "&:hover": {
                                         opacity: 0.5,
@@ -196,6 +201,7 @@ function Title({ isWide, href }: { isWide: boolean; href: string }) {
                     fontWeight: "bold",
                     color: "white",
                     fontSize: isWide ? undefined : "x-large",
+                    whiteSpace: "nowrap",
                 }}
                 css={{
                     "&:hover": {
