@@ -14,6 +14,7 @@ import { useScreenSize } from "../../lib/hooks/useScreenSize";
 import { sleepAsync } from "../../lib/sleep";
 
 import { GetArticleProps } from "../../pages/api/articles/getArticleProps";
+import { PasswordField } from "../shared/Input/PasswordField";
 
 export interface Page {
     url?: string;
@@ -141,6 +142,7 @@ interface ArticleContentProps {
     author?: Author;
     allAuthors: Author[];
 }
+const passwordSaveKey = "simpleModePassword_saveKey";
 export function ArticleContent_Simple({
     title,
     screenWidth,
@@ -154,6 +156,36 @@ export function ArticleContent_Simple({
     useHashScroll(isFirstRender);
 
     const { query } = useRouter();
+
+    const [password, setPassword] = useState("");
+    useEffect(() => {
+        setPassword(localStorage.getItem(passwordSaveKey) || "");
+    }, []);
+    if (password !== "Japanese123") {
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    maxWidth: 600,
+                    marginTop: 30,
+                }}
+            >
+                <span style={{ fontSize: "large", marginBottom: 20 }}>
+                    Please enter the password that I sent you👇
+                </span>
+                <PasswordField
+                    onChange={ev => {
+                        const pw = ev.target.value;
+                        setPassword(pw);
+                        localStorage.setItem(passwordSaveKey, pw);
+                    }}
+                    password={password}
+                />
+            </div>
+        );
+    }
+
     if (!query.path || query.path[0] !== pageName) {
         // During the transition from another article
         return <FullScreenProgress />;
