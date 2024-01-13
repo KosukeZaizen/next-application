@@ -10,6 +10,7 @@ export interface HelmetProps {
     ogImg?: string;
     domain: string;
     siteName: string;
+    favicon?: string;
 }
 
 export const Helmet = ({
@@ -20,6 +21,7 @@ export const Helmet = ({
     ogImg,
     domain,
     siteName,
+    favicon,
 }: HelmetProps) => {
     const router = useRouter();
     const path = router.asPath;
@@ -51,7 +53,7 @@ export const Helmet = ({
             <link
                 rel="icon"
                 type="image/png"
-                href={`/${subDomain}Favicon.ico`}
+                href={favicon || `/${subDomain}Favicon.ico`}
                 sizes="16x16"
             />
             <meta

@@ -61,7 +61,11 @@ export function SimpleArticles(props: ArticlesProps) {
         <Layout
             screenWidth={screenWidth}
             screenHeight={screenHeight}
-            helmetProps={{ ...helmetProps, noindex: true }}
+            helmetProps={{
+                ...helmetProps,
+                noindex: true,
+                favicon: "/favicon.ico",
+            }}
             author={author}
             maxWidth={maxWidth}
             isSimpleMode
