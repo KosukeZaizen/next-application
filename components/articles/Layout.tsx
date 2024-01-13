@@ -28,6 +28,7 @@ interface Props {
     noSeasonAnimation?: boolean;
     author?: Author;
     maxWidth: number;
+    isSimpleMode?: boolean;
 }
 
 let previousScrollY = 0;
@@ -41,6 +42,7 @@ export function Layout({
     noSeasonAnimation,
     author,
     maxWidth,
+    isSimpleMode,
 }: Props) {
     useEffect(() => {
         const { style } = window.document.body;
@@ -91,64 +93,66 @@ export function Layout({
     return (
         <>
             <Helmet {...helmetProps} />
-            <AppBar
-                position="static"
-                style={{
-                    backgroundColor: "rgb(34, 34, 34)",
-                    marginBottom: 20,
-                    position: "fixed",
-                    top: hideAppBar ? -100 : -1,
-                    transition: "top 1s",
-                    width: "100%",
-                }}
-            >
-                <Toolbar style={styles.toolBar}>
-                    <div
-                        css={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            width: "100%",
-                            maxWidth,
-                        }}
-                    >
-                        <Title isWide={isWide} href={Z_APPS_TOP_URL} />
+            {!isSimpleMode && (
+                <AppBar
+                    position="static"
+                    style={{
+                        backgroundColor: "rgb(34, 34, 34)",
+                        marginBottom: 20,
+                        position: "fixed",
+                        top: hideAppBar ? -100 : -1,
+                        transition: "top 1s",
+                        width: "100%",
+                    }}
+                >
+                    <Toolbar style={styles.toolBar}>
                         <div
                             css={{
                                 display: "flex",
                                 alignItems: "center",
-                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                width: "100%",
+                                maxWidth,
                             }}
                         >
-                            <a
+                            <Title isWide={isWide} href={Z_APPS_TOP_URL} />
+                            <div
                                 css={{
-                                    fontSize: isWide ? "large" : "medium",
-                                    margin: isWide
-                                        ? `0 3rem`
-                                        : isSuperNarrow
-                                        ? `0 0.7rem 0 1rem`
-                                        : `0 1rem 0 1.5rem`,
-                                    color: "white",
-                                    "&:hover": {
-                                        opacity: 0.5,
-                                        color: "white",
-                                    },
+                                    display: "flex",
+                                    alignItems: "center",
+                                    flexDirection: "row",
                                 }}
-                                href={Z_APPS_TOP_URL}
                             >
-                                {"Apps"}
-                            </a>
-                            {author && (
-                                <AuthorButton
-                                    author={author}
-                                    screenWidth={screenWidth}
-                                    isWide={isWide}
-                                />
-                            )}
+                                <a
+                                    css={{
+                                        fontSize: isWide ? "large" : "medium",
+                                        margin: isWide
+                                            ? `0 3rem`
+                                            : isSuperNarrow
+                                            ? `0 0.7rem 0 1rem`
+                                            : `0 1rem 0 1.5rem`,
+                                        color: "white",
+                                        "&:hover": {
+                                            opacity: 0.5,
+                                            color: "white",
+                                        },
+                                    }}
+                                    href={Z_APPS_TOP_URL}
+                                >
+                                    {"Apps"}
+                                </a>
+                                {author && (
+                                    <AuthorButton
+                                        author={author}
+                                        screenWidth={screenWidth}
+                                        isWide={isWide}
+                                    />
+                                )}
+                            </div>
                         </div>
-                    </div>
-                </Toolbar>
-            </AppBar>
+                    </Toolbar>
+                </AppBar>
+            )}
             {isFirstRender ? (
                 <FullScreenShuriken
                     style={css({
@@ -162,21 +166,25 @@ export function Layout({
                         css={[
                             mainContainerStyle,
                             {
-                                marginTop: isWide ? 70 : 61,
+                                marginTop: isSimpleMode ? 30 : isWide ? 70 : 61,
                                 transition: "margin-top 1s",
                             },
                         ]}
                     >
                         {children}
                     </div>
-                    {!noSeasonAnimation && (
-                        <SeasonAnimation
-                            frequencySec={2}
-                            screenWidth={screenWidth}
-                            screenHeight={screenHeight}
-                        />
+                    {!isSimpleMode && (
+                        <>
+                            {!noSeasonAnimation && (
+                                <SeasonAnimation
+                                    frequencySec={2}
+                                    screenWidth={screenWidth}
+                                    screenHeight={screenHeight}
+                                />
+                            )}
+                            <PopupAd />
+                        </>
                     )}
-                    <PopupAd />
                 </>
             )}
         </>

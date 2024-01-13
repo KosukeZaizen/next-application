@@ -1,9 +1,9 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { ArticlesProps } from "../../../components/articles/Articles";
 import { getArticleProps } from "../../api/articles/getArticleProps";
-import { Articles_Preview } from "../../../components/articles/Articles_Preview";
+import { SimpleArticles } from "../../../components/articles/Articles_SimpleMode";
 
-export default Articles_Preview;
+export default SimpleArticles;
 
 export const getServerSideProps = async ({
     params,
