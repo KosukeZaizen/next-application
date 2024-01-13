@@ -12,6 +12,7 @@ import { SeasonAnimation } from "../shared/SeasonAnimation";
 import ShurikenProgress from "../shared/ShurikenProgress";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
 import { Author, AuthorArea } from "./Author";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = {
     toolBar: {
@@ -154,12 +155,21 @@ export function Layout({
                 </AppBar>
             )}
             {isFirstRender ? (
-                <FullScreenShuriken
-                    style={css({
-                        marginTop: isWide ? 134 : 126,
-                        transition: "margin-top 1s",
-                    })}
-                />
+                isSimpleMode ? (
+                    <FullScreenProgress
+                        style={css({
+                            marginTop: isWide ? 134 : 126,
+                            transition: "margin-top 1s",
+                        })}
+                    />
+                ) : (
+                    <FullScreenShuriken
+                        style={css({
+                            marginTop: isWide ? 134 : 126,
+                            transition: "margin-top 1s",
+                        })}
+                    />
+                )
             ) : (
                 <>
                     <div
@@ -195,6 +205,14 @@ export function FullScreenShuriken({ style }: { style?: SerializedStyles }) {
     return (
         <div css={[shurikenContainerStyle, style]}>
             <ShurikenProgress size="100%" style={shurikenStyle} />
+        </div>
+    );
+}
+
+export function FullScreenProgress({ style }: { style?: SerializedStyles }) {
+    return (
+        <div css={[shurikenContainerStyle, style]}>
+            <CircularProgress css={shurikenStyle} size={"100%"} />
         </div>
     );
 }

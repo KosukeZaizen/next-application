@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { Author } from "./Author";
-import { FullScreenShuriken, h1TitleCss, Layout } from "./Layout";
+import { FullScreenProgress, h1TitleCss, Layout } from "./Layout";
 import { Markdown } from "./Markdown";
 import { HelmetProps } from "../shared/Helmet";
 import { ScrollBox } from "../shared/ScrollBox";
@@ -70,7 +70,7 @@ export function SimpleArticles(props: ArticlesProps) {
             maxWidth={maxWidth}
             isSimpleMode
         >
-            <ArticleContent
+            <ArticleContent_Simple
                 title={title}
                 description={description}
                 screenWidth={screenWidth}
@@ -141,7 +141,7 @@ interface ArticleContentProps {
     author?: Author;
     allAuthors: Author[];
 }
-export function ArticleContent({
+export function ArticleContent_Simple({
     title,
     screenWidth,
     indexInfo,
@@ -156,7 +156,7 @@ export function ArticleContent({
     const { query } = useRouter();
     if (!query.path || query.path[0] !== pageName) {
         // During the transition from another article
-        return <FullScreenShuriken />;
+        return <FullScreenProgress />;
     }
 
     return (
