@@ -66,6 +66,8 @@ export function SimpleArticles(props: ArticlesProps) {
                 ...helmetProps,
                 noindex: true,
                 favicon: "/favicon.ico",
+                ogImg: "https://lingualninja.blob.core.windows.net/lingual-storage/articles/feedback.png",
+                siteName: "Feedback",
             }}
             author={author}
             maxWidth={maxWidth}
