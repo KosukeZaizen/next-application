@@ -4,6 +4,7 @@ import { LazyLoad } from "../../../shared/LazyLoad";
 import { Video, YouTubeVideo } from "../../../shared/YouTubeVideo";
 import { Speaker } from "./Speaker";
 import { VocabList } from "./VocabList";
+import { AudioControl } from "./AudioControl";
 
 const imgExtensions = [".png", ".jpg", ".gif"];
 const soundExtensions = [".m4a"];
@@ -44,6 +45,9 @@ export const ImageRender = ({ src, alt }: { src?: string; alt?: string }) => {
             />
         );
     } else if (checkExtension(src, soundExtensions)) {
+        if (alt === "progress") {
+            return <AudioControl audioPath={src} />;
+        }
         return (
             <LazyLoad>
                 <Speaker src={src} alt={alt} />
