@@ -13,7 +13,7 @@ export class AudioControl extends React.Component<AudioControlProps> {
         super(props);
 
         this.state = {
-            showControl: false,
+            showControl: true, // iPhoneで表示されない問題のため、trueから開始
             isLoadingStarted: false,
         };
 

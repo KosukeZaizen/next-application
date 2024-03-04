@@ -14,7 +14,7 @@ export class AudioControl extends React.Component<AudioControlProps> {
         super(props);
 
         this.state = {
-            showControl: false,
+            showControl: true,
             isLoadingStarted: false,
         };
 
