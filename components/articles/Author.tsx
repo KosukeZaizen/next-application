@@ -251,7 +251,7 @@ const c = getClasses({
         height: "auto",
         display: "flex",
         alignItems: "center",
-        flex: 1,
+        flex: 2,
     },
     commentContainer: {
         width: "100%",
