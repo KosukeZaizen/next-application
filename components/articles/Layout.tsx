@@ -13,6 +13,11 @@ import ShurikenProgress from "../shared/ShurikenProgress";
 import { PopupAd } from "../shared/YouTubeAd/Popup";
 import { Author, AuthorArea } from "./Author";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuIcon from "@material-ui/icons/Menu";
+import { IconButton, makeStyles } from "@material-ui/core";
+import { ATargetBlank } from "../shared/Link/ATargetBlank";
 
 const styles = {
     toolBar: {
@@ -34,6 +39,14 @@ interface Props {
 
 let previousScrollY = 0;
 let isHidden = false;
+
+const menuItems: { title: string; path: string }[] = [
+    { path: "hiragana-katakana", title: "Hiragana / Katakana" },
+    { path: "grammar", title: "Grammar" },
+    { path: "vocabulary-quiz", title: "Vocab" },
+    { path: "folktales", title: "Folktales" },
+    { path: "ninja", title: "Games" },
+];
 
 export function Layout({
     children,
@@ -86,10 +99,21 @@ export function Layout({
         };
     }, []);
 
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const c = useStyles();
+
     const { isFirstRender } = useIsFirstRender();
 
     const isWide = screenWidth > 600;
-    const isSuperNarrow = screenWidth < 310;
 
     return (
         <>
@@ -117,31 +141,15 @@ export function Layout({
                             }}
                         >
                             <Title isWide={isWide} href={Z_APPS_TOP_URL} />
+
                             <div
-                                css={{
+                                style={{
                                     display: "flex",
+                                    justifyContent: "flex-end",
                                     alignItems: "center",
-                                    flexDirection: "row",
+                                    gap: 20,
                                 }}
                             >
-                                <a
-                                    css={{
-                                        fontSize: isWide ? "large" : "medium",
-                                        margin: isWide
-                                            ? `0 3rem`
-                                            : isSuperNarrow
-                                            ? `0 0.7rem 0 1rem`
-                                            : `0 1rem 0 1.5rem`,
-                                        color: "white",
-                                        "&:hover": {
-                                            opacity: 0.5,
-                                            color: "white",
-                                        },
-                                    }}
-                                    href={Z_APPS_TOP_URL}
-                                >
-                                    {"Apps"}
-                                </a>
                                 {author && (
                                     <AuthorButton
                                         author={author}
@@ -149,6 +157,52 @@ export function Layout({
                                         isWide={isWide}
                                     />
                                 )}
+
+                                <div>
+                                    <IconButton
+                                        style={{ color: "white" }}
+                                        aria-controls="simple-menu"
+                                        aria-haspopup="true"
+                                        onClick={handleClick}
+                                    >
+                                        <MenuIcon
+                                            style={{
+                                                minWidth: 35,
+                                                minHeight: 35,
+                                            }}
+                                        />
+                                    </IconButton>
+                                    <Menu
+                                        id="simple-menu"
+                                        anchorEl={anchorEl}
+                                        keepMounted
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                        classes={{ paper: c.menuPopover }}
+                                        anchorOrigin={{
+                                            vertical: "top",
+                                            horizontal: "right",
+                                        }}
+                                        transformOrigin={{
+                                            vertical: "top",
+                                            horizontal: "right",
+                                        }}
+                                    >
+                                        {menuItems.map(item => (
+                                            <MenuItem
+                                                key={item.path}
+                                                onClick={handleClose}
+                                            >
+                                                <ATargetBlank
+                                                    href={`${Z_APPS_TOP_URL}/${item.path}`}
+                                                    style={{ color: "white" }}
+                                                >
+                                                    {item.title}
+                                                </ATargetBlank>
+                                            </MenuItem>
+                                        ))}
+                                    </Menu>
+                                </div>
                             </div>
                         </div>
                     </Toolbar>
@@ -200,6 +254,12 @@ export function Layout({
         </>
     );
 }
+const useStyles = makeStyles({
+    menuPopover: {
+        backgroundColor: "rgb(34, 34, 34)",
+        color: "white",
+    },
+});
 
 export function FullScreenShuriken({ style }: { style?: SerializedStyles }) {
     return (

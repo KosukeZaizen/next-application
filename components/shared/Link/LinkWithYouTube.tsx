@@ -6,8 +6,13 @@ import { LinkProps, Link as LinkWithoutYouTube } from "./Link";
 
 const seenVideoStorageKey = "seenVideoStorageKey-";
 const youTubeVideoUrls = {
-    how_to_say_you: "https://youtu.be/CHFBq9xjOD4",
+    te_form: "https://youtu.be/-UyIaYnoZOo",
     beginner_grammar1: "https://youtu.be/6gdQS1djlL8",
+    nai_form: "https://youtu.be/yWqAz1Dx0zE",
+    mo: "https://youtu.be/ggZ1pDuz8h8",
+    te_imasu: "https://youtu.be/RAH1DaGfVO0",
+    demonstratives: "https://youtu.be/Y2gPu_pN_FI",
+    how_to_say_you: "https://youtu.be/CHFBq9xjOD4",
     how_to_say_do: "https://youtu.be/K1sDYLPunJ8",
     channel_page: YOUTUBE_CHANNEL_URL,
 } as const;
