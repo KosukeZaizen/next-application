@@ -35,6 +35,8 @@ export const ARTICLES_BLOB = `${BLOB_URL}/articles`;
 
 export const APPS_PUBLIC_IMG_URL = `${BLOB_URL}/appsPublic/img/`;
 
-export const AZURE_HOST = "japaneastnextapp.azurewebsites.net";
+// export const AZURE_HOST = "japaneastnextapp.azurewebsites.net";
+export const AZURE_HOST =
+    "redirect-test2-fyacg5bebfgqfvh2.japaneast-01.azurewebsites.net";
 
 export const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/c/LingualNinja";
